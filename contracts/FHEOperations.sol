@@ -2,8 +2,9 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-// A library of functions for homomorphic operations on ciphertexts.
+import "./Common.sol";
 
+// A library of functions for homomorphic operations on ciphertexts.
 // NOTE: Currently, all handles refer to ciphertexts of the same type, i.e. an 8-bit integer. This
 // is likely to change in the future.
 library FHEOperations {
@@ -19,8 +20,9 @@ library FHEOperations {
         bytes32[1] memory output;
 
         // Call the add precompile.
+        uint256 precompile = Precompiles.Add;
         assembly {
-            if iszero(staticcall(gas(), 65, input, 64, output, 32)) {
+            if iszero(staticcall(gas(), precompile, input, 64, output, 32)) {
                 revert(0, 0)
             }
         }

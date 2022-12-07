@@ -2,6 +2,8 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import "./Common.sol";
+
 // A library of functions for managing ciphertexts.
 library Ciphertext {
 
@@ -27,8 +29,9 @@ library Ciphertext {
         }
 
         // Call the reencrypt precompile. Skip 32 bytes of lenght metadata for the input `bytes`.
+        uint256 precompile = Precompiles.Reencrypt;
         assembly {
-            if iszero(staticcall(gas(), 67, add(input, 32), inputLen, ciphertext, MaxOutputCiphertextBytesLen)) {
+            if iszero(staticcall(gas(), precompile, add(input, 32), inputLen, ciphertext, MaxOutputCiphertextBytesLen)) {
                 revert(0, 0)
             }
         }
@@ -42,8 +45,9 @@ library Ciphertext {
         uint256 inputLen = ciphertextWithProof.length;
 
         // Call the verify precompile. Skip 32 bytes of lenght metadata for the input `bytes`.
+        uint256 precompile = Precompiles.Verify;
         assembly {
-            if iszero(staticcall(gas(), 66, add(ciphertextWithProof, 32), inputLen, output, 32)) {
+            if iszero(staticcall(gas(), precompile, add(ciphertextWithProof, 32), inputLen, output, 32)) {
                 revert(0, 0)
             }
         }
@@ -59,8 +63,9 @@ library Ciphertext {
         input[0] = bytes32(handle);
 
         // Call the delegate precompile.
+        uint256 precompile = Precompiles.Delegate;
         assembly {
-            if iszero(staticcall(gas(), 68, input, 32, 0, 0)) {
+            if iszero(staticcall(gas(), precompile, input, 32, 0, 0)) {
                 revert(0, 0)
             }
         }
