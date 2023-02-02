@@ -70,8 +70,9 @@ contract BlindAuction {
     function withdraw() public {
         require(auctionStopped);
         FHEUInt bidValue = bids[msg.sender];
-        // TODO: Maybe we should now allow a highest bidder to withdraw?
-        Common.requireCt(FHEOps.lte(bidValue, highestBid));
+        if (!objectClaimed) {
+            Common.requireCt(FHEOps.lt(bidValue, highestBid));
+        }
         tokenContract.transfer(msg.sender, bidValue);
         bids[msg.sender] = FHEUInt.wrap(0);
     }
