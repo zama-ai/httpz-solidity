@@ -259,20 +259,20 @@ print("\n\n======== STEP 5: ALICE SENDS 5 TOKEN TO CAROL ========")
 transfer(contract, carol_account.address, alice_account, 5)
 
 print("\n\n======== STEP 6: ALICE REENCRYPTS HER BALANCE ========")
-reencrypt(contract, alice_account, "decrypt/keys/alice_cks.base64",
-          "decrypt/ciphertexts/step6_ct", 15)
+reencrypt(contract, alice_account, "/home/keys/users-fhe-keys/alice_cks.bin",
+          "ct_to_decrypt.bin", 15)
 
 print("\n\n======== STEP 7: CAROL REENCRYPTS HER BALANCE ========")
-reencrypt(contract, carol_account, "decrypt/keys/carol_cks.base64",
-          "decrypt/ciphertexts/step7_ct", 5)
+reencrypt(contract, carol_account, "/home/keys/users-fhe-keys/carol_cks.bin",
+          "ct_to_decrypt.bin", 5)
 
 print("\n\n======== STEP 8: CAROL SENDS BACK 1 TOKEN TO ALICE ========")
 transfer(contract, alice_account.address, carol_account, 1)
 
 print("\n\n======== STEP 9: ALICE REENCRYPTS HER BALANCE ========")
-reencrypt(contract, alice_account, "decrypt/keys/alice_cks.base64",
-          "decrypt/ciphertexts/step9_ct", 16)
+reencrypt(contract, alice_account, "/home/keys/users-fhe-keys/alice_cks.bin",
+          "ct_to_decrypt.bin", 16)
 
 print("\n\n======== STEP 10: CAROL REENCRYPTS HER BALANCE ========")
-reencrypt(contract, carol_account, "decrypt/keys/carol_cks.base64",
-          "decrypt/ciphertexts/step10_ct", 4)
+reencrypt(contract, carol_account, "/home/keys/users-fhe-keys/carol_cks.bin",
+          "ct_to_decrypt.bin", 4)
