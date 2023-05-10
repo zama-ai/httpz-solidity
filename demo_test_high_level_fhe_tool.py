@@ -99,7 +99,7 @@ w3.middleware_onion.add(construct_sign_and_send_raw_middleware(carol_account))
 # Change below to match chain specific information:
 chain_id = 9000
 # private key of the default account
-private_key = '83F4BA49EA86F6C364E2F6E12360F77D8DFC3B533AED318467B76752D8B2F749'
+private_key = "0x" + args.private_key
 account: LocalAccount = Account.from_key(private_key)
 print("Main address: ")
 print(account.address)
