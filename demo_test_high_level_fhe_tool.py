@@ -11,6 +11,17 @@ import argparse
 
 os.chdir("./types")
 
+initial_mint = 1230
+
+
+def extract_number(output: bytes) -> int:
+    output_str = output.decode("utf-8")
+    lines = output_str.split("\n")
+    for line in lines:
+        if "Decrypted integer:" in line:
+            number = int(line.split(":")[-1].strip())
+            return number
+
 
 def transfer(contract, to, account, amount):
     # TODO: use public key encryption instead
@@ -65,10 +76,8 @@ def reencrypt(contract, account, cks_file, ct_file, expected):
     f.close()
 
     res = subprocess.run(
-        ['../zbc-fhe', 'decrypt-integer', ct_file, 'bin', cks_file, 'bin'], stdout=subprocess.PIPE)
-    # assert res.stdout == str.encode('{}\n'.format(str(expected)))
-    print(res.stdout)
-    # print(expected)
+        ['./zbc-fhe', 'decrypt-integer', ct_file, 'bin', cks_file, 'bin'], stdout=subprocess.PIPE)
+    assert extract_number(res.stdout) == expected
 
 parser = argparse.ArgumentParser("Main account address")
 parser.add_argument(
@@ -164,7 +173,7 @@ print(f"contract deployed at {transaction_receipt.contractAddress}")
 print('contract deployment took %s seconds' % (time.time() - start))
 assert transaction_receipt['status'] == 1
 
-print("\n\n======== STEP 2: MINT 2 TOKENS ========")
+print(f"\n\n======== STEP 2: MINT {initial_mint} TOKENS ========")
 
 # get contract adress and send mint transaction
 contract_address = transaction_receipt.contractAddress
@@ -174,9 +183,7 @@ contract = w3.eth.contract(address=contract_address, abi=abi)
 w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
 
 # encrypt amount to mint
-# TODO: use public key encryption heres
-os.system("../zbc-fhe encrypt-public-integer 2 bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin")
-
+os.system("../zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin".format(initial_mint))
 
 file = open('./res/ct/ciphertext.bin', mode='rb')
 input = file.read()
@@ -207,12 +214,12 @@ transaction_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
 print('mint transaction took %s seconds' % (time.time() - start))
 assert transaction_receipt['status'] == 1
 
-print("\n\n======== STEP 3: TRANSFER 1 TOKENS FROM MAIN TO ALICE ========")
-transfer(contract, alice_account.address, account, 1)
+print("\n\n======== STEP 3: TRANSFER 20 TOKENS FROM MAIN TO ALICE ========")
+transfer(contract, alice_account.address, account, 20)
 
-print("\n\n======== STEP 4: Alice REENCRYPTS ITS BALANCE ========")
+print("\n\n======== STEP 4: Alice REENCRYPTS HER BALANCE ========")
 reencrypt(contract, alice_account,  "/home/keys/users-fhe-keys/alice_cks.bin",
-          "ct_to_decrypt.bin", 1)
+          "ct_to_decrypt.bin", 20)
 
 # send native coins to alice and carol
 # tx1
@@ -246,3 +253,26 @@ signed_tx = w3.eth.account.sign_transaction(tx, private_key)
 tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
 transaction_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 assert transaction_receipt['status'] == 1
+
+
+print("\n\n======== STEP 5: ALICE SENDS 5 TOKEN TO CAROL ========")
+transfer(contract, carol_account.address, alice_account, 5)
+
+print("\n\n======== STEP 6: ALICE REENCRYPTS HER BALANCE ========")
+reencrypt(contract, alice_account, "decrypt/keys/alice_cks.base64",
+          "decrypt/ciphertexts/step6_ct", 15)
+
+print("\n\n======== STEP 7: CAROL REENCRYPTS HER BALANCE ========")
+reencrypt(contract, carol_account, "decrypt/keys/carol_cks.base64",
+          "decrypt/ciphertexts/step7_ct", 5)
+
+print("\n\n======== STEP 8: CAROL SENDS BACK 1 TOKEN TO ALICE ========")
+transfer(contract, alice_account.address, carol_account, 1)
+
+print("\n\n======== STEP 9: ALICE REENCRYPTS HER BALANCE ========")
+reencrypt(contract, alice_account, "decrypt/keys/alice_cks.base64",
+          "decrypt/ciphertexts/step9_ct", 16)
+
+print("\n\n======== STEP 10: CAROL REENCRYPTS HER BALANCE ========")
+reencrypt(contract, carol_account, "decrypt/keys/carol_cks.base64",
+          "decrypt/ciphertexts/step10_ct", 4)
