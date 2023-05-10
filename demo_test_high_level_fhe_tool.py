@@ -14,7 +14,7 @@ os.chdir("./types")
 
 def transfer(contract, to, account, amount):
     # TODO: use public key encryption instead
-    os.system("../zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/../keys/global_uncompressed_pks.bin bin".format(amount))
+    os.system("../zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin".format(amount))
 
     file = open('./res/ct/ciphertext.bin', mode='rb')
     input = file.read()
@@ -175,7 +175,7 @@ w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
 
 # encrypt amount to mint
 # TODO: use public key encryption heres
-os.system("../zbc-fhe encrypt-public-integer 2 bin ciphertext $PWD/../keys/global_uncompressed_pks.bin bin")
+os.system("../zbc-fhe encrypt-public-integer 2 bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin")
 
 
 file = open('./res/ct/ciphertext.bin', mode='rb')
@@ -211,5 +211,5 @@ print("\n\n======== STEP 3: TRANSFER 1 TOKENS FROM MAIN TO ALICE ========")
 transfer(contract, alice_account.address, account, 1)
 
 print("\n\n======== STEP 4: Alice REENCRYPTS ITS BALANCE ========")
-reencrypt(contract, alice_account,  "/home/keys/alice_cks.bin",
+reencrypt(contract, alice_account,  "/home/keys/users-fhe-keys/alice_cks.bin",
           "ct_to_decrypt.bin", 1)
