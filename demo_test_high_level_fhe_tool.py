@@ -76,7 +76,7 @@ def reencrypt(contract, account, cks_file, ct_file, expected):
     f.close()
 
     res = subprocess.run(
-        ['./zbc-fhe', 'decrypt-integer', ct_file, 'bin', cks_file, 'bin'], stdout=subprocess.PIPE)
+        ['../zbc-fhe', 'decrypt-integer', ct_file, 'bin', cks_file, 'bin'], stdout=subprocess.PIPE)
     assert extract_number(res.stdout) == expected
 
 parser = argparse.ArgumentParser("Main account address")
