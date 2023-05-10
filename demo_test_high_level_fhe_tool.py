@@ -213,3 +213,36 @@ transfer(contract, alice_account.address, account, 1)
 print("\n\n======== STEP 4: Alice REENCRYPTS ITS BALANCE ========")
 reencrypt(contract, alice_account,  "/home/keys/users-fhe-keys/alice_cks.bin",
           "ct_to_decrypt.bin", 1)
+
+# send native coins to alice and carol
+# tx1
+nonce = w3.eth.getTransactionCount(account.address)
+tx = {
+    'chainId': 9000,
+    'nonce': nonce,
+    'from': account.address,
+    'to': alice_account.address,
+    'value': w3.toWei(9, 'ether'),
+    'gas': 2000000,
+    'gasPrice': w3.toWei('50', 'gwei')
+}
+signed_tx = w3.eth.account.sign_transaction(tx, private_key)
+tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+transaction_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+assert transaction_receipt['status'] == 1
+
+# tx2
+nonce = w3.eth.getTransactionCount(account.address)
+tx = {
+    'chainId': 9000,
+    'nonce': nonce,
+    'from': account.address,
+    'to': carol_account.address,
+    'value': w3.toWei(9, 'ether'),
+    'gas': 2000000,
+    'gasPrice': w3.toWei('50', 'gwei')
+}
+signed_tx = w3.eth.account.sign_transaction(tx, private_key)
+tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+transaction_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+assert transaction_receipt['status'] == 1
