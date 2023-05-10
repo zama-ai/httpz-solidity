@@ -7,6 +7,7 @@ import json
 import subprocess
 import time
 import os
+import argparse
 
 os.chdir("./types")
 
@@ -68,6 +69,12 @@ def reencrypt(contract, account, cks_file, ct_file, expected):
     # assert res.stdout == str.encode('{}\n'.format(str(expected)))
     print(res.stdout)
     # print(expected)
+
+parser = argparse.ArgumentParser("Main account address")
+parser.add_argument(
+    "private_key", help="The private key of main account without 0x.", type=str)
+args = parser.parse_args()
+print(f"Receive the following private key for main account {args.private_key}")
 
 
 w3 = Web3(Web3.HTTPProvider('http://host.docker.internal:8545',
