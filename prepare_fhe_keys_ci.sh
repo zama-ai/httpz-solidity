@@ -23,9 +23,9 @@ aws s3 cp $S3_USERS_KEYS_FULL_PATH/$key $USERS_KEYS_PATH/alice_cks.bin
 
 key="bob_cks.bin"
 echo "Downloading $key to $USERS_KEYS_PATH, please wait ..."
-aws s3 cp $S3_USERS_KEYS_FULL_PATH/$key $USERS_KEYS_PATH/bob_pks.bin
+aws s3 cp $S3_USERS_KEYS_FULL_PATH/$key $USERS_KEYS_PATH/bob_cks.bin
 
 key="carol_cks.bin"
 echo "Downloading $key to $USERS_KEYS_PATH, please wait ..."
-aws s3 cp $S3_USERS_KEYS_FULL_PATH/$key $USERS_KEYS_PATH/carol_pks.bin
+aws s3 cp $S3_USERS_KEYS_FULL_PATH/$key $USERS_KEYS_PATH/carol_cks.bin
 
