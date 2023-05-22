@@ -8,9 +8,12 @@ import "../lib/FHEOps.sol";
 
 contract EncryptedERC20 {
     euint32 public totalSupply;
-    string public name = "Naraggara"; // City of Zama's battle
-    string public symbol = "NARA";
-    uint8 public decimals = 18;
+    string public constant name = "Naraggara"; // City of Zama's battle
+    string public constant symbol = "NARA";
+    uint8 public constant decimals = 18;
+
+    // used for output authorization
+    bytes32 public domainHash;
 
     // A mapping from address to an encrypted balance.
     mapping(address => euint32) internal balances;
@@ -23,6 +26,23 @@ contract EncryptedERC20 {
 
     constructor() {
         contractOwner = msg.sender;
+
+        uint chainId;
+        assembly {
+            chainId := chainid()
+        }
+
+        domainHash = keccak256(
+            abi.encode(
+                keccak256(
+                    "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+                ),
+                keccak256(bytes(name)),
+                keccak256(bytes("1")),
+                chainId,
+                address(this)
+            )
+        );
     }
 
     // Sets the balance of the owner to the given encrypted balance.
@@ -48,8 +68,28 @@ contract EncryptedERC20 {
 
     // Returns the balance of the caller under their public FHE key.
     // The FHE public key is automatically determined based on the origin of the call.
-    function balanceOf() public view returns (bytes memory) {
-        return Ciphertext.reencrypt(balances[msg.sender]);
+    function balanceOf(
+        string calldata publicKey,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) public view returns (bytes memory) {
+        bytes32 reencryptHash = keccak256(
+            abi.encode("Reencrypt(string publicKey)", publicKey)
+        );
+
+        bytes32 signedMessage = keccak256(
+            abi.encodePacked("\x19\x01", domainHash, reencryptHash)
+        );
+
+        address signer = ecrecover(signedMessage, v, r, s);
+        require(signer != address(0), "Invalid EIP712 signature");
+        require(
+            signer == msg.sender,
+            "EIP712 signer and transaction signer do not match"
+        ); // safety measure
+
+        return Ciphertext.reencrypt(balances[signer]);
     }
 
     // Sets the `encryptedAmount` as the allowance of `spender` over the caller's tokens.
