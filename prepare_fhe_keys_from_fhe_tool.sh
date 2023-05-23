@@ -7,9 +7,8 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
-NETWORK_KEYS_PUBLIC_PATH=./volumes/network-public-fhe-keys
-NETWORK_KEYS_PRIVATE_PATH=./volumes/network-private-fhe-keys
-USERS_KEYS_PATH=./volumes/users-fhe-keys
+NETWORK_KEYS_PUBLIC_PATH=./keys/network-public-fhe-keys
+USERS_KEYS_PATH=./keys/users-fhe-keys
 KEYS_FULL_PATH=$1
 
 MANDATORY_KEYS_LIST=('global_uncompressed_pks.bin' 'alice_cks.bin' 'bob_cks.bin' 'carol_cks.bin')
