@@ -318,11 +318,11 @@ library Impl {
 
     function reencrypt(
         uint256 ciphertext,
-        uint256 publicKey
+        bytes32 publicKey
     ) internal view returns (bytes memory reencrypted) {
         bytes32[2] memory input;
         input[0] = bytes32(ciphertext);
-        input[1] = bytes32(publicKey);
+        input[1] = publicKey;
         uint256 inputLen = 64;
 
         reencrypted = new bytes(reencryptedSize);

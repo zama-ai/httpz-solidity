@@ -12,7 +12,7 @@ library Ciphertext {
 
     function reencrypt(
         euint8 ciphertext,
-        uint256 publicKey
+        bytes32 publicKey
     ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint8.unwrap(ciphertext), publicKey);
     }
@@ -37,7 +37,7 @@ library Ciphertext {
 
     function reencrypt(
         euint16 ciphertext,
-        uint256 publicKey
+        bytes32 publicKey
     ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint16.unwrap(ciphertext), publicKey);
     }
@@ -62,7 +62,7 @@ library Ciphertext {
 
     function reencrypt(
         euint32 ciphertext,
-        uint256 publicKey
+        bytes32 publicKey
     ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint32.unwrap(ciphertext), publicKey);
     }

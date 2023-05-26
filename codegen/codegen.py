@@ -279,10 +279,10 @@ library Impl {
         return 0;
     }
 
-    function reencrypt(uint256 ciphertext, uint256 publicKey) internal view returns (bytes memory reencrypted) {
+    function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
         bytes32[2] memory input;
         input[0] = bytes32(ciphertext);
-        input[1] = bytes32(publicKey);
+        input[1] = publicKey;
         uint256 inputLen = 64;
 
         reencrypted = new bytes(reencryptedSize);
@@ -432,7 +432,7 @@ to_print="""
         return euint{i}.wrap(Impl.verify(ciphertext, Common.euint{i}_t));
     }}
 
-    function reencrypt(euint{i} ciphertext, uint256 publicKey) internal view returns (bytes memory reencrypted) {{
+    function reencrypt(euint{i} ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {{
         return Impl.reencrypt(euint{i}.unwrap(ciphertext), publicKey);
     }}
 
