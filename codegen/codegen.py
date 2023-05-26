@@ -298,6 +298,7 @@ library Impl {
                     inputLen,
                     reencrypted,
                     reencryptedSize
+                    maxCiphertextBytesLen
                 )
             ) { 
                 revert(0, 0)
