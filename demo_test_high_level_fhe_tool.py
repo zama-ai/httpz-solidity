@@ -9,7 +9,13 @@ import time
 import os
 import argparse
 
-os.chdir("./types")
+import sha3
+from eip712_structs import EIP712Struct, Bytes
+from eip712_structs import make_domain
+from nacl.public import PrivateKey, SealedBox
+from coincurve import PrivateKey as ccsk
+
+# os.chdir("./types")
 
 initial_mint = 1230
 
@@ -25,7 +31,7 @@ def extract_number(output: bytes) -> int:
 
 def transfer(contract, to, account, amount):
     # TODO: use public key encryption instead
-    os.system("../zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin".format(amount))
+    os.system("./zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/keys/network-public-fhe-keys/pks bin".format(amount))
 
     file = open('./res/ct/ciphertext.bin', mode='rb')
     input = file.read()
@@ -60,24 +66,52 @@ def transfer(contract, to, account, amount):
     assert transaction_receipt['status'] == 1
 
 
-def reencrypt(contract, account, cks_file, ct_file, expected):
+def reencrypt(contract, account: LocalAccount, ct_file, expected):
+    print("Generating keys...")
+    sk = PrivateKey.generate()
+
+    domain = make_domain(name='Naraggara',
+                         version='1',
+                         chainId=9000,
+                         verifyingContract=contract.address)
+
+    class Reencrypt(EIP712Struct):
+        publicKey = Bytes(32)
+
+    msg = Reencrypt()
+    msg['publicKey'] = sk.public_key._public_key
+    print(sk.public_key._public_key.hex())
+    print(len(sk.public_key._public_key))
+
+    signable_bytes = msg.signable_bytes(domain)
+
+    msg_hash = sha3.keccak_256(signable_bytes).digest()
+    msg_sig = account.signHash(msg_hash)
+    print(msg_sig.r)
+
     print("Retrieving encrypted balance from chain...")
     start = time.time()
 
-    ct = contract.functions.balanceOf().call({
+    box = contract.functions.balanceOf(sk.public_key._public_key, msg_sig.v, msg_sig.r.to_bytes(32, 'big'), msg_sig.s.to_bytes(32, 'big')).call({
         'from': account.address
     })
-    print('len(ct) =', len(ct))
+
+    print(box.hex())
+
+    print('len(box) =', len(box))
     print('retrieving alice\'s balance took %s seconds' %
           (time.time() - start))
 
     f = open(ct_file, "w+b")
-    f.write(ct)
+    f.write(box)
     f.close()
 
-    res = subprocess.run(
-        ['../zbc-fhe', 'decrypt-integer', ct_file, 'bin', cks_file, 'bin'], stdout=subprocess.PIPE)
-    assert extract_number(res.stdout) == expected
+    unseal_box = SealedBox(sk)
+    plaintext = unseal_box.decrypt(box)
+    pt_int = int.from_bytes(plaintext, 'big')
+    print(f"balance is : {pt_int}")
+    assert pt_int == expected
+
 
 parser = argparse.ArgumentParser("Main account address")
 parser.add_argument(
@@ -86,8 +120,11 @@ args = parser.parse_args()
 print(f"Receive the following private key for main account {args.private_key}")
 
 
-w3 = Web3(Web3.HTTPProvider('http://host.docker.internal:8545',
+# w3 = Web3(Web3.HTTPProvider('http://host.docker.internal:8545', request_kwargs={'timeout': 600}))
+# Validator
+w3 = Web3(Web3.HTTPProvider('http://13.37.31.214:8545',
           request_kwargs={'timeout': 600}))
+
 
 alice_private_key = "0x00468d407f31211e8f8fba671fa714be5ea3b1203c683dd999075b28f3eff2fd"
 alice_account: LocalAccount = Account.from_key(alice_private_key)
@@ -118,7 +155,7 @@ print("\n\n======== STEP 1: COMPILE AND DEPLOY SMART CONTRACT ========")
 print("Compiling EncryptedERC20.sol...")
 start = time.time()
 
-with open("./examples/EncryptedERC20.sol", "r") as file:
+with open("types/examples/EncryptedERC20.sol", "r") as file:
     file_contents = file.read()
 
 install_solc('0.8.13')
@@ -183,7 +220,7 @@ contract = w3.eth.contract(address=contract_address, abi=abi)
 w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
 
 # encrypt amount to mint
-os.system("../zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/../keys/network-public-fhe-keys/pks bin".format(initial_mint))
+os.system("./zbc-fhe encrypt-public-integer {} bin ciphertext $PWD/keys/network-public-fhe-keys/pks bin".format(initial_mint))
 
 file = open('./res/ct/ciphertext.bin', mode='rb')
 input = file.read()
@@ -218,8 +255,7 @@ print("\n\n======== STEP 3: TRANSFER 20 TOKENS FROM MAIN TO ALICE ========")
 transfer(contract, alice_account.address, account, 20)
 
 print("\n\n======== STEP 4: Alice REENCRYPTS HER BALANCE ========")
-reencrypt(contract, alice_account,  "/home/keys/users-fhe-keys/alice_cks.bin",
-          "ct_to_decrypt.bin", 20)
+reencrypt(contract, alice_account, "ct_to_decrypt.bin", 20)
 
 # send native coins to alice and carol
 # tx1
@@ -259,20 +295,16 @@ print("\n\n======== STEP 5: ALICE SENDS 5 TOKEN TO CAROL ========")
 transfer(contract, carol_account.address, alice_account, 5)
 
 print("\n\n======== STEP 6: ALICE REENCRYPTS HER BALANCE ========")
-reencrypt(contract, alice_account, "/home/keys/users-fhe-keys/alice_cks.bin",
-          "ct_to_decrypt.bin", 15)
+reencrypt(contract, alice_account, "ct_to_decrypt.bin", 15)
 
 print("\n\n======== STEP 7: CAROL REENCRYPTS HER BALANCE ========")
-reencrypt(contract, carol_account, "/home/keys/users-fhe-keys/carol_cks.bin",
-          "ct_to_decrypt.bin", 5)
+reencrypt(contract, carol_account, "ct_to_decrypt.bin", 5)
 
 print("\n\n======== STEP 8: CAROL SENDS BACK 1 TOKEN TO ALICE ========")
 transfer(contract, alice_account.address, carol_account, 1)
 
 print("\n\n======== STEP 9: ALICE REENCRYPTS HER BALANCE ========")
-reencrypt(contract, alice_account, "/home/keys/users-fhe-keys/alice_cks.bin",
-          "ct_to_decrypt.bin", 16)
+reencrypt(contract, alice_account, "ct_to_decrypt.bin", 16)
 
 print("\n\n======== STEP 10: CAROL REENCRYPTS HER BALANCE ========")
-reencrypt(contract, carol_account, "/home/keys/users-fhe-keys/carol_cks.bin",
-          "ct_to_decrypt.bin", 4)
+reencrypt(contract, carol_account, "ct_to_decrypt.bin", 4)

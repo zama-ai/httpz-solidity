@@ -50,12 +50,11 @@ f.write("""\
 
 pragma solidity >=0.8.13 <0.9.0;
 
+import "./Common.sol";
 import "./Precompiles.sol";
 
 library Impl {
-    uint256 constant euint8Size = 32 + 28124;
-    uint256 constant euint16Size = 32 + 56236;
-    uint256 constant euint32Size = 32 + 112460;
+    uint256 constant reencryptedSize = 32 + 48 + 4; // 32 bytes for the `byte` type header + 48 bytes for the NaCl anonymous box overhead + 4 bytes for the plaintext value 
 
     function add(uint256 a, uint256 b) internal view returns (uint256 result) {
         if (a == 0) {
@@ -254,6 +253,7 @@ library Impl {
 //    }
 
     function cast(uint256 ciphertext, uint8 toType) internal view returns(uint256) {
+        revert("casting not supported yet");
         bytes memory input = bytes.concat(bytes32(ciphertext), bytes1(toType));
         uint256 inputLen = input.length;
 
@@ -279,23 +279,14 @@ library Impl {
         return 0;
     }
 
-    function reencrypt(uint256 ciphertext, uint8 _type) internal view returns (bytes memory reencrypted) {
-        bytes32[1] memory input;
+    function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+        bytes32[2] memory input;
         input[0] = bytes32(ciphertext);
-        uint256 inputLen = 32;
+        input[1] = publicKey;
+        uint256 inputLen = 64;
 
-        uint256 MaxCiphertextBytesLen;
+        reencrypted = new bytes(reencryptedSize);
 
-        if (_type == 0) {
-            MaxCiphertextBytesLen = euint8Size;
-        } else if (_type == 1) {
-            MaxCiphertextBytesLen = euint16Size;
-        } else if (_type == 2) {
-            MaxCiphertextBytesLen = euint32Size;
-        } else {
-            revert("unsupported ciphertext type");
-        }
-        
         // Call the reencrypt precompile.
         uint256 precompile = Precompiles.Reencrypt;
         assembly {
@@ -306,7 +297,8 @@ library Impl {
                     input,
                     inputLen,
                     reencrypted,
-                    MaxCiphertextBytesLen
+                    reencryptedSize
+                    maxCiphertextBytesLen
                 )
             ) { 
                 revert(0, 0)
@@ -341,7 +333,6 @@ library Impl {
             }
         }
         result = uint256(output[0]);
-        return 0;
     }
 
     function delegate(uint256 ciphertext) internal view {
@@ -442,26 +433,24 @@ to_print="""
         return euint{i}.wrap(Impl.verify(ciphertext, Common.euint{i}_t));
     }}
 
-    function reencrypt(euint{i} ciphertext) internal view returns (bytes memory reencrypted) {{
-        return Impl.reencrypt(euint{i}.unwrap(ciphertext), Common.euint{i}_t);
+    function reencrypt(euint{i} ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {{
+        return Impl.reencrypt(euint{i}.unwrap(ciphertext), publicKey);
     }}
 
     function delegate(euint{i} ciphertext) internal view {{
         Impl.delegate(euint{i}.unwrap(ciphertext));
     }}
+
+    function requireCt(euint{i} ciphertext) internal view {{
+        Impl.requireCt(euint{i}.unwrap(ciphertext));
+    }}
+    function optimisticRequireCt(euint{i} ciphertext) internal view {{
+        Impl.optimisticRequireCt(euint{i}.unwrap(ciphertext));
+    }}
 """
 
 for i in (2**p for p in range(3, 6)):
     f.write(to_print.format(i=i))
-
-f.write("""
-    function requireCt(euint8 ciphertext) internal view {{
-        Impl.requireCt(euint8.unwrap(ciphertext));
-    }}
-    function optimisticRequireCt(euint8 ciphertext) internal view {{
-        Impl.optimisticRequireCt(euint8.unwrap(ciphertext));
-    }}
-""")
 
 f.write("}")
 f.close()
