@@ -3,15 +3,17 @@
 set -Eeuo pipefail
 
 if [ "$#" -ne 1 ]; then
-    echo "Please give the path where all the keys are stored"
+    echo "Please give the path to the public global key (named pks)"
+    echo "Example: `basename "$0"` volumes/network-public-fhe-keys "
     exit
 fi
 
-NETWORK_KEYS_PUBLIC_PATH=./keys/network-public-fhe-keys
-USERS_KEYS_PATH=./keys/users-fhe-keys
+NETWORK_KEYS_PUBLIC_PATH="keys/network-public-fhe-keys"
 KEYS_FULL_PATH=$1
 
-MANDATORY_KEYS_LIST=('global_uncompressed_pks.bin' 'alice_cks.bin' 'bob_cks.bin' 'carol_cks.bin')
+mkdir -p $NETWORK_KEYS_PUBLIC_PATH
+
+MANDATORY_KEYS_LIST=('pks')
  
 echo "check folder $KEYS_FULL_PATH"
 for key in "${MANDATORY_KEYS_LIST[@]}"
@@ -23,25 +25,8 @@ for key in "${MANDATORY_KEYS_LIST[@]}"
             exit
         else
             echo "$key exists, nice!"
+            echo "Copying $key to $NETWORK_KEYS_PUBLIC_PATH, please wait ..."
+            cp $KEYS_FULL_PATH/$key $NETWORK_KEYS_PUBLIC_PATH/pks
         fi
 done
-
-mkdir -p $NETWORK_KEYS_PUBLIC_PATH
-mkdir -p $USERS_KEYS_PATH
-
-key="global_uncompressed_pks.bin"
-echo "Copying $key to $NETWORK_KEYS_PUBLIC_PATH, please wait ..."
-cp $KEYS_FULL_PATH/$key $NETWORK_KEYS_PUBLIC_PATH/pks
-
-key="alice_cks.bin"
-echo "Copying $key to $USERS_KEYS_PATH, please wait ..."
-cp $KEYS_FULL_PATH/$key $USERS_KEYS_PATH/alice_cks.bin
-
-key="bob_cks.bin"
-echo "Copying $key to $USERS_KEYS_PATH, please wait ..."
-cp $KEYS_FULL_PATH/$key $USERS_KEYS_PATH/bob_cks.bin
-
-key="carol_cks.bin"
-echo "Copying $key to $USERS_KEYS_PATH, please wait ..."
-cp $KEYS_FULL_PATH/$key $USERS_KEYS_PATH/carol_cks.bin
 
