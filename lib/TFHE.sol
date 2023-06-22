@@ -186,40 +186,87 @@ library TFHE {
         return lt(a, asEuint32(b));
     }
 
-    function cmux(euint8 control, euint8 a, euint8 b) internal view returns (euint8) {
-        return euint8.wrap(Impl.cmux(euint8.unwrap(control), euint8.unwrap(a), euint8.unwrap(b)));
+    function cmux(
+        euint8 control,
+        euint8 a,
+        euint8 b
+    ) internal view returns (euint8) {
+        return
+            euint8.wrap(
+                Impl.cmux(
+                    euint8.unwrap(control),
+                    euint8.unwrap(a),
+                    euint8.unwrap(b)
+                )
+            );
     }
 
-    function cmux(euint8 control, euint16 a, euint16 b) internal view returns (euint16) {
-        return euint16.wrap(Impl.cmux(euint8.unwrap(control), euint16.unwrap(a), euint16.unwrap(b)));
+    function cmux(
+        euint8 control,
+        euint16 a,
+        euint16 b
+    ) internal view returns (euint16) {
+        return
+            euint16.wrap(
+                Impl.cmux(
+                    euint8.unwrap(control),
+                    euint16.unwrap(a),
+                    euint16.unwrap(b)
+                )
+            );
     }
 
-    function cmux(euint8 control, euint32 a, euint32 b) internal view returns (euint32) {
-        return euint32.wrap(Impl.cmux(euint8.unwrap(control), euint32.unwrap(a), euint32.unwrap(b)));
+    function cmux(
+        euint8 control,
+        euint32 a,
+        euint32 b
+    ) internal view returns (euint32) {
+        return
+            euint32.wrap(
+                Impl.cmux(
+                    euint8.unwrap(control),
+                    euint32.unwrap(a),
+                    euint32.unwrap(b)
+                )
+            );
     }
 
     function asEuint8(euint16 ciphertext) internal view returns (euint8) {
-        return euint8.wrap(Impl.cast(euint16.unwrap(ciphertext), Common.euint8_t));
+        return
+            euint8.wrap(Impl.cast(euint16.unwrap(ciphertext), Common.euint8_t));
     }
 
     function asEuint8(euint32 ciphertext) internal view returns (euint8) {
-        return euint8.wrap(Impl.cast(euint32.unwrap(ciphertext), Common.euint8_t));
+        return
+            euint8.wrap(Impl.cast(euint32.unwrap(ciphertext), Common.euint8_t));
     }
 
     function asEuint16(euint8 ciphertext) internal view returns (euint16) {
-        return euint16.wrap(Impl.cast(euint8.unwrap(ciphertext), Common.euint16_t));
+        return
+            euint16.wrap(
+                Impl.cast(euint8.unwrap(ciphertext), Common.euint16_t)
+            );
     }
 
     function asEuint16(euint32 ciphertext) internal view returns (euint16) {
-        return euint16.wrap(Impl.cast(euint32.unwrap(ciphertext), Common.euint16_t));
+        return
+            euint16.wrap(
+                Impl.cast(euint32.unwrap(ciphertext), Common.euint16_t)
+            );
     }
 
     function asEuint32(euint8 ciphertext) internal view returns (euint32) {
-        return euint32.wrap(Impl.cast(euint8.unwrap(ciphertext), Common.euint32_t));
+        return
+            euint32.wrap(
+                Impl.cast(euint8.unwrap(ciphertext), Common.euint32_t)
+            );
     }
 
     function asEuint32(euint16 ciphertext) internal view returns (euint32) {
-        return euint32.wrap(Impl.cast(euint16.unwrap(ciphertext), Common.euint32_t));
+        return
+            euint32.wrap(
+                Impl.cast(euint16.unwrap(ciphertext), Common.euint32_t)
+            );
     }
 
     function asEuint8(bytes memory ciphertext) internal view returns (euint8) {
@@ -230,7 +277,10 @@ library TFHE {
         return euint8.wrap(Impl.trivialEncrypt(value, Common.euint8_t));
     }
 
-    function reencrypt(euint8 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+    function reencrypt(
+        euint8 ciphertext,
+        bytes32 publicKey
+    ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint8.unwrap(ciphertext), publicKey);
     }
 
@@ -242,7 +292,9 @@ library TFHE {
         Impl.optimisticRequireCt(euint8.unwrap(ciphertext));
     }
 
-    function asEuint16(bytes memory ciphertext) internal view returns (euint16) {
+    function asEuint16(
+        bytes memory ciphertext
+    ) internal view returns (euint16) {
         return euint16.wrap(Impl.verify(ciphertext, Common.euint16_t));
     }
 
@@ -250,7 +302,10 @@ library TFHE {
         return euint16.wrap(Impl.trivialEncrypt(value, Common.euint16_t));
     }
 
-    function reencrypt(euint16 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+    function reencrypt(
+        euint16 ciphertext,
+        bytes32 publicKey
+    ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint16.unwrap(ciphertext), publicKey);
     }
 
@@ -262,7 +317,9 @@ library TFHE {
         Impl.optimisticRequireCt(euint16.unwrap(ciphertext));
     }
 
-    function asEuint32(bytes memory ciphertext) internal view returns (euint32) {
+    function asEuint32(
+        bytes memory ciphertext
+    ) internal view returns (euint32) {
         return euint32.wrap(Impl.verify(ciphertext, Common.euint32_t));
     }
 
@@ -270,7 +327,10 @@ library TFHE {
         return euint32.wrap(Impl.trivialEncrypt(value, Common.euint32_t));
     }
 
-    function reencrypt(euint32 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+    function reencrypt(
+        euint32 ciphertext,
+        bytes32 publicKey
+    ) internal view returns (bytes memory reencrypted) {
         return Impl.reencrypt(euint32.unwrap(ciphertext), publicKey);
     }
 
