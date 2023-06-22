@@ -39,6 +39,12 @@ library Precompiles {
     uint256 public constant OptimisticRequire = 75;
     uint256 public constant Cast = 76;
     uint256 public constant TrivialEncrypt = 77;
+    uint256 public constant BitwiseAnd = 78;
+    uint256 public constant BitwiseOr = 79;
+    uint256 public constant BitwiseXor = 80;
+    uint256 public constant Equal = 81;
+    uint256 public constant GreaterThanOrEqual = 82;
+    uint256 public constant GreaterThan = 83;
 }
 """
 )
@@ -127,6 +133,132 @@ library Impl {
 
         // Call the mul precompile.
         uint256 precompile = Precompiles.Multiply;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    function and(uint256 a, uint256 b) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(a);
+        input[1] = bytes32(b);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the AND precompile.
+        uint256 precompile = Precompiles.BitwiseAnd;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    function or(uint256 a, uint256 b) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(a);
+        input[1] = bytes32(b);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the OR precompile.
+        uint256 precompile = Precompiles.BitwiseOr;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    function xor(uint256 a, uint256 b) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(a);
+        input[1] = bytes32(b);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the XOR precompile.
+        uint256 precompile = Precompiles.BitwiseXor;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    // Evaluate `lhs == rhs` on the given ciphertexts and, if successful, return the resulting ciphertext.
+    // If successful, the resulting ciphertext is automatically verified.
+    function eq(uint256 lhs, uint256 rhs) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(lhs);
+        input[1] = bytes32(rhs);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the eq precompile.
+        uint256 precompile = Precompiles.Equal;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    // Evaluate `lhs >= rhs` on the given ciphertexts and, if successful, return the resulting ciphertext.
+    // If successful, the resulting ciphertext is automatically verified.
+    function ge(uint256 lhs, uint256 rhs) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(lhs);
+        input[1] = bytes32(rhs);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the ge precompile.
+        uint256 precompile = Precompiles.GreaterThanOrEqual;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+
+        result = uint256(output[0]);
+    }
+
+    // Evaluate `lhs > rhs` on the given ciphertexts and, if successful, return the resulting ciphertext.
+    // If successful, the resulting ciphertext is automatically verified.
+    function gt(uint256 lhs, uint256 rhs) internal view returns (uint256 result) {
+        bytes32[2] memory input;
+        input[0] = bytes32(lhs);
+        input[1] = bytes32(rhs);
+        uint256 inputLen = 64;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the gt precompile.
+        uint256 precompile = Precompiles.GreaterThan;
         assembly {
             if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
                 revert(0, 0)
@@ -420,6 +552,12 @@ for i in (2**p for p in range(3, 6)):
             f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="add"))
             f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="sub"))
             f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="mul"))
+            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="and"))
+            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="or"))
+            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="xor"))
+            f.write(to_print.format(i=i, j=j, k=i, f="eq"))
+            f.write(to_print.format(i=i, j=j, k=i, f="ge"))
+            f.write(to_print.format(i=i, j=j, k=i, f="gt"))
             f.write(to_print.format(i=i, j=j, k=i, f="lte"))
             f.write(to_print.format(i=i, j=j, k=i, f="lt"))
 
