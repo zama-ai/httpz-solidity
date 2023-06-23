@@ -42,8 +42,8 @@ library TFHE {
         return euint8.wrap(Impl.gt(euint8.unwrap(a), euint8.unwrap(b)));
     }
 
-    function lte(euint8 a, euint8 b) internal view returns (euint8) {
-        return euint8.wrap(Impl.lte(euint8.unwrap(a), euint8.unwrap(b)));
+    function le(euint8 a, euint8 b) internal view returns (euint8) {
+        return euint8.wrap(Impl.le(euint8.unwrap(a), euint8.unwrap(b)));
     }
 
     function lt(euint8 a, euint8 b) internal view returns (euint8) {
@@ -266,27 +266,27 @@ library TFHE {
             );
     }
 
-    function lte(euint8 a, euint16 b) internal view returns (euint16) {
+    function le(euint8 a, euint16 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(euint16.unwrap(asEuint16(a)), euint16.unwrap(b))
+                Impl.le(euint16.unwrap(asEuint16(a)), euint16.unwrap(b))
             );
     }
 
-    function lte(euint8 a, uint16 b) internal view returns (euint16) {
+    function le(euint8 a, uint16 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(
+                Impl.le(
                     euint16.unwrap(asEuint16(a)),
                     euint16.unwrap(asEuint16(b))
                 )
             );
     }
 
-    function lte(uint8 a, euint16 b) internal view returns (euint16) {
+    function le(uint8 a, euint16 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(euint16.unwrap(asEuint16(a)), euint16.unwrap(b))
+                Impl.le(euint16.unwrap(asEuint16(a)), euint16.unwrap(b))
             );
     }
 
@@ -530,27 +530,27 @@ library TFHE {
             );
     }
 
-    function lte(euint8 a, euint32 b) internal view returns (euint32) {
+    function le(euint8 a, euint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
+                Impl.le(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
             );
     }
 
-    function lte(euint8 a, uint32 b) internal view returns (euint32) {
+    function le(euint8 a, uint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(
+                Impl.le(
                     euint32.unwrap(asEuint32(a)),
                     euint32.unwrap(asEuint32(b))
                 )
             );
     }
 
-    function lte(uint8 a, euint32 b) internal view returns (euint32) {
+    function le(uint8 a, euint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
+                Impl.le(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
             );
     }
 
@@ -794,24 +794,24 @@ library TFHE {
             );
     }
 
-    function lte(euint16 a, euint8 b) internal view returns (euint16) {
+    function le(euint16 a, euint8 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(euint16.unwrap(a), euint16.unwrap(asEuint16(b)))
+                Impl.le(euint16.unwrap(a), euint16.unwrap(asEuint16(b)))
             );
     }
 
-    function lte(euint16 a, uint8 b) internal view returns (euint16) {
+    function le(euint16 a, uint8 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(euint16.unwrap(a), euint16.unwrap(asEuint16(b)))
+                Impl.le(euint16.unwrap(a), euint16.unwrap(asEuint16(b)))
             );
     }
 
-    function lte(uint16 a, euint8 b) internal view returns (euint16) {
+    function le(uint16 a, euint8 b) internal view returns (euint16) {
         return
             euint16.wrap(
-                Impl.lte(
+                Impl.le(
                     euint16.unwrap(asEuint16(a)),
                     euint16.unwrap(asEuint16(b))
                 )
@@ -878,8 +878,8 @@ library TFHE {
         return euint16.wrap(Impl.gt(euint16.unwrap(a), euint16.unwrap(b)));
     }
 
-    function lte(euint16 a, euint16 b) internal view returns (euint16) {
-        return euint16.wrap(Impl.lte(euint16.unwrap(a), euint16.unwrap(b)));
+    function le(euint16 a, euint16 b) internal view returns (euint16) {
+        return euint16.wrap(Impl.le(euint16.unwrap(a), euint16.unwrap(b)));
     }
 
     function lt(euint16 a, euint16 b) internal view returns (euint16) {
@@ -1102,27 +1102,27 @@ library TFHE {
             );
     }
 
-    function lte(euint16 a, euint32 b) internal view returns (euint32) {
+    function le(euint16 a, euint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
+                Impl.le(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
             );
     }
 
-    function lte(euint16 a, uint32 b) internal view returns (euint32) {
+    function le(euint16 a, uint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(
+                Impl.le(
                     euint32.unwrap(asEuint32(a)),
                     euint32.unwrap(asEuint32(b))
                 )
             );
     }
 
-    function lte(uint16 a, euint32 b) internal view returns (euint32) {
+    function le(uint16 a, euint32 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
+                Impl.le(euint32.unwrap(asEuint32(a)), euint32.unwrap(b))
             );
     }
 
@@ -1366,24 +1366,24 @@ library TFHE {
             );
     }
 
-    function lte(euint32 a, euint8 b) internal view returns (euint32) {
+    function le(euint32 a, euint8 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
+                Impl.le(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
             );
     }
 
-    function lte(euint32 a, uint8 b) internal view returns (euint32) {
+    function le(euint32 a, uint8 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
+                Impl.le(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
             );
     }
 
-    function lte(uint32 a, euint8 b) internal view returns (euint32) {
+    function le(uint32 a, euint8 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(
+                Impl.le(
                     euint32.unwrap(asEuint32(a)),
                     euint32.unwrap(asEuint32(b))
                 )
@@ -1630,24 +1630,24 @@ library TFHE {
             );
     }
 
-    function lte(euint32 a, euint16 b) internal view returns (euint32) {
+    function le(euint32 a, euint16 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
+                Impl.le(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
             );
     }
 
-    function lte(euint32 a, uint16 b) internal view returns (euint32) {
+    function le(euint32 a, uint16 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
+                Impl.le(euint32.unwrap(a), euint32.unwrap(asEuint32(b)))
             );
     }
 
-    function lte(uint32 a, euint16 b) internal view returns (euint32) {
+    function le(uint32 a, euint16 b) internal view returns (euint32) {
         return
             euint32.wrap(
-                Impl.lte(
+                Impl.le(
                     euint32.unwrap(asEuint32(a)),
                     euint32.unwrap(asEuint32(b))
                 )
@@ -1714,8 +1714,8 @@ library TFHE {
         return euint32.wrap(Impl.gt(euint32.unwrap(a), euint32.unwrap(b)));
     }
 
-    function lte(euint32 a, euint32 b) internal view returns (euint32) {
-        return euint32.wrap(Impl.lte(euint32.unwrap(a), euint32.unwrap(b)));
+    function le(euint32 a, euint32 b) internal view returns (euint32) {
+        return euint32.wrap(Impl.le(euint32.unwrap(a), euint32.unwrap(b)));
     }
 
     function lt(euint32 a, euint32 b) internal view returns (euint32) {

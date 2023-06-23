@@ -306,7 +306,7 @@ library Impl {
 
     // Evaluate `lhs <= rhs` on the given ciphertexts and, if successful, return the resulting ciphertext.
     // If successful, the resulting ciphertext is automatically verified.
-    function lte(
+    function le(
         uint256 lhs,
         uint256 rhs
     ) internal view returns (uint256 result) {
@@ -318,7 +318,7 @@ library Impl {
         bytes32[1] memory output;
         uint256 outputLen = 32;
 
-        // Call the lte precompile.
+        // Call the le precompile.
         uint256 precompile = Precompiles.LessThanOrEqual;
         assembly {
             if iszero(
@@ -352,7 +352,7 @@ library Impl {
         bytes32[1] memory output;
         uint256 outputLen = 32;
 
-        // Call the lte precompile.
+        // Call the lt precompile.
         uint256 precompile = Precompiles.LessThan;
         assembly {
             if iszero(

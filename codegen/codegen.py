@@ -270,7 +270,7 @@ library Impl {
 
     // Evaluate `lhs <= rhs` on the given ciphertexts and, if successful, return the resulting ciphertext.
     // If successful, the resulting ciphertext is automatically verified.
-    function lte(uint256 lhs, uint256 rhs) internal view returns (uint256 result) {
+    function le(uint256 lhs, uint256 rhs) internal view returns (uint256 result) {
         bytes32[2] memory input;
         input[0] = bytes32(lhs);
         input[1] = bytes32(rhs);
@@ -279,7 +279,7 @@ library Impl {
         bytes32[1] memory output;
         uint256 outputLen = 32;
 
-        // Call the lte precompile.
+        // Call the le precompile.
         uint256 precompile = Precompiles.LessThanOrEqual;
         assembly {
             if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
@@ -301,7 +301,7 @@ library Impl {
         bytes32[1] memory output;
         uint256 outputLen = 32;
 
-        // Call the lte precompile.
+        // Call the lt precompile.
         uint256 precompile = Precompiles.LessThan;
         assembly {
             if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
@@ -578,7 +578,7 @@ for i in (2**p for p in range(3, 6)):
             f.write((to_print_no_cast.format(i=i, j=j, k=i, f="eq")))
             f.write((to_print_no_cast.format(i=i, j=j, k=i, f="ge")))
             f.write((to_print_no_cast.format(i=i, j=j, k=i, f="gt")))
-            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="lte")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="le")))
             f.write((to_print_no_cast.format(i=i, j=j, k=i, f="lt")))
         elif i < j:
             f.write((to_print_cast_a.format(i=i, j=j, k=j, f="add")))
@@ -590,7 +590,7 @@ for i in (2**p for p in range(3, 6)):
             f.write((to_print_cast_a.format(i=i, j=j, k=j, f="eq")))
             f.write((to_print_cast_a.format(i=i, j=j, k=j, f="ge")))
             f.write((to_print_cast_a.format(i=i, j=j, k=j, f="gt")))
-            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="lte")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="le")))
             f.write((to_print_cast_a.format(i=i, j=j, k=j, f="lt")))
         else:
             f.write((to_print_cast_b.format(i=i, j=j, k=i, f="add")))
@@ -602,7 +602,7 @@ for i in (2**p for p in range(3, 6)):
             f.write((to_print_cast_b.format(i=i, j=j, k=i, f="eq")))
             f.write((to_print_cast_b.format(i=i, j=j, k=i, f="ge")))
             f.write((to_print_cast_b.format(i=i, j=j, k=i, f="gt")))
-            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="lte")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="le")))
             f.write((to_print_cast_b.format(i=i, j=j, k=i, f="lt")))
 
 to_print =  """
