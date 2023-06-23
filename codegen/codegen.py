@@ -532,44 +532,88 @@ import "./Impl.sol";
 
 library TFHE {""")
 
-to_print =  """
+to_print_no_cast =  """
     function {f}(euint{i} a, euint{j} b) internal view returns (euint{k}) {{
         return euint{k}.wrap(Impl.{f}(euint{i}.unwrap(a), euint{j}.unwrap(b)));
     }}
+"""
 
-    function {f}(uint256 a, euint{i} b) internal view returns (euint{k}) {{
-        return {f}(asEuint{i}(a), b);
+to_print_cast_a =  """
+    function {f}(euint{i} a, euint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{j}.unwrap(asEuint{j}(a)), euint{j}.unwrap(b)));
     }}
 
-    function {f}(euint{i} a, uint256 b) internal view returns (euint{k}) {{
-        return {f}(a, asEuint{i}(b));
+    function {f}(euint{i} a, uint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{j}.unwrap(asEuint{j}(a)), euint{j}.unwrap(asEuint{j}(b))));
+    }}
+
+    function {f}(uint{i} a, euint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{j}.unwrap(asEuint{j}(a)), euint{j}.unwrap(b)));
+    }}
+"""
+
+to_print_cast_b =  """
+    function {f}(euint{i} a, euint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{i}.unwrap(a), euint{i}.unwrap(asEuint{i}(b))));
+    }}
+
+    function {f}(euint{i} a, uint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{i}.unwrap(a), euint{i}.unwrap(asEuint{i}(b))));
+    }}
+
+    function {f}(uint{i} a, euint{j} b) internal view returns (euint{k}) {{
+        return euint{k}.wrap(Impl.{f}(euint{i}.unwrap(asEuint{i}(a)), euint{i}.unwrap(asEuint{i}(b))));
     }}
 """
 
 for i in (2**p for p in range(3, 6)):
     for j in (2**p for p in range(3, 6)):
-        if i == j: # TODO: remove this line when casting is implemented
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="add"))
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="sub"))
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="mul"))
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="and"))
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="or"))
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j, f="xor"))
-            f.write(to_print.format(i=i, j=j, k=i, f="eq"))
-            f.write(to_print.format(i=i, j=j, k=i, f="ge"))
-            f.write(to_print.format(i=i, j=j, k=i, f="gt"))
-            f.write(to_print.format(i=i, j=j, k=i, f="lte"))
-            f.write(to_print.format(i=i, j=j, k=i, f="lt"))
+        if i == j:
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="add")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="sub")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="mul")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="and")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="or")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="xor")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="eq")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="ge")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="gt")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="lte")))
+            f.write((to_print_no_cast.format(i=i, j=j, k=i, f="lt")))
+        elif i < j:
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="add")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="sub")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="mul")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="and")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="or")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="xor")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="eq")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="ge")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="gt")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="lte")))
+            f.write((to_print_cast_a.format(i=i, j=j, k=j, f="lt")))
+        else:
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="add")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="sub")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="mul")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="and")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="or")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="xor")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="eq")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="ge")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="gt")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="lte")))
+            f.write((to_print_cast_b.format(i=i, j=j, k=i, f="lt")))
 
 to_print =  """
-    function cmux(euint8 control, euint{i} a, euint{j} b) internal view returns (euint{k}) {{
-        return euint{k}.wrap(Impl.cmux(euint8.unwrap(control), euint{i}.unwrap(a), euint{j}.unwrap(b)));
+    function cmux(euint{i} control, euint{i} a, euint{i} b) internal view returns (euint{i}) {{
+        return euint{i}.wrap(Impl.cmux(euint{i}.unwrap(control), euint{i}.unwrap(a), euint{i}.unwrap(b)));
     }}
 """
 for i in (2**p for p in range(3, 6)):
     for j in (2**p for p in range(3, 6)):
-        if i == j: # TODO: remove this line when casting is implemented
-            f.write(to_print.format(i=i, j=j, k=i if i>j else j))
+        if i == j: # TODO: Decide whether we want to have mixed-inputs for CMUX
+            f.write(to_print.format(i=i))
 
 to_print="""
     function asEuint{i}(euint{j} ciphertext) internal view returns (euint{i}) {{
@@ -598,7 +642,15 @@ to_print="""
     function requireCt(euint{i} ciphertext) internal view {{
         Impl.requireCt(euint{i}.unwrap(ciphertext));
     }}
+"""
 
+to_print_cast_or="""
+    function optimisticRequireCt(euint{i} ciphertext) internal view {{
+        Impl.optimisticRequireCt(euint32.unwrap(asEuint32(ciphertext)));
+    }}
+"""
+
+to_print_no_cast_or="""
     function optimisticRequireCt(euint{i} ciphertext) internal view {{
         Impl.optimisticRequireCt(euint{i}.unwrap(ciphertext));
     }}
@@ -606,6 +658,11 @@ to_print="""
 
 for i in (2**p for p in range(3, 6)):
     f.write(to_print.format(i=i))
+    if i != 32:
+        f.write(to_print_cast_or.format(i=i))
+    else:
+        f.write(to_print_no_cast_or.format(i=i))
+
 
 f.write("\n")
 f.write("""\
