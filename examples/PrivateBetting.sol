@@ -30,9 +30,6 @@ contract PrivateBet {
     // gameId => user => bet
     mapping(uint256 => mapping(address => Bet)) bets;
 
-    // gameId => results
-    mapping(uint256 => bool[]) results;
-
     Game[] public games;
     uint256 public numGames;
     uint32 constant public BET_MULTIPLIER = 2;
@@ -94,11 +91,13 @@ contract PrivateBet {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
         require(!game.isOpen, "Game is not yet closed");
-
         Bet storage bet = bets[_gameId][msg.sender];
+        require(bet.state == BetState.PENDING, "Bet already processed");
         if (game.results[bet.option]) {
             bet.state = BetState.WON;
             encryptedToken.transfer(msg.sender, TFHE.mul(BET_MULTIPLIER, bet.amount));
+        } else {
+            bet.state = BetState.LOST;
         }
     }
 }
