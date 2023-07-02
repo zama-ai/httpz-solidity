@@ -19,6 +19,9 @@ contract BlindAuction is EIP712WithModifier {
     // Mapping from bidder to their bid value.
     mapping(address => euint32) public bids;
 
+    // The owner of the contract.
+    address internal contractOwner;
+
     // Number of bid
     uint public bidCounter;
 
@@ -102,7 +105,7 @@ contract BlindAuction is EIP712WithModifier {
     }
 
     // Returns the user bid
-    function stop() public {
+    function stop() public onlyContractOwner {
         require(stoppable);
         manuallyStopped = true;
     }
@@ -170,6 +173,10 @@ contract BlindAuction is EIP712WithModifier {
     modifier onlyAfterEnd() {
         if (block.timestamp <= endTime && manuallyStopped == false)
             revert TooEarly(endTime);
+        _;
+    }
+    modifier onlyContractOwner() {
+        require(msg.sender == contractOwner);
         _;
     }
 }
