@@ -2,7 +2,7 @@
 
 pragma solidity >=0.8.13 <0.9.0;
 
-import "./lib/TFHE.sol";
+import "../lib/TFHE.sol";
 
 import "./abstract/EIP712WithModifier.sol";
 
@@ -41,7 +41,6 @@ contract PrivateBet is EIP712WithModifier {
         string description;
         GameState state;
         uint256 numBets;
-        string outcome;
         bool isSuccessful; // winning option
     }
 
@@ -69,16 +68,12 @@ contract PrivateBet is EIP712WithModifier {
         _;
     }
 
-    function createGame(
-        string memory _description,
-        string memory _outcome
-    ) public onlyContractOwner {
+    function createGame(string memory _description) public onlyContractOwner {
         games.push(
             Game({
                 description: _description,
                 state: GameState.OPEN,
                 numBets: 0,
-                outcome: _outcome,
                 isSuccessful: false
             })
         );
@@ -86,10 +81,7 @@ contract PrivateBet is EIP712WithModifier {
         emit NewGame(_description);
     }
 
-    function placeBet(
-        uint256 _gameId,
-        bytes calldata _encryptedAmount
-    ) public {
+    function placeBet(uint256 _gameId, bytes calldata _encryptedAmount) public {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
         require(game.state == GameState.OPEN, "Game is not open");
@@ -138,7 +130,10 @@ contract PrivateBet is EIP712WithModifier {
     function cancelGame(uint256 _gameId) public onlyContractOwner {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
-        require(game.state == GameState.OPEN, "Game is already closed or canceled");
+        require(
+            game.state == GameState.OPEN,
+            "Game is already closed or canceled"
+        );
         game.state = GameState.CANCELED;
     }
 
@@ -148,7 +143,10 @@ contract PrivateBet is EIP712WithModifier {
     ) public onlyContractOwner {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
-        require(game.state == GameState.OPEN, "Game is already closed or canceled");
+        require(
+            game.state == GameState.OPEN,
+            "Game is already closed or canceled"
+        );
 
         game.state = GameState.CLOSED;
         game.isSuccessful = _isSuccessful;
