@@ -22,6 +22,7 @@ contract PrivateBet is EIP712WithModifier {
 
     enum GameState {
         OPEN,
+        PENDING,
         CLOSED,
         CANCELED
     }
@@ -127,11 +128,21 @@ contract PrivateBet is EIP712WithModifier {
             });
     }
 
-    function cancelGame(uint256 _gameId) public onlyContractOwner {
+    function pauseGame(uint256 _gameId) public onlyContractOwner {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
         require(
             game.state == GameState.OPEN,
+            "Game is already closed or canceled"
+        );
+        game.state = GameState.PENDING;
+    }
+
+    function cancelGame(uint256 _gameId) public onlyContractOwner {
+        require(_gameId < numGames, "Invalid game ID");
+        Game storage game = games[_gameId];
+        require(
+            game.state == GameState.OPEN || game.state == GameState.PENDING,
             "Game is already closed or canceled"
         );
         game.state = GameState.CANCELED;
@@ -144,7 +155,7 @@ contract PrivateBet is EIP712WithModifier {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
         require(
-            game.state == GameState.OPEN,
+            game.state == GameState.OPEN || game.state == GameState.PENDING,
             "Game is already closed or canceled"
         );
 
@@ -157,7 +168,11 @@ contract PrivateBet is EIP712WithModifier {
     function withdraw(uint256 _gameId) public {
         require(_gameId < numGames, "Invalid game ID");
         Game storage game = games[_gameId];
-        require(!(game.state == GameState.OPEN), "Game is not yet closed");
+        require(
+            !(game.state == GameState.OPEN || game.state == GameState.PENDING),
+            "Game is not yet closed"
+        );
+
         Bet storage bet = bets[_gameId][msg.sender];
         require(bet.state == BetState.PENDING, "Bet already processed");
 
