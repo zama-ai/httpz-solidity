@@ -60,6 +60,7 @@ contract BlindAuction is EIP712WithModifier {
         tokenTransferred = false;
         bidCounter = 0;
         stoppable = isStoppable;
+        contractOwner = msg.sender;
     }
 
     // Bid an `encryptedValue`.
