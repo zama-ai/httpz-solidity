@@ -2437,7 +2437,7 @@ library TFHE {
     }
 
     function optReq(euint8 ciphertext) internal view {
-        Impl.optReq(euint32.unwrap(asEuint32(ciphertext)));
+        Impl.optReq(euint8.unwrap(ciphertext));
     }
 
     function asEuint16(
@@ -2478,7 +2478,7 @@ library TFHE {
     }
 
     function optReq(euint16 ciphertext) internal view {
-        Impl.optReq(euint32.unwrap(asEuint32(ciphertext)));
+        Impl.optReq(euint8.unwrap(asEuint8(ciphertext)));
     }
 
     function asEuint32(
@@ -2519,7 +2519,7 @@ library TFHE {
     }
 
     function optReq(euint32 ciphertext) internal view {
-        Impl.optReq(euint32.unwrap(ciphertext));
+        Impl.optReq(euint8.unwrap(asEuint8(ciphertext)));
     }
 
     // Returns the network public FHE key.
