@@ -9,6 +9,9 @@ pragma solidity >=0.8.13 <0.8.20;
 type euint8 is uint256;
 type euint16 is uint256;
 type euint32 is uint256;
+euint8 constant NIL8 = euint8.wrap(0);
+euint16 constant NIL16 = euint16.wrap(0);
+euint32 constant NIL32 = euint32.wrap(0);
 
 library Common {
     // Values used to communicate types to the runtime.
