@@ -935,12 +935,12 @@ to_print="""
 
     // Return the negation of `value`.
     function neg(euint{i} value) internal view returns (euint{i}) {{
-        return Impl.neg(euint{i}.unwrap(value));
+        return euint{i}.wrap(Impl.neg(euint{i}.unwrap(value)));
     }}
 
     // Return `!value`.
     function not(euint{i} value) internal view returns (euint{i}) {{
-        return Impl.not(euint{i}.unwrap(value));
+        return euint{i}.wrap(Impl.not(euint{i}.unwrap(value)));
     }}
 """
 

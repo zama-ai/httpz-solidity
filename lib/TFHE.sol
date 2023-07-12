@@ -2674,12 +2674,12 @@ library TFHE {
 
     // Return the negation of `value`.
     function neg(euint8 value) internal view returns (euint8) {
-        return Impl.neg(euint8.unwrap(value));
+        return euint8.wrap(Impl.neg(euint8.unwrap(value)));
     }
 
     // Return `!value`.
     function not(euint8 value) internal view returns (euint8) {
-        return Impl.not(euint8.unwrap(value));
+        return euint8.wrap(Impl.not(euint8.unwrap(value)));
     }
 
     // Optimistically require that `value` is not equal to 0.
@@ -2746,12 +2746,12 @@ library TFHE {
 
     // Return the negation of `value`.
     function neg(euint16 value) internal view returns (euint16) {
-        return Impl.neg(euint16.unwrap(value));
+        return euint16.wrap(Impl.neg(euint16.unwrap(value)));
     }
 
     // Return `!value`.
     function not(euint16 value) internal view returns (euint16) {
-        return Impl.not(euint16.unwrap(value));
+        return euint16.wrap(Impl.not(euint16.unwrap(value)));
     }
 
     // Optimistically require that `value` is not equal to 0.
@@ -2818,12 +2818,12 @@ library TFHE {
 
     // Return the negation of `value`.
     function neg(euint32 value) internal view returns (euint32) {
-        return Impl.neg(euint32.unwrap(value));
+        return euint32.wrap(Impl.neg(euint32.unwrap(value)));
     }
 
     // Return `!value`.
     function not(euint32 value) internal view returns (euint32) {
-        return Impl.not(euint32.unwrap(value));
+        return euint32.wrap(Impl.not(euint32.unwrap(value)));
     }
 
     // Optimistically require that `value` is not equal to 0.
