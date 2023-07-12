@@ -9,9 +9,6 @@ pragma solidity >=0.8.13 <0.8.20;
 type euint8 is uint256;
 type euint16 is uint256;
 type euint32 is uint256;
-euint8 constant NIL8 = euint8.wrap(0);
-euint16 constant NIL16 = euint16.wrap(0);
-euint32 constant NIL32 = euint32.wrap(0);
 
 library Common {
     // Values used to communicate types to the runtime.
@@ -491,7 +488,7 @@ library Impl {
         bytes32[1] memory output;
         uint256 outputLen = 32;
 
-        // Call the opposite precompile.
+        // Call the not precompile.
         uint256 precompile = Precompiles.Not;
         assembly {
             if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
@@ -723,7 +720,10 @@ pragma solidity >=0.8.13 <0.8.20;
 import "./Common.sol";
 import "./Impl.sol";
 
-library TFHE {""")
+library TFHE {
+euint8 constant NIL8 = euint8.wrap(0);
+euint16 constant NIL16 = euint16.wrap(0);
+euint32 constant NIL32 = euint32.wrap(0);""")
         
 to_print_is_initialized =  """
     function isInitialized(euint{i} v) internal pure returns (bool) {{
