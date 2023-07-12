@@ -36,10 +36,10 @@ clone_fhevm_tfhe_cli: $(WORKDIR)/
 build_fhevm_tfhe_cli:
 ifeq ($(HOST_ARCH), x86_64)
 	@echo 'Arch is x86'
-	@ARCH_TO_BUIL_FHEVM_TFHE_CLI=$$(cd $(FHEVM_TFHE_CLI_PATH) && ./scripts/get_arch.sh) && cd $(FHEVM_TFHE_CLI_PATH) && cargo build --release --features tfhe/$${ARCH_TO_BUIL_FHEVM_TFHE_CLI}
+	@ARCH_TO_BUILD_FHEVM_TFHE_CLI=$$(cd $(FHEVM_TFHE_CLI_PATH) && ./scripts/get_arch.sh) && cd $(FHEVM_TFHE_CLI_PATH) && cargo build --release --features tfhe/$${ARCH_TO_BUILD_FHEVM_TFHE_CLI}
 else
 	@echo 'Arch is not x86'
-	@ARCH_TO_BUIL_FHEVM_TFHE_CLI=$$(cd $(FHEVM_TFHE_CLI_PATH) && ./scripts/get_arch.sh) && cd $(FHEVM_TFHE_CLI_PATH) && cargo +nightly build --release --features tfhe/$${ARCH_TO_BUIL_FHEVM_TFHE_CLI}
+	@ARCH_TO_BUILD_FHEVM_TFHE_CLI=$$(cd $(FHEVM_TFHE_CLI_PATH) && ./scripts/get_arch.sh) && cd $(FHEVM_TFHE_CLI_PATH) && cargo +nightly build --release --features tfhe/$${ARCH_TO_BUILD_FHEVM_TFHE_CLI}
 endif
 
 
