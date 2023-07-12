@@ -90,7 +90,6 @@ docker compose -f ci/docker-compose.yml run app python demo_test.py $PRIVATE_KEY
 make install-fhevm-tfhe-cli
 ```
 
-#The binary will be available at **work_dir/fhevm-tfhe-cli/target/release/fhevm-tfhe-cli**
-
+The binary will be available at **work_dir/fhevm-tfhe-cli/target/release/fhevm-tfhe-cli**
 </details>
 <br />
