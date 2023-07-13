@@ -1139,6 +1139,11 @@ f.write("""\
     function optReq(ebool b) internal view {
         Impl.optReq(ebool.unwrap(b));
     }
+        
+    // Converts an `ebool` to an `euint8`.
+    function asEuint8(ebool b) internal view returns (euint8) {{
+        return euint8.wrap(ebool.unwrap(b));
+    }}
 
     // Reencrypt the given `ciphertext` under the given `publicKey`.
     // Return a serialized euint8 ciphertext.
