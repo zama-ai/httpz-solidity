@@ -3065,8 +3065,8 @@ library TFHE {
     }
 
     // Cast an encrypted integer from euint8 to ebool.
-    function asEbool(euint8 ciphertext) internal view returns (ebool) {
-        return ne(ciphertext, 0);
+    function asEbool(euint8 value) internal view returns (ebool) {
+        return ne(value, 0);
     }
 
     // Convert a serialized `ciphertext` to an encrypted boolean.
@@ -3094,8 +3094,8 @@ library TFHE {
     }
 
     // Cast an encrypted integer from euint16 to ebool.
-    function asEbool(euint16 ciphertext) internal view returns (ebool) {
-        return ne(ciphertext, 0);
+    function asEbool(euint16 value) internal view returns (ebool) {
+        return ne(value, 0);
     }
 
     // Cast an encrypted integer from euint8 to euint32.
@@ -3109,8 +3109,8 @@ library TFHE {
     }
 
     // Cast an encrypted integer from euint32 to ebool.
-    function asEbool(euint32 ciphertext) internal view returns (ebool) {
-        return ne(ciphertext, 0);
+    function asEbool(euint32 value) internal view returns (ebool) {
+        return ne(value, 0);
     }
 
     // Convert a serialized `ciphertext` to an encrypted euint8 integer.
@@ -3339,31 +3339,31 @@ library TFHE {
     }
 
     // Converts an `ebool` to an `euint8`.
-    function asEuint8(ebool b) internal view returns (euint8) {
+    function asEuint8(ebool b) internal pure returns (euint8) {
         {
             return euint8.wrap(ebool.unwrap(b));
         }
     }
 
-    // Reencrypt the given `ciphertext` under the given `publicKey`.
-    // Return a serialized euint8 ciphertext.
+    // Reencrypt the given `value` under the given `publicKey`.
+    // Return a serialized euint8 value.
     function reencrypt(
-        ebool ciphertext,
+        ebool value,
         bytes32 publicKey
     ) internal view returns (bytes memory reencrypted) {
-        return Impl.reencrypt(ebool.unwrap(ciphertext), publicKey);
+        return Impl.reencrypt(ebool.unwrap(value), publicKey);
     }
 
-    // Reencrypt the given `ciphertext` under the given `publicKey`.
-    // Return a serialized euint8 ciphertext.
+    // Reencrypt the given `value` under the given `publicKey`.
+    // Return a serialized euint8 value.
     // If `value` is not initialized, the returned value will contain the `defaultValue` constant.
     function reencrypt(
-        ebool ciphertext,
+        ebool value,
         bytes32 publicKey,
         bool defaultValue
     ) internal view returns (bytes memory reencrypted) {
-        if (ebool.unwrap(ciphertext) != 0) {
-            return Impl.reencrypt(ebool.unwrap(ciphertext), publicKey);
+        if (ebool.unwrap(value) != 0) {
+            return Impl.reencrypt(ebool.unwrap(value), publicKey);
         } else {
             return
                 Impl.reencrypt(ebool.unwrap(asEbool(defaultValue)), publicKey);
