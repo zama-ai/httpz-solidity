@@ -54,6 +54,7 @@ library Precompiles {
     uint256 public constant Max = 88;
     uint256 public constant Negate = 89;
     uint256 public constant Not = 90;
+    uint256 public constant Decrypt = 91;
 }
 """
 )
@@ -683,6 +684,25 @@ library Impl {
             }
         }
     }
+        
+    function decrypt(uint256 ciphertext) internal view returns(uint256 result) {
+        bytes32[1] memory input;
+        input[0] = bytes32(ciphertext);
+        uint256 inputLen = 32;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the decrypt precompile.
+        uint256 precompile = Precompiles.Decrypt;
+        assembly {
+            if iszero(staticcall(gas(), precompile, input, inputLen, output, outputLen)) {
+                revert(0, 0)
+            }
+        }
+        // The output is a 32-byte buffer of a 256-bit big-endian unsigned integer.
+        result = uint256(output[0]);
+    }
 }
 """
 )
@@ -982,9 +1002,9 @@ for i in (2**p for p in range(3, 6)):
     f.write(to_print_scalar.format(i=i, f="max", g="max"))
 
 
-to_print_8 =  """
-    // If `control`'s value is 1, the result has the same value as `a`.
-    // If `control`'s value is 0, the result has the same value as `b`.
+to_print =  """
+    // If `control`'s value is `true`, the result has the same value as `a`.
+    // If `control`'s value is `false`, the result has the same value as `b`.
     function cmux(ebool control, euint{i} a, euint{i} b) internal view returns (euint{i}) {{
         return euint{i}.wrap(Impl.cmux(ebool.unwrap(control), euint{i}.unwrap(a), euint{i}.unwrap(b)));
     }}
@@ -1081,6 +1101,14 @@ to_print="""
     // Involves decrypting `value`.
     function req(euint{i} value) internal view {{
         Impl.req(euint{i}.unwrap(value));
+    }}
+
+    // Decrypts the encrypted `value`.
+    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
+    // but the txn might get reverted at the end. That leaks unnecessary information.
+    // Please use with care.
+    function decrypt(euint{i} value) internal view returns (uint{i}) {{
+        return uint{i}(Impl.decrypt(euint{i}.unwrap(value)));
     }}
 
     // Return the negation of `value`.

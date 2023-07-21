@@ -2233,10 +2233,21 @@ library TFHE {
         return euint32.wrap(Impl.max(euint32.unwrap(b), uint256(a), true));
     }
 
-    // If `control`'s value is 1, the result has the same value as `a`.
-    // If `control`'s value is 0, the result has the same value as `b`.
-    function cmux(ebool control, euint8 a, euint8 b) internal view returns (euint8) {
-        return euint8.wrap(Impl.cmux(ebool.unwrap(control), euint8.unwrap(a), euint8.unwrap(b)));
+    // If `control`'s value is `true`, the result has the same value as `a`.
+    // If `control`'s value is `false`, the result has the same value as `b`.
+    function cmux(
+        ebool control,
+        euint8 a,
+        euint8 b
+    ) internal view returns (euint8) {
+        return
+            euint8.wrap(
+                Impl.cmux(
+                    ebool.unwrap(control),
+                    euint8.unwrap(a),
+                    euint8.unwrap(b)
+                )
+            );
     }
 
     // If `control`'s value is `true`, the result has the same value as `a`.
@@ -2349,6 +2360,14 @@ library TFHE {
         Impl.req(euint8.unwrap(value));
     }
 
+    // Decrypts the encrypted `value`.
+    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
+    // but the txn might get reverted at the end. That leaks unnecessary information.
+    // Please use with care.
+    function decrypt(euint8 value) internal view returns (uint8) {
+        return uint8(Impl.decrypt(euint8.unwrap(value)));
+    }
+
     // Return the negation of `value`.
     function neg(euint8 value) internal view returns (euint8) {
         return euint8.wrap(Impl.neg(euint8.unwrap(value)));
@@ -2412,6 +2431,14 @@ library TFHE {
         Impl.req(euint16.unwrap(value));
     }
 
+    // Decrypts the encrypted `value`.
+    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
+    // but the txn might get reverted at the end. That leaks unnecessary information.
+    // Please use with care.
+    function decrypt(euint16 value) internal view returns (uint16) {
+        return uint16(Impl.decrypt(euint16.unwrap(value)));
+    }
+
     // Return the negation of `value`.
     function neg(euint16 value) internal view returns (euint16) {
         return euint16.wrap(Impl.neg(euint16.unwrap(value)));
@@ -2473,6 +2500,14 @@ library TFHE {
     // Involves decrypting `value`.
     function req(euint32 value) internal view {
         Impl.req(euint32.unwrap(value));
+    }
+
+    // Decrypts the encrypted `value`.
+    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
+    // but the txn might get reverted at the end. That leaks unnecessary information.
+    // Please use with care.
+    function decrypt(euint32 value) internal view returns (uint32) {
+        return uint32(Impl.decrypt(euint32.unwrap(value)));
     }
 
     // Return the negation of `value`.

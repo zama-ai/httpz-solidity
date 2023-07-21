@@ -426,9 +426,13 @@ library Impl {
         result = uint256(output[0]);
     }
 
-    // If `control`'s value is `true`, the result has the same value as `ifTrue`.
-    // If `control`'s value is `false`, the result has the same value as `ifFalse`.
-    function cmux(uint256 control, uint256 ifTrue, uint256 ifFalse) internal view returns (uint256 result) {
+    // If `control`'s value is 1, the result has the same value as `ifTrue`.
+    // If `control`'s value is 0, the result has the same value as `ifFalse`.
+    function cmux(
+        uint256 control,
+        uint256 ifTrue,
+        uint256 ifFalse
+    ) internal view returns (uint256 result) {
         // result = (ifTrue - ifFalse) * control + ifFalse
         bytes memory input = bytes.concat(bytes32(ifTrue), bytes32(ifFalse), bytes1(0x00));
         uint256 inputLen = input.length;
@@ -583,5 +587,35 @@ library Impl {
                 revert(0, 0)
             }
         }
+    }
+
+    function decrypt(
+        uint256 ciphertext
+    ) internal view returns (uint256 result) {
+        bytes32[1] memory input;
+        input[0] = bytes32(ciphertext);
+        uint256 inputLen = 32;
+
+        bytes32[1] memory output;
+        uint256 outputLen = 32;
+
+        // Call the decrypt precompile.
+        uint256 precompile = Precompiles.Decrypt;
+        assembly {
+            if iszero(
+                staticcall(
+                    gas(),
+                    precompile,
+                    input,
+                    inputLen,
+                    output,
+                    outputLen
+                )
+            ) {
+                revert(0, 0)
+            }
+        }
+        // The output is a 32-byte buffer of a 256-bit big-endian unsigned integer.
+        result = uint256(output[0]);
     }
 }
