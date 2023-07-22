@@ -2361,9 +2361,6 @@ library TFHE {
     }
 
     // Decrypts the encrypted `value`.
-    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
-    // but the txn might get reverted at the end. That leaks unnecessary information.
-    // Please use with care.
     function decrypt(euint8 value) internal view returns (uint8) {
         return uint8(Impl.decrypt(euint8.unwrap(value)));
     }
@@ -2432,9 +2429,6 @@ library TFHE {
     }
 
     // Decrypts the encrypted `value`.
-    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
-    // but the txn might get reverted at the end. That leaks unnecessary information.
-    // Please use with care.
     function decrypt(euint16 value) internal view returns (uint16) {
         return uint16(Impl.decrypt(euint16.unwrap(value)));
     }
@@ -2503,9 +2497,6 @@ library TFHE {
     }
 
     // Decrypts the encrypted `value`.
-    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
-    // but the txn might get reverted at the end. That leaks unnecessary information.
-    // Please use with care.
     function decrypt(euint32 value) internal view returns (uint32) {
         return uint32(Impl.decrypt(euint32.unwrap(value)));
     }
@@ -2547,11 +2538,14 @@ library TFHE {
         Impl.optReq(ebool.unwrap(b));
     }
 
+    // Decrypts the encrypted `value`.
+    function decrypt(ebool value) internal view returns (bool) {
+        return bool(Impl.decrypt(ebool.unwrap(value)));
+    }
+
     // Converts an `ebool` to an `euint8`.
     function asEuint8(ebool b) internal pure returns (euint8) {
-        {
-            return euint8.wrap(ebool.unwrap(b));
-        }
+        return euint8.wrap(ebool.unwrap(b));
     }
 
     // Reencrypt the given `value` under the given `publicKey`.

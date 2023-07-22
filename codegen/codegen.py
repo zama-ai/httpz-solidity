@@ -1104,9 +1104,6 @@ to_print="""
     }}
 
     // Decrypts the encrypted `value`.
-    // Note: If used with optimisticReq(), all decrypt() calls in a txn will be executed,
-    // but the txn might get reverted at the end. That leaks unnecessary information.
-    // Please use with care.
     function decrypt(euint{i} value) internal view returns (uint{i}) {{
         return uint{i}(Impl.decrypt(euint{i}.unwrap(value)));
     }}
@@ -1178,11 +1175,16 @@ f.write("""\
     function optReq(ebool b) internal view {
         Impl.optReq(ebool.unwrap(b));
     }
+
+    // Decrypts the encrypted `value`.
+    function decrypt(ebool value) internal view returns (bool) {
+        return bool(Impl.decrypt(ebool.unwrap(value)));
+    }
         
     // Converts an `ebool` to an `euint8`.
-    function asEuint8(ebool b) internal pure returns (euint8) {{
+    function asEuint8(ebool b) internal pure returns (euint8) {
         return euint8.wrap(ebool.unwrap(b));
-    }}
+    }
 
     // Reencrypt the given `value` under the given `publicKey`.
     // Return a serialized euint8 value.
