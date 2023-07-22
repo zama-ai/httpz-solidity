@@ -1178,7 +1178,7 @@ f.write("""\
 
     // Decrypts the encrypted `value`.
     function decrypt(ebool value) internal view returns (bool) {
-        return bool(Impl.decrypt(ebool.unwrap(value)));
+        return (Impl.decrypt(ebool.unwrap(value)) != 0);
     }
         
     // Converts an `ebool` to an `euint8`.
