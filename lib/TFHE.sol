@@ -3155,8 +3155,8 @@ library TFHE {
 
     // Require that the encrypted `value` is not equal to 0.
     // Involves decrypting `value`.
-    function req(euint8 value) internal view {
-        Impl.req(euint8.unwrap(value));
+    function req(euint8 value) internal view returns (bool, string memory){
+        return Impl.req(euint8.unwrap(value));
     }
 
     // Return the negation of `value`.
@@ -3227,9 +3227,10 @@ library TFHE {
 
     // Require that the encrypted `value` is not equal to 0.
     // Involves decrypting `value`.
-    function req(euint16 value) internal view {
-        Impl.req(euint16.unwrap(value));
+    function req(euint16 value) internal view returns (bool, string memory){
+        return Impl.req(euint16.unwrap(value));
     }
+
 
     // Return the negation of `value`.
     function neg(euint16 value) internal view returns (euint16) {
@@ -3299,8 +3300,8 @@ library TFHE {
 
     // Require that the encrypted `value` is not equal to 0.
     // Involves decrypting `value`.
-    function req(euint32 value) internal view {
-        Impl.req(euint32.unwrap(value));
+    function req(euint32 value) internal view returns (bool, string memory){
+        return Impl.req(euint32.unwrap(value));
     }
 
     // Return the negation of `value`.
@@ -3331,8 +3332,8 @@ library TFHE {
 
     // Require that the encrypted bool `b` is not equal to 0.
     // Involves decrypting `b`.
-    function req(ebool b) internal view {
-        Impl.req(ebool.unwrap(b));
+    function req(ebool b) internal view returns (bool, string memory){
+        return Impl.req(ebool.unwrap(b));
     }
 
     // Optimistically require that `b` is not equal to 0.
