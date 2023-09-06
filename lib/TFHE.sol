@@ -1,9 +1,33 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-pragma solidity >=0.8.13 <0.8.20;
+pragma solidity >=0.8.19 <0.8.20;
 
-import "./Common.sol";
+type ebool is uint256;
+type euint8 is uint256;
+type euint16 is uint256;
+type euint32 is uint256;
+
+library Common {
+    // Values used to communicate types to the runtime.
+    uint8 internal constant ebool_t = 0;
+    uint8 internal constant euint8_t = 0;
+    uint8 internal constant euint16_t = 1;
+    uint8 internal constant euint32_t = 2;
+}
+
 import "./Impl.sol";
+
+using {operatorAddUint8 as +} for euint8 global;
+
+function operatorAddUint8(euint8 lhs, euint8 rhs) pure returns (euint8) {
+    if (!TFHE.isInitialized(lhs)) {
+        lhs = TFHE.asEuint8(0);
+    }
+    if (!TFHE.isInitialized(rhs)) {
+        rhs = TFHE.asEuint8(0);
+    }
+    return euint8.wrap(extAdd(euint8.unwrap(lhs), euint8.unwrap(rhs), false));
+}
 
 library TFHE {
     euint8 constant NIL8 = euint8.wrap(0);
@@ -26,7 +50,7 @@ library TFHE {
     }
 
     // Evaluate add(a, b) and return the result.
-    function add(euint8 a, euint8 b) internal view returns (euint8) {
+    function add(euint8 a, euint8 b) internal pure returns (euint8) {
         if (!isInitialized(a)) {
             a = asEuint8(0);
         }
@@ -554,7 +578,7 @@ library TFHE {
     }
 
     // Evaluate add(a, b) and return the result.
-    function add(euint8 a, uint8 b) internal view returns (euint8) {
+    function add(euint8 a, uint8 b) internal pure returns (euint8) {
         if (!isInitialized(a)) {
             a = asEuint8(0);
         }
@@ -562,7 +586,7 @@ library TFHE {
     }
 
     // Evaluate add(a, b) and return the result.
-    function add(uint8 a, euint8 b) internal view returns (euint8) {
+    function add(uint8 a, euint8 b) internal pure returns (euint8) {
         if (!isInitialized(b)) {
             b = asEuint8(0);
         }
@@ -2351,8 +2375,8 @@ library TFHE {
     }
 
     // Convert a plaintext value to an encrypted euint8 integer.
-    function asEuint8(uint256 value) internal view returns (euint8) {
-        return euint8.wrap(Impl.trivialEncrypt(value, Common.euint8_t));
+    function asEuint8(uint256 value) internal pure returns (euint8) {
+        return euint8.wrap(extTrivialEncrypt(value, Common.euint8_t));
     }
 
     // Reencrypt the given 'value' under the given 'publicKey'.

@@ -2,8 +2,28 @@
 
 pragma solidity >=0.8.13 <0.8.20;
 
-import "./Common.sol";
 import "./Precompiles.sol";
+
+interface IExtFhevm {
+    function add(uint256 lhs, uint256 rhs, bool scalar) external pure returns (uint256 result);
+    function trivialEncrypt(uint256 value, uint8 toType) external pure returns (uint256 result);
+}
+
+address constant EXT_TFHE_LIBRARY = 0x85c46de9915a1A4FE0326492EfbF03d5D7b41805;
+
+function extAdd(uint256 lhs, uint256 rhs, bool scalar) pure returns (uint256 result) {
+    result = IExtFhevm(EXT_TFHE_LIBRARY).add(lhs, rhs, scalar);
+
+    //bool status;
+    //bytes memory bytesResult;
+    //(status, bytesResult) = address(EXT_TFHE_LIBRARY).delegatecall(abi.encodePacked(bytes4(keccak256("add(uint256,uint256,bool)")), lhs, rhs, scalar));
+    //require(status, "ext call failed");
+    //result = abi.decode(bytesResult, (uint256));
+}
+
+function extTrivialEncrypt(uint256 value, uint8 toType) pure returns (uint256 result) {
+    result = IExtFhevm(EXT_TFHE_LIBRARY).trivialEncrypt(value, toType);
+}
 
 library Impl {
     // 32 bytes for the 'byte' type header + 48 bytes for the NaCl anonymous
@@ -13,28 +33,8 @@ library Impl {
     // 32 bytes for the 'byte' header + 16553 bytes of key data.
     uint256 constant fhePubKeySize = 32 + 16553;
 
-    function add(uint256 lhs, uint256 rhs, bool scalar) internal view returns (uint256 result) {
-        bytes1 scalarByte;
-        if (scalar) {
-            scalarByte = 0x01;
-        } else {
-            scalarByte = 0x00;
-        }
-        bytes memory input = bytes.concat(bytes32(lhs), bytes32(rhs), scalarByte);
-        uint256 inputLen = input.length;
-
-        bytes32[1] memory output;
-        uint256 outputLen = 32;
-        // Call the add precompile.
-        uint256 precompile = Precompiles.Add;
-        assembly {
-            // jump over the 32-bit 'size' field of the 'bytes' data structure of the 'input' to read actual bytes
-            if iszero(staticcall(gas(), precompile, add(input, 32), inputLen, output, outputLen)) {
-                revert(0, 0)
-            }
-        }
-
-        result = uint256(output[0]);
+    function add(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+        result = extAdd(lhs, rhs, scalar);
     }
 
     function sub(uint256 lhs, uint256 rhs, bool scalar) internal view returns (uint256 result) {
