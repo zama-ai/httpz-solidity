@@ -66,6 +66,8 @@ export function generateTestCode(shards: OverloadShard[]): string {
     import { createInstances } from '../instance';
     import { getSigners } from '../signers';
 
+    let testsBegin: Date
+
   `);
 
   shards.forEach((os) => {
@@ -107,6 +109,13 @@ async function deployTfheTestFixture${os.shardNumber}(): Promise<TFHETestSuite${
   });
 
   res.push(`
+           testsBegin = new Date();
+        });
+
+        after(function() {
+          const testsEnd = new Date();
+          const diffMs = testsEnd.getTime() - testsBegin.getTime();
+          console.log('Tests finished in ' + diffMs + 'ms');
         });
   `);
 
@@ -114,7 +123,8 @@ async function deployTfheTestFixture${os.shardNumber}(): Promise<TFHETestSuite${
   const overloadUsages: { [methodName: string]: boolean } = {};
   shards.forEach((os) => {
     os.overloads.forEach((o) => {
-      const testName = `test operator "${o.name}" overload ${signatureContractEncryptedSignature(o)}`;
+      const overloadSignature = signatureContractEncryptedSignature(o);
+      const testName = `test operator "${o.name}" overload ${overloadSignature}`;
       const methodName = signatureContractMethodName(o);
       overloadUsages[methodName] = true;
       const tests = overloadTests[methodName] || [];
@@ -132,7 +142,10 @@ async function deployTfheTestFixture${os.shardNumber}(): Promise<TFHETestSuite${
         const testArgs = t.inputs.join(', ');
         res.push(`
                 it('${testName} test ${testIndex} (${testArgs})', async function () {
+                    const testBegin = new Date();
                     const res = await this.contract${os.shardNumber}.${methodName}(${testArgs});
+                    const testDurationMs = new Date().getTime() - testBegin.getTime();
+                    console.log('test,"${methodName}(${overloadSignature}) inputs (${testArgs})",' + testDurationMs);
                     expect(res).to.equal(${t.output});
                 });
             `);
