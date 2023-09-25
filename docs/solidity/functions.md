@@ -21,11 +21,8 @@ In this case, operators can take as input operands of the following types
 - `uint32`
 
 under the condition that the size of the `uint` operand is at most the size of the `euint` operand.
-For example, `add(uint8 a, euint8 b)` is defined but `add(uint16 a, euint16 b)` is not.
+For example, `add(uint8 a, euint8 b)` is defined but `add(uint32 a, euint16 b)` is not.
 Note that these ciphertext-plaintext operations may take less time to compute than ciphertext-ciphertext operations.
-
-In the backend, FHE operations are only defined on same-type operands.
-Therefore, the `TFHE` Solidity library will do implicit upcasting if necessary.
 
 ## `asEuint`
 
@@ -180,3 +177,27 @@ Note that since we work with unsigned integers, the result of negation is interp
 The `not` operator returns the value obtained after flipping all the bits of the operand.
 
 > **_NOTE:_** More information about the behavior of these operators can be found at the [TFHE-rs docs](https://docs.zama.ai/tfhe-rs/getting-started/operations#arithmetic-operations.).
+
+## Generating random encrypted integers
+
+Random encrypted integers of types `euint8`, `euint16` or `euint32` can be generated fully on-chain.
+
+That can only be done during transactions and not on an `eth_call` RPC method, because PRNG state needs to be mutated on-chain during generation.
+
+> **_IMPORTANT:_** Not for use in production! Currently, integers are generated in the plain via a PRNG whose seed and state are public, with the state being on-chain. An FHE-based PRNG is coming soon, where the seed and state will be encrypted.
+
+> **_NOTE:_** As of now, there is a separate PRNG per smart contract. That might change when the FHE-based PRNG is implemented.
+
+### Examples
+
+```solidity
+// random euint8
+function randEuint8() internal view returns (euint8)
+
+// random euint16
+function randEuint16() internal view returns (euint16)
+
+// random euint32
+function randEuint32() internal view returns (euint32)
+
+```
