@@ -5,11 +5,11 @@ import type { TFHETestSuite1 } from '../../types/contracts/tests/TFHETestSuite1'
 import type { TFHETestSuite2 } from '../../types/contracts/tests/TFHETestSuite2';
 import type { TFHETestSuite3 } from '../../types/contracts/tests/TFHETestSuite3';
 import { createInstances } from '../instance';
-import { getSigners, initSigners } from '../signers';
+import { getSigners } from '../signers';
 
 async function deployTfheTestFixture1(): Promise<TFHETestSuite1> {
-  const signers = await getSigners();
-  const admin = signers.alice;
+  const signers = await ethers.getSigners();
+  const admin = signers[0];
 
   const contractFactory = await ethers.getContractFactory('TFHETestSuite1');
   const contract = await contractFactory.connect(admin).deploy();
@@ -19,8 +19,8 @@ async function deployTfheTestFixture1(): Promise<TFHETestSuite1> {
 }
 
 async function deployTfheTestFixture2(): Promise<TFHETestSuite2> {
-  const signers = await getSigners();
-  const admin = signers.alice;
+  const signers = await ethers.getSigners();
+  const admin = signers[0];
 
   const contractFactory = await ethers.getContractFactory('TFHETestSuite2');
   const contract = await contractFactory.connect(admin).deploy();
@@ -30,8 +30,8 @@ async function deployTfheTestFixture2(): Promise<TFHETestSuite2> {
 }
 
 async function deployTfheTestFixture3(): Promise<TFHETestSuite3> {
-  const signers = await getSigners();
-  const admin = signers.alice;
+  const signers = await ethers.getSigners();
+  const admin = signers[0];
 
   const contractFactory = await ethers.getContractFactory('TFHETestSuite3');
   const contract = await contractFactory.connect(admin).deploy();
@@ -42,7 +42,6 @@ async function deployTfheTestFixture3(): Promise<TFHETestSuite3> {
 
 describe('TFHE operations', function () {
   before(async function () {
-    await initSigners(1);
     this.signers = await getSigners();
 
     const contract1 = await deployTfheTestFixture1();
@@ -977,6 +976,11 @@ describe('TFHE operations', function () {
     expect(res).to.equal(8);
   });
 
+  it('test operator "rem" overload (euint8, uint8) => euint8 test 1 (8, 3)', async function () {
+    const res = await this.contract1.rem_euint8_uint8(this.instances1.alice.encrypt8(8), 3);
+    expect(res).to.equal(2);
+  });
+
   it('test operator "shl" overload (euint8, uint8) => euint8 test 1 (16, 1)', async function () {
     const res = await this.contract1.shl_euint8_uint8(this.instances1.alice.encrypt8(16), 1);
     expect(res).to.equal(32);
@@ -1606,17 +1610,17 @@ describe('TFHE operations', function () {
   });
 
   it('test operator "eq" overload (euint16, euint16) => ebool test 1 (512, 2)', async function () {
-    const res = await this.contract1.eq_euint16_euint16(
-      this.instances1.alice.encrypt16(512),
-      this.instances1.alice.encrypt16(2),
+    const res = await this.contract2.eq_euint16_euint16(
+      this.instances2.alice.encrypt16(512),
+      this.instances2.alice.encrypt16(2),
     );
     expect(res).to.equal(false);
   });
 
   it('test operator "eq" overload (euint16, euint16) => ebool test 2 (512, 512)', async function () {
-    const res = await this.contract1.eq_euint16_euint16(
-      this.instances1.alice.encrypt16(512),
-      this.instances1.alice.encrypt16(512),
+    const res = await this.contract2.eq_euint16_euint16(
+      this.instances2.alice.encrypt16(512),
+      this.instances2.alice.encrypt16(512),
     );
     expect(res).to.equal(true);
   });
@@ -2086,6 +2090,11 @@ describe('TFHE operations', function () {
   it('test operator "div" overload (euint16, uint16) => euint16 test 1 (1542, 3)', async function () {
     const res = await this.contract2.div_euint16_uint16(this.instances2.alice.encrypt16(1542), 3);
     expect(res).to.equal(514);
+  });
+
+  it('test operator "rem" overload (euint16, uint16) => euint16 test 1 (1544, 3)', async function () {
+    const res = await this.contract2.rem_euint16_uint16(this.instances2.alice.encrypt16(1544), 3);
+    expect(res).to.equal(2);
   });
 
   it('test operator "shl" overload (euint16, uint16) => euint16 test 1 (1542, 3)', async function () {
@@ -3113,12 +3122,12 @@ describe('TFHE operations', function () {
   });
 
   it('test operator "add" overload (euint32, uint32) => euint32 test 1 (3416064, 3280896)', async function () {
-    const res = await this.contract2.add_euint32_uint32(this.instances2.alice.encrypt32(3416064), 3280896);
+    const res = await this.contract3.add_euint32_uint32(this.instances3.alice.encrypt32(3416064), 3280896);
     expect(res).to.equal(6696960);
   });
 
   it('test operator "add" overload (uint32, euint32) => euint32 test 1 (3416064, 3280896)', async function () {
-    const res = await this.contract2.add_uint32_euint32(3416064, this.instances2.alice.encrypt32(3280896));
+    const res = await this.contract3.add_uint32_euint32(3416064, this.instances3.alice.encrypt32(3280896));
     expect(res).to.equal(6696960);
   });
 
@@ -3145,6 +3154,11 @@ describe('TFHE operations', function () {
   it('test operator "div" overload (euint32, uint32) => euint32 test 1 (3416064, 256)', async function () {
     const res = await this.contract3.div_euint32_uint32(this.instances3.alice.encrypt32(3416064), 256);
     expect(res).to.equal(13344);
+  });
+
+  it('test operator "rem" overload (euint32, uint32) => euint32 test 1 (3416121, 256)', async function () {
+    const res = await this.contract3.rem_euint32_uint32(this.instances3.alice.encrypt32(3416121), 256);
+    expect(res).to.equal(57);
   });
 
   it('test operator "shl" overload (euint32, uint32) => euint32 test 1 (3416064, 1)', async function () {
