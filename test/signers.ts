@@ -20,7 +20,8 @@ let signers: Signers;
 const keys: (keyof Signers)[] = ['alice', 'bob', 'carol', 'dave'];
 
 const getCoin = async (address: string) => {
-  const response = await exec(`docker exec -i fhevm faucet ${address}`);
+  const dockerImageName = process.env.LOCAL_IMAGE_NAME || 'fhevm';
+  const response = await exec(`docker exec -i ${dockerImageName} faucet ${address}`);
   const res = JSON.parse(response.stdout);
   if (res.raw_log.match('account sequence mismatch')) await getCoin(address);
 };
