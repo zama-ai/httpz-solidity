@@ -176,6 +176,15 @@ Ensure the faucet command was succesful.
 </details>
 <br />
 
+#### Run tests for tsunami network
+
+```bash
+# codegen for tsunami network
+TARGET_NETWORK=Tsunami npx ts-node codegen/main.ts && npm run prettier
+# run tests for tsunami network, assumes tsunami rpc already running locally
+npx hardhat test --network localTsunami
+```
+
 ### Adding new operators
 
 Operators can be defined as data inside `codegen/common.ts` file and code automatically generates solidity overloads.
