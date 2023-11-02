@@ -90,12 +90,8 @@ describe('TFHE manual operations', function () {
 
     it('stateful optimistic require with false fails', async function () {
       const res = await this.contract.test_opt_req_stateful(false);
-      try {
-        const _ = await res.wait();
-        fail('This should fail');
-      } catch (e: any) {
-        expect(e.toString()).to.contain('transaction execution reverted');
-      }
+      const receipt = await res.wait();
+      expect(receipt.status).to.not.equal(1);
     });
   }
 });
