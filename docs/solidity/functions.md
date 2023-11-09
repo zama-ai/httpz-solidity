@@ -127,7 +127,7 @@ The result of comparison operations is an encrypted boolean (`ebool`). In the ba
 function eq(euint32 a, euint16 b) internal view returns (ebool)
 
 // actually returns `lt(b, a)`
-function gt(uint32 a, euint16 b) internal view returns (ebool)
+function lt(uint32 a, euint16 b) internal view returns (ebool)
 
 // actually returns `gt(a, b)`
 function gt(euint16 a, uint32 b) internal view returns (ebool)
