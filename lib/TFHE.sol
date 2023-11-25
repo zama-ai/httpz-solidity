@@ -2372,7 +2372,7 @@ library TFHE {
     }
 
     function not(ebool a) internal pure returns (ebool) {
-        return asEbool(not(asEuint8(a)));
+        return asEbool(TFHE.sub(not(asEuint8(a)), 254));
     }
 
     // If 'control''s value is 'true', the result has the same value as 'a'.
