@@ -4,57 +4,32 @@ pragma solidity 0.8.19;
 
 interface FhevmLib {
     function fheAdd(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheSub(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheMul(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheDiv(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheRem(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheBitAnd(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheBitOr(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheBitXor(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheShl(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheShr(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheEq(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheNe(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheGe(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheGt(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheLe(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheLt(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheMin(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheMax(uint256 lhs, uint256 rhs, bytes1 scalarByte) external pure returns (uint256 result);
-
     function fheNeg(uint256 ct) external pure returns (uint256 result);
-
     function fheNot(uint256 ct) external pure returns (uint256 result);
 
     function reencrypt(uint256 ct, uint256 publicKey) external view returns (bytes memory);
-
     function fhePubKey(bytes1 fromLib) external view returns (bytes memory result);
-
     function verifyCiphertext(bytes memory input) external pure returns (uint256 result);
-
     function cast(uint256 ct, bytes1 toType) external pure returns (uint256 result);
-
     function trivialEncrypt(uint256 ct, bytes1 toType) external pure returns (uint256 result);
-
     function decrypt(uint256 ct) external view returns (uint256 result);
-
     function fheRand(bytes1 inp) external view returns (uint256 result);
 }
 
