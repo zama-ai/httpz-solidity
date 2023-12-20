@@ -2021,15 +2021,6 @@ library TFHE {
         return euint8.wrap(Impl.shl(euint8.unwrap(a), uint256(b), true));
     }
 
-    // Evaluate shl(a, b) and return the result.
-    function shl(uint8 a, euint8 b) internal pure returns (euint8) {
-        euint8 aEnc = asEuint8(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint8.wrap(Impl.shl(euint8.unwrap(aEnc), euint8.unwrap(b), false));
-    }
-
     // Evaluate shr(a, b) and return the result.
     function shr(euint8 a, euint8 b) internal pure returns (euint8) {
         if (!isInitialized(a)) {
@@ -2047,15 +2038,6 @@ library TFHE {
             a = asEuint8(0);
         }
         return euint8.wrap(Impl.shr(euint8.unwrap(a), uint256(b), true));
-    }
-
-    // Evaluate shr(a, b) and return the result.
-    function shr(uint8 a, euint8 b) internal pure returns (euint8) {
-        euint8 aEnc = asEuint8(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint8.wrap(Impl.shr(euint8.unwrap(aEnc), euint8.unwrap(b), false));
     }
 
     // Evaluate shl(a, b) and return the result.
@@ -2077,15 +2059,6 @@ library TFHE {
         return euint16.wrap(Impl.shl(euint16.unwrap(a), uint256(b), true));
     }
 
-    // Evaluate shl(a, b) and return the result.
-    function shl(uint16 a, euint8 b) internal pure returns (euint16) {
-        euint16 aEnc = asEuint16(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint16.wrap(Impl.shl(euint16.unwrap(aEnc), euint8.unwrap(b), false));
-    }
-
     // Evaluate shr(a, b) and return the result.
     function shr(euint16 a, euint8 b) internal pure returns (euint16) {
         if (!isInitialized(a)) {
@@ -2103,15 +2076,6 @@ library TFHE {
             a = asEuint16(0);
         }
         return euint16.wrap(Impl.shr(euint16.unwrap(a), uint256(b), true));
-    }
-
-    // Evaluate shr(a, b) and return the result.
-    function shr(uint16 a, euint8 b) internal pure returns (euint16) {
-        euint16 aEnc = asEuint16(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint16.wrap(Impl.shr(euint16.unwrap(aEnc), euint8.unwrap(b), false));
     }
 
     // Evaluate shl(a, b) and return the result.
@@ -2133,15 +2097,6 @@ library TFHE {
         return euint32.wrap(Impl.shl(euint32.unwrap(a), uint256(b), true));
     }
 
-    // Evaluate shl(a, b) and return the result.
-    function shl(uint32 a, euint8 b) internal pure returns (euint32) {
-        euint32 aEnc = asEuint32(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint32.wrap(Impl.shl(euint32.unwrap(aEnc), euint8.unwrap(b), false));
-    }
-
     // Evaluate shr(a, b) and return the result.
     function shr(euint32 a, euint8 b) internal pure returns (euint32) {
         if (!isInitialized(a)) {
@@ -2159,15 +2114,6 @@ library TFHE {
             a = asEuint32(0);
         }
         return euint32.wrap(Impl.shr(euint32.unwrap(a), uint256(b), true));
-    }
-
-    // Evaluate shr(a, b) and return the result.
-    function shr(uint32 a, euint8 b) internal pure returns (euint32) {
-        euint32 aEnc = asEuint32(a);
-        if (!isInitialized(b)) {
-            b = asEuint8(0);
-        }
-        return euint32.wrap(Impl.shr(euint32.unwrap(aEnc), euint8.unwrap(b), false));
     }
 
     // If 'control''s value is 'true', the result has the same value as 'a'.

@@ -475,26 +475,6 @@ function tfheShiftOperators(inputBits: number, operator: Operator, signatures: O
     }
   `);
 
-  // Code and test for shift(uint{inputBits},euint8}
-  signatures.push({
-    name: operator.name,
-    arguments: [
-      { type: ArgumentType.Uint, bits: lhsBits },
-      { type: ArgumentType.EUint, bits: rhsBits },
-    ],
-    returnType: { type: returnTypeOverload, bits: outputBits },
-  });
-  res.push(`
-
-  // Evaluate ${operator.name}(a, b) and return the result.
-  function ${operator.name}(uint${lhsBits} a, euint${rhsBits} b) internal pure returns (${returnType}) {
-      ${maybeEncryptLeft}
-      if (!isInitialized(b)) {
-          b = asEuint${rhsBits}(0);
-      }
-      return ${returnType}.wrap(${implExpressionB});
-  }
-      `);
   return res.join('');
 }
 

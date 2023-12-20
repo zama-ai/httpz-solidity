@@ -4,13 +4,6 @@ pragma solidity 0.8.19;
 import "../../lib/TFHE.sol";
 
 contract TFHETestSuite3 {
-    function shl_uint8_euint8(uint8 a, bytes calldata b) public view returns (uint8) {
-        uint8 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
-        euint8 result = TFHE.shl(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
     function shr_euint8_euint8(bytes calldata a, bytes calldata b) public view returns (uint8) {
         euint8 aProc = TFHE.asEuint8(a);
         euint8 bProc = TFHE.asEuint8(b);
@@ -21,13 +14,6 @@ contract TFHETestSuite3 {
     function shr_euint8_uint8(bytes calldata a, uint8 b) public view returns (uint8) {
         euint8 aProc = TFHE.asEuint8(a);
         uint8 bProc = b;
-        euint8 result = TFHE.shr(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
-    function shr_uint8_euint8(uint8 a, bytes calldata b) public view returns (uint8) {
-        uint8 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
         euint8 result = TFHE.shr(aProc, bProc);
         return TFHE.decrypt(result);
     }
@@ -46,13 +32,6 @@ contract TFHETestSuite3 {
         return TFHE.decrypt(result);
     }
 
-    function shl_uint16_euint8(uint16 a, bytes calldata b) public view returns (uint16) {
-        uint16 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
-        euint16 result = TFHE.shl(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
     function shr_euint16_euint8(bytes calldata a, bytes calldata b) public view returns (uint16) {
         euint16 aProc = TFHE.asEuint16(a);
         euint8 bProc = TFHE.asEuint8(b);
@@ -63,13 +42,6 @@ contract TFHETestSuite3 {
     function shr_euint16_uint8(bytes calldata a, uint8 b) public view returns (uint16) {
         euint16 aProc = TFHE.asEuint16(a);
         uint8 bProc = b;
-        euint16 result = TFHE.shr(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
-    function shr_uint16_euint8(uint16 a, bytes calldata b) public view returns (uint16) {
-        uint16 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
         euint16 result = TFHE.shr(aProc, bProc);
         return TFHE.decrypt(result);
     }
@@ -88,13 +60,6 @@ contract TFHETestSuite3 {
         return TFHE.decrypt(result);
     }
 
-    function shl_uint32_euint8(uint32 a, bytes calldata b) public view returns (uint32) {
-        uint32 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
-        euint32 result = TFHE.shl(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
     function shr_euint32_euint8(bytes calldata a, bytes calldata b) public view returns (uint32) {
         euint32 aProc = TFHE.asEuint32(a);
         euint8 bProc = TFHE.asEuint8(b);
@@ -105,13 +70,6 @@ contract TFHETestSuite3 {
     function shr_euint32_uint8(bytes calldata a, uint8 b) public view returns (uint32) {
         euint32 aProc = TFHE.asEuint32(a);
         uint8 bProc = b;
-        euint32 result = TFHE.shr(aProc, bProc);
-        return TFHE.decrypt(result);
-    }
-
-    function shr_uint32_euint8(uint32 a, bytes calldata b) public view returns (uint32) {
-        uint32 aProc = a;
-        euint8 bProc = TFHE.asEuint8(b);
         euint32 result = TFHE.shr(aProc, bProc);
         return TFHE.decrypt(result);
     }
