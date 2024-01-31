@@ -64,7 +64,7 @@ interface FhevmLib {
     function fheRandBounded(uint256 upperBound, bytes1 randType) external view returns (uint256 result);
 }
 
-address constant EXT_TFHE_LIBRARY = address(0x000000000000000000000000000000000000005d);
+address constant EXT_TFHE_LIBRARY = address(0x010000000000000000000000000000000000005D);
 
 library Impl {
     // 32 bytes for the 'byte' type header + 48 bytes for the NaCl anonymous
