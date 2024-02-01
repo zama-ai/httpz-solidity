@@ -25,6 +25,7 @@
 * [Write conditions](howto/conditions.md)
 * [Decrypt and reencrypt](howto/decrypt.md)
 * [Estimate gas](howto/gas.md)
+* [Common pitfalls and best practises](howto/pitfalls.md)
 
 ## API
 
@@ -59,4 +60,6 @@
 * [Community forum](https://community.zama.ai)
 * [Telegram](https://t.me/+Ojt5y-I7oR42MTkx)
 * [FHE.org discord](https://discord.fhe.org)
-* [Twitter](https://twitter.com/zama\_fhe)
+<!-- markdown-link-check-disable -->
+* [Twitter](https://twitter.com/zama_fhe)
+  <!-- markdown-link-check-enable -->
