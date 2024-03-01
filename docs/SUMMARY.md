@@ -1,10 +1,10 @@
 # Table of contents
 
-* [<- Home](https://docs.zama.ai/homepage/)
+* [Welcome to fhEVM](README.md)
 
 ## What is Zama's fhEVM
 
-* [Overview](README.md)
+* [Overview](<README (1).md>)
 * [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
 
 ## Getting Started
@@ -13,53 +13,46 @@
 * [Using Zama Faucet](getting\_started/faucet.md)
 * [Local dev node](getting\_started/local.md)
 
-## How to
+## Fundamentals
 
-* [Write contract](howto/write\_contract.md)
-  * [Using Hardhat](howto/write\_contract/hardhat.md)
-  * [Using Remix](howto/write\_contract/remix.md)
-  * [Other development environment](howto/write\_contract/others.md)
-* [Use encrypted types](howto/types.md)
-* [Operations on encrypted types](howto/operations.md)
-* [Generate random number](howto/random.md)
-* [Write conditions](howto/conditions.md)
-* [Decrypt and reencrypt](howto/decrypt.md)
-* [Estimate gas](howto/gas.md)
-* [Common pitfalls and best practises](howto/pitfalls.md)
+* [Write contract](fundamentals/write\_contract/README.md)
+  * [Using Hardhat](fundamentals/write\_contract/hardhat.md)
+  * [Using Remix](fundamentals/write\_contract/remix.md)
+  * [Other development environment](fundamentals/write\_contract/others.md)
+* [Use encrypted types](fundamentals/types.md)
+* [Operations on encrypted types](fundamentals/operations.md)
+* [Generate random number](fundamentals/random.md)
+* [Write conditions](fundamentals/conditions.md)
+* [Decrypt and reencrypt](fundamentals/decrypt.md)
 
-## API
+## Guides
 
-* [Function specifications](api/functions.md)
+* [Estimate gas](guides/gas.md)
+* [Common pitfalls and best practises](guides/pitfalls.md)
+* [Client SDK](guides/client-sdk/README.md)
+  * [Installation](guides/client-sdk/getting\_started/README.md)
+    * [Using Node](guides/client-sdk/getting\_started/node.md)
+    * [Using a template](guides/client-sdk/getting\_started/templates.md)
+    * [Other frontend tooling](guides/client-sdk/getting\_started/browser.md)
+    * [Using CLI](guides/client-sdk/getting\_started/cli.md)
+  * [Setup an instance](guides/client-sdk/instance.md)
+  * [Encrypt an input](guides/client-sdk/inputs.md)
+  * [Get a reencryption](guides/client-sdk/reencryption.md)
+  * [Examples](guides/client-sdk/examples/README.md)
+    * [Transfer tokens (node)](guides/client-sdk/examples/transfererc20.md)
+    * [Get balance (node)](guides/client-sdk/examples/getbalance.md)
 
-## Client SDK
+## Tutorials
 
-* [Getting started](client/getting\_started.md)
-  * [Using Node](client/getting\_started/node.md)
-  * [Using a template](client/getting\_started/templates.md)
-  * [Other frontend tooling](client/getting\_started/browser.md)
-  * [Using CLI](client/getting\_started/cli.md)
-* [Setup an instance](client/instance.md)
-* [Encrypt an input](client/inputs.md)
-* [Get a reencryption](client/reencryption.md)
-* [Examples](client-sdk/examples/README.md)
-  * [Transfer tokens (node)](client/examples/transfererc20.md)
-  * [Get balance (node)](client/examples/getbalance.md)
+* [Tutorials](tutorials/tutorials.md)
+* [Examples](tutorials/examples.md)
 
-## Resources
+## References
 
-* [Examples](resources/examples.md)
-* [Tutorials](resources/tutorials.md)
-* [Repositories](resources/repositories.md)
+* [API Function specifications](references/functions.md)
+* [Repositories](references/repositories.md)
 
-## Future Developments
+## Developer
 
-* [Development Roadmap](roadmap/roadmap.md)
-
-## 🔗 Support
-
-* [Community forum](https://community.zama.ai)
-* [Telegram](https://t.me/+Ojt5y-I7oR42MTkx)
-* [FHE.org discord](https://discord.fhe.org)
-<!-- markdown-link-check-disable -->
-* [Twitter](https://twitter.com/zama_fhe)
-  <!-- markdown-link-check-enable -->
+* [Development Roadmap](developer/roadmap.md)
+* [Contribute](developer/contribute.md)
