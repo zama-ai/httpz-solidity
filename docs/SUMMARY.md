@@ -54,5 +54,5 @@
 
 ## Developer
 
-* [Development Roadmap](developer/roadmap.md)
+* [Development roadmap](developer/roadmap.md)
 * [Contribute](developer/contribute.md)
