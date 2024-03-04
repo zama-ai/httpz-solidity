@@ -8,7 +8,7 @@
 
 ### Start here
 
-earn the basics of fhEVM, set it up, and make it run with ease.
+Learn the basics of fhEVM, set it up, and make it run with ease.
 
 {% tabs %}
 {% tab title="Write a fhEVM smart contract in Solidity" %}
