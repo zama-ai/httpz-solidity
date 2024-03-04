@@ -44,8 +44,7 @@
 
 ## Tutorials
 
-* [Tutorials](tutorials/tutorials.md)
-* [Examples](tutorials/examples.md)
+* [See all tutorials](tutorials/see-all-tutorials.md)
 
 ## References
 
