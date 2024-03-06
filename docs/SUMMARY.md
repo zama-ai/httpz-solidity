@@ -1,57 +1,58 @@
 # Table of contents
 
-- [Welcome to fhEVM](README.md)
-
-## What is Zama's fhEVM
-
-- [Overview](overview.md)
-- [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
+* [Welcome to fhEVM](README.md)
 
 ## Getting Started
 
-- [Connecting to Zama Devnet](getting_started/connect.md)
-- [Using Zama Faucet](getting_started/faucet.md)
-- [Local dev node](getting_started/local.md)
+* [What is fhEVM](getting-started/overview.md)
+* [Connecting to Zama Devnet](getting\_started/connect.md)
+* [Using Zama Faucet](getting\_started/faucet.md)
+* [Local dev node](getting\_started/local.md)
+* [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
 
 ## Fundamentals
 
-- [Write contract](fundamentals/write_contract/README.md)
-  - [Using Hardhat](fundamentals/write_contract/hardhat.md)
-  - [Using Remix](fundamentals/write_contract/remix.md)
-  - [Other development environment](fundamentals/write_contract/others.md)
-- [Use encrypted types](fundamentals/types.md)
-- [Operations on encrypted types](fundamentals/operations.md)
-- [Generate random number](fundamentals/random.md)
-- [Write conditions](fundamentals/conditions.md)
-- [Decrypt and reencrypt](fundamentals/decrypt.md)
+* [Write contract](fundamentals/write\_contract/README.md)
+  * [Using Hardhat](fundamentals/write\_contract/hardhat.md)
+  * [Using Remix](fundamentals/write\_contract/remix.md)
+  * [Other development environment](fundamentals/write\_contract/others.md)
+* [Use encrypted types](fundamentals/types.md)
+* [Operations on encrypted types](fundamentals/operations.md)
+* [Write conditions](fundamentals/conditions.md)
+* [Decrypt and reencrypt](fundamentals/decrypt.md)
+* [Generate random number](fundamentals/random.md)
 
 ## Guides
 
-- [Estimate gas](guides/gas.md)
-- [Common pitfalls and best practises](guides/pitfalls.md)
-- [Client SDK](guides/client-sdk/README.md)
-  - [Installation](guides/client-sdk/getting_started/README.md)
-    - [Using Node](guides/client-sdk/getting_started/node.md)
-    - [Using a template](guides/client-sdk/getting_started/templates.md)
-    - [Other frontend tooling](guides/client-sdk/getting_started/browser.md)
-    - [Using CLI](guides/client-sdk/getting_started/cli.md)
-  - [Setup an instance](guides/client-sdk/instance.md)
-  - [Encrypt an input](guides/client-sdk/inputs.md)
-  - [Get a reencryption](guides/client-sdk/reencryption.md)
-  - [Examples](guides/client-sdk/examples/README.md)
-    - [Transfer tokens (node)](guides/client-sdk/examples/transfererc20.md)
-    - [Get balance (node)](guides/client-sdk/examples/getbalance.md)
+* [Estimate gas](guides/gas.md)
+* [Common pitfalls and best practises](guides/pitfalls.md)
+* [Client SDK](guides/client-sdk/README.md)
+  * [Installation](guides/client-sdk/getting\_started/README.md)
+    * [Using Node](guides/client-sdk/getting\_started/node.md)
+    * [Using a template](guides/client-sdk/getting\_started/templates.md)
+    * [Other frontend tooling](guides/client-sdk/getting\_started/browser.md)
+    * [Using CLI](guides/client-sdk/getting\_started/cli.md)
+  * [Setup an instance](guides/client-sdk/instance.md)
+  * [Encrypt an input](guides/client-sdk/inputs.md)
+  * [Get a reencryption](guides/client-sdk/reencryption.md)
+  * [Examples](guides/client-sdk/examples/README.md)
+    * [Transfer tokens (node)](guides/client-sdk/examples/transfererc20.md)
+    * [Get balance (node)](guides/client-sdk/examples/getbalance.md)
 
 ## Tutorials
 
-- [See all tutorials](tutorials/see-all-tutorials.md)
+* [See all tutorials](tutorials/see-all-tutorials.md)
+* [Write confidential smart contract with fhEVM](https://www.zama.ai/post/video-tutorial-how-to-write-confidential-smart-contracts-using-zamas-fhevm)
 
 ## References
 
-- [API Function specifications](references/functions.md)
-- [Repositories](references/repositories.md)
+* [API Function specifications](references/functions.md)
+* [Repositories](references/repositories.md)
 
 ## Developer
 
-- [Development roadmap](developer/roadmap.md)
-- [Contribute](developer/contribute.md)
+* [Contributing](developer/contribute.md)
+* [Development roadmap](developer/roadmap.md)
+* [Release note](https://github.com/zama-ai/fhevm/releases)
+* [Feature request](https://github.com/zama-ai/fhevm/issues/new)
+* [Bug report](https://github.com/zama-ai/fhevm/issues/new)
