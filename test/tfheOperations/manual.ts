@@ -30,22 +30,42 @@ describe('TFHE manual operations', function () {
     this.instances = instances;
   });
 
-  it('Cmux works returning if false', async function () {
-    const res = await this.contract.test_cmux(
-      this.instances.alice.encrypt8(0),
+  it('Select works returning if false', async function () {
+    const res = await this.contract.test_select(
+      this.instances.alice.encryptBool(false),
       this.instances.alice.encrypt32(3),
       this.instances.alice.encrypt32(4),
     );
     expect(res).to.equal(4);
   });
 
-  it('Cmux works returning if true', async function () {
-    const res = await this.contract.test_cmux(
-      this.instances.alice.encrypt8(1),
+  it('Select works returning if true', async function () {
+    const res = await this.contract.test_select(
+      this.instances.alice.encryptBool(true),
       this.instances.alice.encrypt32(3),
       this.instances.alice.encrypt32(4),
     );
     expect(res).to.equal(3);
+  });
+
+  it('ebool to euint4 casting works with true', async function () {
+    const res = await this.contract.test_ebool_to_euint4_cast(true);
+    expect(res).to.equal(1);
+  });
+
+  it('ebool to euint4 casting works with false', async function () {
+    const res = await this.contract.test_ebool_to_euint4_cast(false);
+    expect(res).to.equal(0);
+  });
+
+  it('ebool to euint8 casting works with true', async function () {
+    const res = await this.contract.test_ebool_to_euint8_cast(true);
+    expect(res).to.equal(1);
+  });
+
+  it('ebool to euint8 casting works with false', async function () {
+    const res = await this.contract.test_ebool_to_euint8_cast(false);
+    expect(res).to.equal(0);
   });
 
   it('ebool to euint16 casting works with true', async function () {
@@ -73,7 +93,7 @@ describe('TFHE manual operations', function () {
     expect(res).to.equal(1);
   });
 
-  it('ebool to euint32 casting works with false', async function () {
+  it('ebool to euint64 casting works with false', async function () {
     const res = await this.contract.test_ebool_to_euint64_cast(false);
     expect(res).to.equal(0);
   });
@@ -108,35 +128,4 @@ describe('TFHE manual operations', function () {
     expect(await this.contract.test_ebool_xor(true, false)).to.equal(true);
     expect(await this.contract.test_ebool_xor(true, true)).to.equal(false);
   });
-
-  if (OPTIMISTIC_REQUIRES_ENABLED) {
-    it('optimistic require with true succeeds', async function () {
-      await this.contract.test_opt_req(true);
-    });
-
-    it('optimistic require with false fails', async function () {
-      try {
-        await this.contract.test_opt_req(false);
-        fail('This should fail');
-      } catch (e: any) {
-        expect(e.message).to.contain('execution reverted');
-      }
-    });
-
-    it('stateful optimistic require with true succeeds', async function () {
-      const res = await this.contract.test_opt_req_stateful(true);
-      const receipt = await res.wait();
-      expect(receipt.status).to.equal(1);
-    });
-
-    it('stateful optimistic require with false fails', async function () {
-      try {
-        const res = await this.contract.test_opt_req_stateful(false);
-        const _ = await res.wait();
-        fail('This should fail');
-      } catch (e: any) {
-        expect(e.toString()).to.contain('transaction execution reverted');
-      }
-    });
-  }
 });

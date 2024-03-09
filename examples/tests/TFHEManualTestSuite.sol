@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "../../lib/TFHE.sol";
 
 contract TFHEManualTestSuite {
-    function test_cmux(
+    function test_select(
         bytes calldata control,
         bytes calldata ifTrue,
         bytes calldata ifFalse
@@ -12,7 +12,15 @@ contract TFHEManualTestSuite {
         ebool controlProc = TFHE.asEbool(control);
         euint32 ifTrueProc = TFHE.asEuint32(ifTrue);
         euint32 ifFalseProc = TFHE.asEuint32(ifFalse);
-        return TFHE.decrypt(TFHE.cmux(controlProc, ifTrueProc, ifFalseProc));
+        return TFHE.decrypt(TFHE.select(controlProc, ifTrueProc, ifFalseProc));
+    }
+
+    function test_ebool_to_euint4_cast(bool input) public view returns (uint16) {
+        return TFHE.decrypt(TFHE.asEuint4(TFHE.asEbool(input)));
+    }
+
+    function test_ebool_to_euint8_cast(bool input) public view returns (uint16) {
+        return TFHE.decrypt(TFHE.asEuint8(TFHE.asEbool(input)));
     }
 
     function test_ebool_to_euint16_cast(bool input) public view returns (uint16) {
@@ -25,17 +33,6 @@ contract TFHEManualTestSuite {
 
     function test_ebool_to_euint64_cast(bool input) public view returns (uint64) {
         return TFHE.decrypt(TFHE.asEuint64(TFHE.asEbool(input)));
-    }
-
-    function test_opt_req(bool input) public view {
-        TFHE.optReq(TFHE.asEbool(input));
-    }
-
-    uint32 counter = 0;
-
-    function test_opt_req_stateful(bool input) public {
-        TFHE.optReq(TFHE.asEbool(input));
-        counter += 1;
     }
 
     function test_ebool_not(bool input) public view returns (bool) {

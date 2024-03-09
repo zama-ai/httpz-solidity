@@ -46,20 +46,20 @@ contract CompliantERC20 is EncryptedERC20 {
         euint64 walletCountry = identityContract.getIdentifier(wallet, "country");
         ebool sameCountry = TFHE.eq(walletCountry, userCountry);
         euint64 balance = TFHE.isInitialized(balances[wallet]) ? balances[wallet] : TFHE.asEuint64(0);
-        balance = TFHE.cmux(sameCountry, balance, TFHE.asEuint64(0));
+        balance = TFHE.select(sameCountry, balance, TFHE.asEuint64(0));
 
         return TFHE.reencrypt(balance, publicKey, 0);
     }
 
     // Transfers an encrypted amount.
     function _transfer(address from, address to, euint64 _amount, ebool isTransferable) internal override {
-        // Condition 1: hasEnoughFunds
-        ebool enoughFund = TFHE.le(_amount, balances[from]);
-        euint64 amount = TFHE.cmux(enoughFund, _amount, TFHE.asEuint64(0));
+        // Condition 1: hasEnoughFunds and hasEnoughAllowance (classical ERC20)
+        euint64 amount = TFHE.select(isTransferable, _amount, TFHE.asEuint64(0));
 
         amount = rulesContract.transfer(from, to, amount);
 
         balances[to] = balances[to] + amount;
         balances[from] = balances[from] - amount;
+        emit Transfer(from, to);
     }
 }

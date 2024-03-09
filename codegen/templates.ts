@@ -2,10 +2,12 @@ import { assert } from 'console';
 
 import { CodegenContext, Operator, OperatorArguments, ReturnType } from './common';
 import { ArgumentType, OverloadSignature } from './testgen';
+import { getUint } from './utils';
 
 export function commonSolLib(): string {
   return `
 type ebool is uint256;
+type euint4 is uint256;
 type euint8 is uint256;
 type euint16 is uint256;
 type euint32 is uint256;
@@ -14,10 +16,11 @@ type euint64 is uint256;
 library Common {
     // Values used to communicate types to the runtime.
     uint8 internal constant ebool_t = 0;
-    uint8 internal constant euint8_t = 0;
-    uint8 internal constant euint16_t = 1;
-    uint8 internal constant euint32_t = 2;
-    uint8 internal constant euint64_t = 3;
+    uint8 internal constant euint4_t = 1;
+    uint8 internal constant euint8_t = 2;
+    uint8 internal constant euint16_t = 3;
+    uint8 internal constant euint32_t = 4;
+    uint8 internal constant euint64_t = 5;
 }
 `;
 }
@@ -167,15 +170,27 @@ library TFHE {
 `);
   });
   if (mocked) {
+    res.push(`
+    // Return true if the enrypted integer is initialized and false otherwise.
+    function isInitialized(ebool /*v*/) internal pure returns (bool) {
+        return true;
+    }
+  `);
     supportedBits.forEach((b) => {
       res.push(`
       // Return true if the enrypted integer is initialized and false otherwise.
-      function isInitialized(euint${b} v) internal pure returns (bool) {
+      function isInitialized(euint${b} /*v*/) internal pure returns (bool) {
           return true;
       }
     `);
     });
   } else {
+    res.push(`
+    // Return true if the enrypted integer is initialized and false otherwise.
+    function isInitialized(ebool v) internal pure returns (bool) {
+        return ebool.unwrap(v) != 0;
+    }
+  `);
     supportedBits.forEach((b) => {
       res.push(`
       // Return true if the enrypted integer is initialized and false otherwise.
@@ -199,12 +214,12 @@ library TFHE {
 
   supportedBits.forEach((bits) => {
     operators.forEach((operator) => {
-      if (operator.shiftOperator) res.push(tfheShiftOperators(bits, operator, signatures));
+      if (operator.shiftOperator) res.push(tfheShiftOperators(bits, operator, signatures, mocked));
     });
   });
 
-  // TODO: Decide whether we want to have mixed-inputs for CMUX
-  supportedBits.forEach((bits) => res.push(tfheCmux(bits)));
+  // TODO: Decide whether we want to have mixed-inputs for CMUX/Select
+  supportedBits.forEach((bits) => res.push(tfheSelect(bits)));
   supportedBits.forEach((outputBits) => {
     supportedBits.forEach((inputBits) => {
       res.push(tfheAsEboolCustomCast(inputBits, outputBits));
@@ -212,9 +227,9 @@ library TFHE {
     res.push(tfheAsEboolUnaryCast(outputBits));
   });
   supportedBits.forEach((bits) => res.push(tfheUnaryOperators(bits, operators, signatures)));
-  supportedBits.forEach((bits) => res.push(tfheCustomUnaryOperators(bits, signatures)));
+  supportedBits.forEach((bits) => res.push(tfheCustomUnaryOperators(bits, signatures, mocked)));
 
-  res.push(tfheCustomMethods(ctx));
+  res.push(tfheCustomMethods(ctx, mocked));
 
   res.push('}\n');
 
@@ -242,16 +257,16 @@ function tfheSolidityOperator(bits: number, operator: Operator, os: OverloadSign
       }
     `);
 
-    os.push({
-      binaryOperator: operator.binarySolidityOperator,
-      arguments: [
-        { type: ArgumentType.EUint, bits },
-        { type: ArgumentType.EUint, bits },
-      ],
+    // os.push({
+    //   binaryOperator: operator.binarySolidityOperator,
+    //   arguments: [
+    //     { type: ArgumentType.EUint, bits },
+    //     { type: ArgumentType.EUint, bits },
+    //   ],
 
-      name: `bin_op_${operator.name}`,
-      returnType: { type: ArgumentType.EUint, bits },
-    });
+    //   name: `bin_op_${operator.name}`,
+    //   returnType: { type: ArgumentType.EUint, bits },
+    // });
   }
 
   if (operator.hasEncrypted && operator.unarySolidityOperator) {
@@ -266,13 +281,13 @@ function tfheSolidityOperator(bits: number, operator: Operator, os: OverloadSign
       }
     `);
 
-    os.push({
-      unaryOperator: operator.unarySolidityOperator,
-      arguments: [{ type: ArgumentType.EUint, bits }],
+    // os.push({
+    //   unaryOperator: operator.unarySolidityOperator,
+    //   arguments: [{ type: ArgumentType.EUint, bits }],
 
-      name: `unary_op_${operator.name}`,
-      returnType: { type: ArgumentType.EUint, bits },
-    });
+    //   name: `unary_op_${operator.name}`,
+    //   returnType: { type: ArgumentType.EUint, bits },
+    // });
   }
 
   return res.join('');
@@ -293,7 +308,6 @@ function tfheEncryptedOperator(
   const outputBits = Math.max(lhsBits, rhsBits);
   const castLeftToRight = lhsBits < rhsBits;
   const castRightToLeft = lhsBits > rhsBits;
-  const boolCastNeeded = outputBits > 8 && operator.returnType == ReturnType.Ebool;
   const returnType =
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
@@ -307,9 +321,6 @@ function tfheEncryptedOperator(
   const leftExpr = castLeftToRight ? `asEuint${outputBits}(a)` : 'a';
   const rightExpr = castRightToLeft ? `asEuint${outputBits}(b)` : 'b';
   let implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(${leftExpr}), euint${outputBits}.unwrap(${rightExpr})${scalarFlag})`;
-  if (boolCastNeeded) {
-    implExpression = `Impl.cast(${implExpression}, Common.ebool_t)`;
-  }
   signatures.push({
     name: operator.name,
     arguments: [
@@ -351,7 +362,6 @@ function tfheScalarOperator(
   const res: string[] = [];
 
   const outputBits = Math.max(lhsBits, rhsBits);
-  const boolCastNeeded = outputBits > 8 && operator.returnType == ReturnType.Ebool;
   const returnType =
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
@@ -371,11 +381,6 @@ function tfheScalarOperator(
     maybeEncryptLeft = `euint${outputBits} aEnc = asEuint${outputBits}(a);`;
     implExpressionB = `Impl.${leftOpName}(euint${outputBits}.unwrap(aEnc), euint${outputBits}.unwrap(b)${scalarFlag})`;
   }
-  if (boolCastNeeded) {
-    implExpressionA = `Impl.cast(${implExpressionA}, Common.ebool_t)`;
-    implExpressionB = `Impl.cast(${implExpressionB}, Common.ebool_t)`;
-  }
-
   signatures.push({
     name: operator.name,
     arguments: [
@@ -388,7 +393,7 @@ function tfheScalarOperator(
   // rhs scalar
   res.push(`
     // Evaluate ${operator.name}(a, b) and return the result.
-    function ${operator.name}(euint${lhsBits} a, uint${rhsBits} b) internal pure returns (${returnType}) {
+    function ${operator.name}(euint${lhsBits} a, ${getUint(rhsBits)} b) internal pure returns (${returnType}) {
         if (!isInitialized(a)) {
             a = asEuint${lhsBits}(0);
         }
@@ -410,7 +415,7 @@ function tfheScalarOperator(
     res.push(`
 
     // Evaluate ${operator.name}(a, b) and return the result.
-    function ${operator.name}(uint${lhsBits} a, euint${rhsBits} b) internal pure returns (${returnType}) {
+    function ${operator.name}(${getUint(lhsBits)} a, euint${rhsBits} b) internal pure returns (${returnType}) {
         ${maybeEncryptLeft}
         if (!isInitialized(b)) {
             b = asEuint${rhsBits}(0);
@@ -423,7 +428,12 @@ function tfheScalarOperator(
   return res.join('');
 }
 
-function tfheShiftOperators(inputBits: number, operator: Operator, signatures: OverloadSignature[]): string {
+function tfheShiftOperators(
+  inputBits: number,
+  operator: Operator,
+  signatures: OverloadSignature[],
+  mocked: boolean,
+): string {
   const res: string[] = [];
 
   // Code and test for shift(euint{inputBits},euint8}
@@ -439,17 +449,24 @@ function tfheShiftOperators(inputBits: number, operator: Operator, signatures: O
 
   const leftExpr = 'a';
   const rightExpr = castRightToLeft ? `asEuint${outputBits}(b)` : 'b';
-  let implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(${leftExpr}), euint${outputBits}.unwrap(${rightExpr})${scalarFlag})`;
+  let implExpression;
+  if (mocked) {
+    implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(${leftExpr}), euint${outputBits}.unwrap(${rightExpr}) % ${lhsBits}${scalarFlag})`;
+  } else {
+    implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(${leftExpr}), euint${outputBits}.unwrap(${rightExpr})${scalarFlag})`;
+  }
 
-  signatures.push({
-    name: operator.name,
-    arguments: [
-      { type: ArgumentType.EUint, bits: lhsBits },
-      { type: ArgumentType.EUint, bits: rhsBits },
-    ],
-    returnType: { type: returnTypeOverload, bits: outputBits },
-  });
-  res.push(`
+  if (inputBits >= 8) {
+    signatures.push({
+      name: operator.name,
+      arguments: [
+        { type: ArgumentType.EUint, bits: lhsBits },
+        { type: ArgumentType.EUint, bits: rhsBits },
+      ],
+      returnType: { type: returnTypeOverload, bits: outputBits },
+    });
+
+    res.push(`
     // Evaluate ${operator.name}(a, b) and return the result.
     function ${operator.name}(euint${lhsBits} a, euint${rhsBits} b) internal pure returns (${returnType}) {
         if (!isInitialized(a)) {
@@ -461,19 +478,13 @@ function tfheShiftOperators(inputBits: number, operator: Operator, signatures: O
         return ${returnType}.wrap(${implExpression});
     }
 `);
+  }
 
   // Code and test for shift(euint{inputBits},uint8}
   scalarFlag = ', true';
-  const leftOpName = operator.name;
-  var implExpressionA = `Impl.${operator.name}(euint${outputBits}.unwrap(a), uint256(b)${scalarFlag})`;
-  var implExpressionB = `Impl.${leftOpName}(euint${outputBits}.unwrap(b), uint256(a)${scalarFlag})`;
-  var maybeEncryptLeft = '';
-  if (operator.leftScalarEncrypt) {
-    // workaround until tfhe-rs left scalar support:
-    // do the trivial encryption and preserve order of operations
-    scalarFlag = ', false';
-    maybeEncryptLeft = `euint${outputBits} aEnc = asEuint${outputBits}(a);`;
-    implExpressionB = `Impl.${leftOpName}(euint${outputBits}.unwrap(aEnc), euint${8}.unwrap(b)${scalarFlag})`;
+  implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(a), uint256(b)${scalarFlag})`;
+  if (mocked) {
+    implExpression = `Impl.${operator.name}(euint${outputBits}.unwrap(a), uint256(b) % ${lhsBits}${scalarFlag})`;
   }
   signatures.push({
     name: operator.name,
@@ -485,23 +496,27 @@ function tfheShiftOperators(inputBits: number, operator: Operator, signatures: O
   });
   res.push(`
     // Evaluate ${operator.name}(a, b) and return the result.
-    function ${operator.name}(euint${lhsBits} a, uint${rhsBits} b) internal pure returns (${returnType}) {
+    function ${operator.name}(euint${lhsBits} a, ${getUint(rhsBits)} b) internal pure returns (${returnType}) {
         if (!isInitialized(a)) {
             a = asEuint${lhsBits}(0);
         }
-        return ${returnType}.wrap(${implExpressionA});
+        return ${returnType}.wrap(${implExpression});
     }
   `);
 
   return res.join('');
 }
 
-function tfheCmux(inputBits: number): string {
+function tfheSelect(inputBits: number): string {
   return `
     // If 'control''s value is 'true', the result has the same value as 'a'.
     // If 'control''s value is 'false', the result has the same value as 'b'.
     function cmux(ebool control, euint${inputBits} a, euint${inputBits} b) internal pure returns (euint${inputBits}) {
-        return euint${inputBits}.wrap(Impl.cmux(ebool.unwrap(control), euint${inputBits}.unwrap(a), euint${inputBits}.unwrap(b)));
+        return euint${inputBits}.wrap(Impl.select(ebool.unwrap(control), euint${inputBits}.unwrap(a), euint${inputBits}.unwrap(b)));
+    }
+    
+    function select(ebool control, euint${inputBits} a, euint${inputBits} b) internal pure returns (euint${inputBits}) {
+        return euint${inputBits}.wrap(Impl.select(ebool.unwrap(control), euint${inputBits}.unwrap(a), euint${inputBits}.unwrap(b)));
     }`;
 }
 
@@ -529,48 +544,47 @@ function tfheAsEboolUnaryCast(bits: number): string {
 
   if (bits == 8) {
     res.push(`
-    // Convert a serialized 'ciphertext' to an encrypted boolean.
+    // Convert a serialized 'ciphertext' to an encrypted euint8 integer.
     function asEbool(bytes memory ciphertext) internal pure returns (ebool) {
-        return asEbool(asEuint8(ciphertext));
+        return ebool.wrap(Impl.verify(ciphertext, Common.ebool_t));
+    }
+
+    // Convert a plaintext value to an encrypted euint8 integer.
+    function asEbool(uint256 value) internal pure returns (ebool) {
+        return ebool.wrap(Impl.trivialEncrypt(value, Common.ebool_t));
     }
 
     // Convert a plaintext boolean to an encrypted boolean.
     function asEbool(bool value) internal pure returns (ebool) {
         if (value) {
-            return asEbool(asEuint8(1));
+            return asEbool(1);
         } else {
-            return asEbool(asEuint8(0));
+            return asEbool(0);
         }
     }
 
     // Converts an 'ebool' to an 'euint8'.
-    function asEuint8(ebool b) internal pure returns (euint8) {
-        return euint8.wrap(ebool.unwrap(b));
+    function asEuint8(ebool value) internal pure returns (euint8) {
+      return euint8.wrap(Impl.cast(ebool.unwrap(value), Common.euint8_t));
     }
 
     // Evaluate and(a, b) and return the result.
     function and(ebool a, ebool b) internal pure returns (ebool) {
-        return asEbool(and(asEuint8(a), asEuint8(b)));
+        return ebool.wrap(Impl.and(ebool.unwrap(a), ebool.unwrap(b)));
     }
 
     // Evaluate or(a, b) and return the result.
     function or(ebool a, ebool b) internal pure returns (ebool) {
-        return asEbool(or(asEuint8(a), asEuint8(b)));
+        return ebool.wrap(Impl.or(ebool.unwrap(a), ebool.unwrap(b)));
     }
 
     // Evaluate xor(a, b) and return the result.
     function xor(ebool a, ebool b) internal pure returns (ebool) {
-        return asEbool(xor(asEuint8(a), asEuint8(b)));
+        return ebool.wrap(Impl.xor(ebool.unwrap(a), ebool.unwrap(b)));
     }
 
     function not(ebool a) internal pure returns (ebool) {
-        return asEbool(and(not(asEuint8(a)), asEuint8(1)));
-    }
-    
-    // If 'control''s value is 'true', the result has the same value as 'a'.
-    // If 'control''s value is 'false', the result has the same value as 'b'.
-    function cmux(ebool cond, ebool a, ebool b) internal pure returns (ebool) {
-        return asEbool(cmux(cond, asEuint8(a), asEuint8(b)));
+        return ebool.wrap(Impl.not(ebool.unwrap(a)));
     }
     `);
   } else {
@@ -607,8 +621,8 @@ function tfheUnaryOperators(bits: number, operators: Operator[], signatures: Ove
   return res.join('\n');
 }
 
-function tfheCustomUnaryOperators(bits: number, signatures: OverloadSignature[]): string {
-  return `
+function tfheCustomUnaryOperators(bits: number, signatures: OverloadSignature[], mocked: boolean): string {
+  let result = `
     // Convert a serialized 'ciphertext' to an encrypted euint${bits} integer.
     function asEuint${bits}(bytes memory ciphertext) internal pure returns (euint${bits}) {
         return euint${bits}.wrap(Impl.verify(ciphertext, Common.euint${bits}_t));
@@ -617,6 +631,40 @@ function tfheCustomUnaryOperators(bits: number, signatures: OverloadSignature[])
     // Convert a plaintext value to an encrypted euint${bits} integer.
     function asEuint${bits}(uint256 value) internal pure returns (euint${bits}) {
         return euint${bits}.wrap(Impl.trivialEncrypt(value, Common.euint${bits}_t));
+    }
+
+    `;
+  if (mocked) {
+    result += `
+    // Decrypts the encrypted 'value'.
+    function decrypt(euint${bits} value) internal view returns (${getUint(bits)}) {
+        return ${getUint(bits)}(Impl.decrypt(euint${bits}.unwrap(value)) % 2**${bits});
+    }
+
+    // Reencrypt the given 'value' under the given 'publicKey'.
+    // Return a serialized euint${bits} ciphertext.
+    function reencrypt(euint${bits} value, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+        return Impl.reencrypt(euint${bits}.unwrap(value) % 2**${bits}, publicKey);
+    }
+
+    // Reencrypt the given 'value' under the given 'publicKey'.
+    // If 'value' is not initialized, the returned value will contain the 'defaultValue' constant.
+    // Return a serialized euint${bits} ciphertext.
+    function reencrypt(euint${bits} value, bytes32 publicKey, ${getUint(
+      bits,
+    )} defaultValue) internal view returns (bytes memory reencrypted) {
+        if (euint${bits}.unwrap(value) != 0) {
+            return Impl.reencrypt(euint${bits}.unwrap(value) % 2**${bits}, publicKey);
+        } else {
+            return Impl.reencrypt(euint${bits}.unwrap(asEuint${bits}(defaultValue)) % 2**${bits}, publicKey);
+        }
+    }
+    `;
+  } else {
+    result += `
+    // Decrypts the encrypted 'value'.
+    function decrypt(euint${bits} value) internal view returns (${getUint(bits)}) {
+        return ${getUint(bits)}(Impl.decrypt(euint${bits}.unwrap(value)));
     }
 
     // Reencrypt the given 'value' under the given 'publicKey'.
@@ -628,19 +676,18 @@ function tfheCustomUnaryOperators(bits: number, signatures: OverloadSignature[])
     // Reencrypt the given 'value' under the given 'publicKey'.
     // If 'value' is not initialized, the returned value will contain the 'defaultValue' constant.
     // Return a serialized euint${bits} ciphertext.
-    function reencrypt(euint${bits} value, bytes32 publicKey, uint${bits} defaultValue) internal view returns (bytes memory reencrypted) {
+    function reencrypt(euint${bits} value, bytes32 publicKey, ${getUint(
+      bits,
+    )} defaultValue) internal view returns (bytes memory reencrypted) {
         if (euint${bits}.unwrap(value) != 0) {
             return Impl.reencrypt(euint${bits}.unwrap(value), publicKey);
         } else {
             return Impl.reencrypt(euint${bits}.unwrap(asEuint${bits}(defaultValue)), publicKey);
         }
     }
-
-    // Decrypts the encrypted 'value'.
-    function decrypt(euint${bits} value) internal view returns (uint${bits}) {
-        return uint${bits}(Impl.decrypt(euint${bits}.unwrap(value)));
-    }
     `;
+  }
+  return result;
 }
 
 function unaryOperatorImpl(op: Operator): string {
@@ -652,37 +699,8 @@ function unaryOperatorImpl(op: Operator): string {
   `;
 }
 
-function tfheCustomMethods(ctx: CodegenContext): string {
-  return `
-    // Optimistically require that 'b' is true.
-    //
-    // This function does not evaluate 'b' at the time of the call.
-    // Instead, it accumulates all optimistic requires and evaluates a single combined
-    // require at the end of the transaction. A side effect of this mechanism
-    // is that a method call with a failed optimistic require will always incur the full
-    // gas cost, as if all optimistic requires were true. Yet, the transaction will be
-    // reverted at the end if any of the optimisic requires were false.
-    //
-    // Exceptions to above rule are reencryptions and decryptions via
-    // TFHE.reencrypt() and TFHE.decrypt(), respectively. If either of them
-    // are encountered and if optimistic requires have been used before in the
-    // txn, the optimisic requires will be immediately evaluated. Rationale is
-    // that we want to avoid decrypting or reencrypting a value if the txn is about
-    // to fail and be reverted anyway at the end. Checking immediately and reverting on the spot
-    // would avoid unnecessary decryptions.
-    //
-    // The benefit of optimistic requires is that they are faster than non-optimistic ones,
-    // because there is a single call to the decryption oracle per transaction, irrespective
-    // of how many optimistic requires were used.
-    function optReq(ebool b) internal view {
-        Impl.optReq(ebool.unwrap(b));
-    }
-
-    // Decrypts the encrypted 'value'.
-    function decrypt(ebool value) internal view returns (bool) {
-        return (Impl.decrypt(ebool.unwrap(value)) != 0);
-    }
-
+function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
+  let result = `
     // Reencrypt the given 'value' under the given 'publicKey'.
     // Return a serialized euint8 value.
     function reencrypt(ebool value, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
@@ -744,29 +762,30 @@ function tfheCustomMethods(ctx: CodegenContext): string {
       return euint32.wrap(Impl.randBounded(upperBound, Common.euint32_t));
     }
 `;
+  if (mocked) {
+    result += `
+    // Decrypts the encrypted 'value'.
+    function decrypt(ebool value) internal view returns (bool) {
+        return (Impl.decrypt(ebool.unwrap(value)) % 2 == 1);
+    }
+    `;
+  } else {
+    result += `
+    // Decrypts the encrypted 'value'.
+    function decrypt(ebool value) internal view returns (bool) {
+        return (Impl.decrypt(ebool.unwrap(value)) != 0);
+    }
+    `;
+  }
+  return result;
 }
 
 function implCustomMethods(ctx: CodegenContext): string {
   return `
     // If 'control's value is 'true', the result has the same value as 'ifTrue'.
     // If 'control's value is 'false', the result has the same value as 'ifFalse'.
-    function cmux(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
+    function select(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
         result = FhevmLib(address(EXT_TFHE_LIBRARY)).fheIfThenElse(control, ifTrue, ifFalse);
-    }
-
-    // We do assembly here because ordinary call will emit extcodesize check which is zero for our precompiles
-    // and revert the transaction because we don't return any data for this precompile method
-    function optReq(uint256 ciphertext) internal view {
-        bytes memory input = abi.encodeWithSignature("optimisticRequire(uint256)", ciphertext);
-        uint256 inputLen = input.length;
-
-        // Call the optimistic require method in precompile.
-        address precompile = EXT_TFHE_LIBRARY;
-        assembly {
-            if iszero(staticcall(gas(), precompile, add(input, 32), inputLen, 0, 0)) {
-                revert(0, 0)
-            }
-        }
     }
 
     function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
@@ -825,19 +844,19 @@ pragma solidity ^0.8.20;
 import "./TFHE.sol";
 
 library Impl {
-  function add(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function add(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
     unchecked {
         result = lhs + rhs;
     }
   }
 
-  function sub(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function sub(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       unchecked {
           result = lhs - rhs;
       }
   }
 
-  function mul(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function mul(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       unchecked {
           result = lhs * rhs;
       }
@@ -863,43 +882,43 @@ library Impl {
       result = lhs ^ rhs;
   }
 
-  function shl(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function shl(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = lhs << rhs;
   }
 
-  function shr(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function shr(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = lhs >> rhs;
   }
 
-  function eq(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function eq(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs == rhs) ? 1 : 0;
   }
 
-  function ne(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function ne(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs != rhs) ? 1 : 0;
   }
 
-  function ge(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function ge(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs >= rhs) ? 1 : 0;
   }
 
-  function gt(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function gt(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs > rhs) ? 1 : 0;
   }
 
-  function le(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function le(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs <= rhs) ? 1 : 0;
   }
 
-  function lt(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function lt(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs < rhs) ? 1 : 0;
   }
 
-  function min(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function min(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs < rhs) ? lhs : rhs;
   }
 
-  function max(uint256 lhs, uint256 rhs, bool scalar) internal pure returns (uint256 result) {
+  function max(uint256 lhs, uint256 rhs, bool /*scalar*/) internal pure returns (uint256 result) {
       result = (lhs > rhs) ? lhs : rhs;
   }
 
@@ -925,23 +944,30 @@ library Impl {
       result = (control == 1) ? ifTrue : ifFalse;
   }
 
+  function select(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
+      result = (control == 1) ? ifTrue : ifFalse;
+  }
+
   function optReq(uint256 ciphertext) internal view {
+      this; // silence state mutability warning
       require(ciphertext == 1, "transaction execution reverted");
   }
 
-  function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
+  function reencrypt(uint256 ciphertext, bytes32 /*publicKey*/) internal view returns (bytes memory reencrypted) {
+      this; // silence state mutability warning
       reencrypted = new bytes(32);
-      assembly {
-          mstore(add(reencrypted, 32), ciphertext)
-      }
-      return reencrypted;
+        assembly {
+            mstore(add(reencrypted, 32), ciphertext)
+        }
+        return reencrypted;
   }
 
   function fhePubKey() internal view returns (bytes memory key) {
+      this; // silence state mutability warning
       key = hex"0123456789ABCDEF";
   }
 
-  function verify(bytes memory _ciphertextBytes, uint8 _toType) internal pure returns (uint256 result) {
+  function verify(bytes memory _ciphertextBytes, uint8 /*_toType*/) internal pure returns (uint256 result) {
       uint256 x;
       assembly {
           switch gt(mload(_ciphertextBytes), 31)
@@ -959,25 +985,32 @@ library Impl {
   }
 
   function cast(uint256 ciphertext, uint8 toType) internal pure returns (uint256 result) {
-      if (toType == 0) {
-          result = uint256(uint8(ciphertext));
-      }
-      if (toType == 1) {
-          result = uint256(uint16(ciphertext));
-      }
-      if (toType == 2) {
-          result = uint256(uint32(ciphertext));
-      }
-      if (toType == 3) {
-          result = uint256(uint64(ciphertext));
-      }
+    if (toType == 0) {
+        result = uint256(uint8(ciphertext));
+    }
+    if (toType == 1) {
+        result = uint256(uint8(ciphertext));
+    }
+    if (toType == 2) {
+        result = uint256(uint8(ciphertext));
+    }
+    if (toType == 3) {
+        result = uint256(uint16(ciphertext));
+    }
+    if (toType == 4) {
+        result = uint256(uint32(ciphertext));
+    }
+    if (toType == 5) {
+        result = uint256(uint64(ciphertext));
+    }
   }
 
-  function trivialEncrypt(uint256 value, uint8 toType) internal pure returns (uint256 result) {
+  function trivialEncrypt(uint256 value, uint8 /*toType*/) internal pure returns (uint256 result) {
       result = value;
   }
 
   function decrypt(uint256 ciphertext) internal view returns (uint256 result) {
+      this; // silence state mutability warning
       result = ciphertext;
   }
 

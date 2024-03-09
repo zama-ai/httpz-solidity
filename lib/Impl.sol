@@ -239,23 +239,8 @@ library Impl {
 
     // If 'control's value is 'true', the result has the same value as 'ifTrue'.
     // If 'control's value is 'false', the result has the same value as 'ifFalse'.
-    function cmux(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
+    function select(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
         result = FhevmLib(address(EXT_TFHE_LIBRARY)).fheIfThenElse(control, ifTrue, ifFalse);
-    }
-
-    // We do assembly here because ordinary call will emit extcodesize check which is zero for our precompiles
-    // and revert the transaction because we don't return any data for this precompile method
-    function optReq(uint256 ciphertext) internal view {
-        bytes memory input = abi.encodeWithSignature("optimisticRequire(uint256)", ciphertext);
-        uint256 inputLen = input.length;
-
-        // Call the optimistic require method in precompile.
-        address precompile = EXT_TFHE_LIBRARY;
-        assembly {
-            if iszero(staticcall(gas(), precompile, add(input, 32), inputLen, 0, 0)) {
-                revert(0, 0)
-            }
-        }
     }
 
     function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {

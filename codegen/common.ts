@@ -26,7 +26,6 @@ export type Operator = {
 
 export type CodegenContext = {
   libFheAddress: string;
-  optimisticRequiresEnabled: boolean;
 };
 
 export enum OperatorArguments {
@@ -39,7 +38,7 @@ export enum ReturnType {
   Ebool,
 }
 
-export const SUPPORTED_BITS: number[] = [8, 16, 32, 64];
+export const SUPPORTED_BITS: number[] = [4, 8, 16, 32, 64];
 
 export const ALL_OPERATORS: Operator[] = [
   {
@@ -246,12 +245,10 @@ export function networkCodegenContext(network: Network): CodegenContext {
     case Network.Evmos:
       return {
         libFheAddress: '0x000000000000000000000000000000000000005d',
-        optimisticRequiresEnabled: true,
       };
     case Network.Network1:
       return {
         libFheAddress: '0x010000000000000000000000000000000000005D',
-        optimisticRequiresEnabled: false,
       };
   }
 }
