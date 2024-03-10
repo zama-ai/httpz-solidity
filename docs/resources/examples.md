@@ -3,7 +3,6 @@
 ## Finance
 
 - [🖥️ ERC-20](https://github.com/zama-ai/fhevm/blob/main/examples/EncryptedERC20.sol)
-- [🖥️ Mixnet](https://github.com/anonymousGifter/mixnet-core) \[by [Remi Gai](https://github.com/remi-gai)]
 - [🖥️ Darkpool](https://github.com/omurovec/fhe-darkpools) \[by [Owen Murovec](https://github.com/omurovec)]
 
 ## Games
