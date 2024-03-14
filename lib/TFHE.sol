@@ -5568,7 +5568,7 @@ library TFHE {
     }
 
     // Decrypts the encrypted 'value'.
-    function decryptCustom(eaddress value) internal view returns (address) {
+    function decrypt(eaddress value) internal view returns (address) {
         return address(uint160(Impl.decrypt(eaddress.unwrap(value))));
     }
 
