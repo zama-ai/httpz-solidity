@@ -769,7 +769,7 @@ function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
 
     // Decrypts the encrypted 'value'.
     function decryptCustom(eaddress value) internal view returns (address) {
-        return address(uint160(Impl.decAddress(eaddress.unwrap(value))));
+        return address(uint160(Impl.decrypt(eaddress.unwrap(value))));
     }
 
     // From bytes to eaddress
@@ -828,8 +828,6 @@ function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
         return ebool.wrap(Impl.eq(eaddress.unwrap(a), bProc, true));
     }
 
-
-
     // Evaluate ne(a, b) and return the result.
     function ne(eaddress a, address b) internal pure returns (ebool) {
         if (!isInitialized(a)) {
@@ -847,9 +845,6 @@ function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
         uint256 bProc = uint256(uint160(b));
         return ebool.wrap(Impl.ne(eaddress.unwrap(a), bProc, true));
     }
-
-
-
 `;
   if (mocked) {
     result += `
@@ -879,10 +874,6 @@ function implCustomMethods(ctx: CodegenContext): string {
 
     function reencrypt(uint256 ciphertext, bytes32 publicKey) internal view returns (bytes memory reencrypted) {
         return FhevmLib(address(EXT_TFHE_LIBRARY)).reencrypt(ciphertext, uint256(publicKey));
-    }
-
-    function decAddress(uint256 ciphertext) internal view returns (uint256) {
-      return FhevmLib(address(EXT_TFHE_LIBRARY)).decrypt(ciphertext);
     }
 
     function fhePubKey() internal view returns (bytes memory key) {
