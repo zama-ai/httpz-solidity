@@ -23,7 +23,7 @@ library Common {
     uint8 internal constant euint32_t = 4;
     uint8 internal constant euint64_t = 5;
     uint8 internal constant euint128_t = 6;
-    uint8 internal constant euint160_t = 7;
+    uint8 internal constant eaddress_t = 7;
 }
 `;
 }
@@ -315,8 +315,8 @@ function tfheEncryptedOperator(
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
       : operator.returnType == ReturnType.Ebool
-      ? `ebool`
-      : assert(false, 'Unknown return type');
+        ? `ebool`
+        : assert(false, 'Unknown return type');
   const returnTypeOverload: ArgumentType =
     operator.returnType == ReturnType.Uint ? ArgumentType.EUint : ArgumentType.Ebool;
   const scalarFlag = operator.hasEncrypted && operator.hasScalar ? ', false' : '';
@@ -369,8 +369,8 @@ function tfheScalarOperator(
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
       : operator.returnType == ReturnType.Ebool
-      ? `ebool`
-      : assert(false, 'Unknown return type');
+        ? `ebool`
+        : assert(false, 'Unknown return type');
   const returnTypeOverload = operator.returnType == ReturnType.Uint ? ArgumentType.EUint : ArgumentType.Ebool;
   var scalarFlag = operator.hasEncrypted && operator.hasScalar ? ', true' : '';
   const leftOpName = operator.leftScalarInvertOp ?? operator.name;
@@ -788,13 +788,13 @@ function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
 
     // From bytes to eaddress
     function asEaddress(bytes memory ciphertext) internal pure returns (eaddress) {
-      return eaddress.wrap(Impl.verify(ciphertext, Common.euint160_t));
+      return eaddress.wrap(Impl.verify(ciphertext, Common.eaddress_t));
 
     }
 
     // Convert a plaintext value to an encrypted asEaddress.
     function asEaddress(uint256 value) internal pure returns (eaddress) {
-        return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.euint160_t));
+        return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.eaddress_t));
     }
 
     // Return true if the enrypted integer is initialized and false otherwise.

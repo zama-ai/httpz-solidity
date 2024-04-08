@@ -462,7 +462,7 @@ contract OraclePredeploy is Ownable2Step {
 
     function fulfillRequestAddress(
         uint256 requestID,
-        uint160[] memory decryptedCt /*, bytes memory signatureKMS */
+        address[] memory decryptedCt /*, bytes memory signatureKMS */
     ) external payable onlyRelayer {
         // TODO: check EIP712-signature of the DecryptionRequest struct by the KMS (waiting for signature scheme specification of KMS to be decided first)
         require(!isFulfilled[requestID], "Request is already fulfilled");
