@@ -5053,6 +5053,7 @@ library TFHE {
     function select(ebool control, euint4 a, euint4 b) internal pure returns (euint4) {
         return euint4.wrap(Impl.select(ebool.unwrap(control), euint4.unwrap(a), euint4.unwrap(b)));
     }
+
     // If 'control''s value is 'true', the result has the same value as 'a'.
     // If 'control''s value is 'false', the result has the same value as 'b'.
     function cmux(ebool control, euint8 a, euint8 b) internal pure returns (euint8) {
@@ -5062,6 +5063,7 @@ library TFHE {
     function select(ebool control, euint8 a, euint8 b) internal pure returns (euint8) {
         return euint8.wrap(Impl.select(ebool.unwrap(control), euint8.unwrap(a), euint8.unwrap(b)));
     }
+
     // If 'control''s value is 'true', the result has the same value as 'a'.
     // If 'control''s value is 'false', the result has the same value as 'b'.
     function cmux(ebool control, euint16 a, euint16 b) internal pure returns (euint16) {
@@ -5071,6 +5073,7 @@ library TFHE {
     function select(ebool control, euint16 a, euint16 b) internal pure returns (euint16) {
         return euint16.wrap(Impl.select(ebool.unwrap(control), euint16.unwrap(a), euint16.unwrap(b)));
     }
+
     // If 'control''s value is 'true', the result has the same value as 'a'.
     // If 'control''s value is 'false', the result has the same value as 'b'.
     function cmux(ebool control, euint32 a, euint32 b) internal pure returns (euint32) {
@@ -5080,6 +5083,7 @@ library TFHE {
     function select(ebool control, euint32 a, euint32 b) internal pure returns (euint32) {
         return euint32.wrap(Impl.select(ebool.unwrap(control), euint32.unwrap(a), euint32.unwrap(b)));
     }
+
     // If 'control''s value is 'true', the result has the same value as 'a'.
     // If 'control''s value is 'false', the result has the same value as 'b'.
     function cmux(ebool control, euint64 a, euint64 b) internal pure returns (euint64) {
@@ -5089,6 +5093,7 @@ library TFHE {
     function select(ebool control, euint64 a, euint64 b) internal pure returns (euint64) {
         return euint64.wrap(Impl.select(ebool.unwrap(control), euint64.unwrap(a), euint64.unwrap(b)));
     }
+
     // Cast an encrypted integer from euint8 to euint4.
     function asEuint4(euint8 value) internal pure returns (euint4) {
         return euint4.wrap(Impl.cast(euint8.unwrap(value), Common.euint4_t));
@@ -5571,6 +5576,7 @@ library TFHE {
     function randEuint64(uint64 upperBound) internal view returns (euint64) {
         return euint64.wrap(Impl.randBounded(upperBound, Common.euint64_t));
     }
+
     // Decrypts the encrypted 'value'.
     function decrypt(eaddress value) internal view returns (address) {
         return address(uint160(Impl.decrypt(eaddress.unwrap(value))));
@@ -5588,6 +5594,11 @@ library TFHE {
 
     // Convert a plaintext value to an encrypted asEaddress.
     function asEaddress(uint256 value) internal pure returns (eaddress) {
+        return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.eaddress_t));
+    }
+
+    // Convert an address value to an encrypted asEaddress.
+    function asEaddress(address value) internal pure returns (eaddress) {
         return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.eaddress_t));
     }
 

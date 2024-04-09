@@ -315,8 +315,8 @@ function tfheEncryptedOperator(
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
       : operator.returnType == ReturnType.Ebool
-        ? `ebool`
-        : assert(false, 'Unknown return type');
+      ? `ebool`
+      : assert(false, 'Unknown return type');
   const returnTypeOverload: ArgumentType =
     operator.returnType == ReturnType.Uint ? ArgumentType.EUint : ArgumentType.Ebool;
   const scalarFlag = operator.hasEncrypted && operator.hasScalar ? ', false' : '';
@@ -369,8 +369,8 @@ function tfheScalarOperator(
     operator.returnType == ReturnType.Uint
       ? `euint${outputBits}`
       : operator.returnType == ReturnType.Ebool
-        ? `ebool`
-        : assert(false, 'Unknown return type');
+      ? `ebool`
+      : assert(false, 'Unknown return type');
   const returnTypeOverload = operator.returnType == ReturnType.Uint ? ArgumentType.EUint : ArgumentType.Ebool;
   var scalarFlag = operator.hasEncrypted && operator.hasScalar ? ', true' : '';
   const leftOpName = operator.leftScalarInvertOp ?? operator.name;
@@ -794,6 +794,11 @@ function tfheCustomMethods(ctx: CodegenContext, mocked: boolean): string {
 
     // Convert a plaintext value to an encrypted asEaddress.
     function asEaddress(uint256 value) internal pure returns (eaddress) {
+        return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.eaddress_t));
+    }
+
+    // Convert an address value to an encrypted asEaddress.
+    function asEaddress(address value) internal pure returns (eaddress) {
         return eaddress.wrap(Impl.trivialEncrypt(uint160(value), Common.eaddress_t));
     }
 
