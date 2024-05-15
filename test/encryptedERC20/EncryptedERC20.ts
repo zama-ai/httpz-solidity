@@ -27,9 +27,10 @@ describe('EncryptedERC20', function () {
       publicKey: '',
     };
 
-    const encryptedBalance = await this.erc20.balanceOf(this.signers.alice, token.publicKey, token.signature);
     // Decrypt the balance
-    const balance = this.instances.alice.decrypt(this.contractAddress, encryptedBalance);
+    const decryptTxn = await this.erc20.decryptBalanceOf(this.signers.alice);
+    await decryptTxn.wait();
+    const balance = await this.erc20.decryptedBalance();
     expect(balance).to.equal(1000);
 
     const totalSupply = await this.erc20.totalSupply();
@@ -45,28 +46,16 @@ describe('EncryptedERC20', function () {
     const tx = await this.erc20['transfer(address,bytes)'](this.signers.bob.address, encryptedTransferAmount);
     await tx.wait();
 
-    const tokenAlice = this.instances.alice.getPublicKey(this.contractAddress)!;
-
-    const encryptedBalanceAlice = await this.erc20.balanceOf(
-      this.signers.alice,
-      tokenAlice.publicKey,
-      tokenAlice.signature,
-    );
-
-    // Decrypt the balance
-    const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
-
+    // Decrypt Alice's balance
+    const balanceAliceTxn = await this.erc20.decryptBalanceOf(this.signers.alice);
+    await balanceAliceTxn.wait();
+    const balanceAlice = await this.erc20.decryptedBalance();
     expect(balanceAlice).to.equal(10000 - 1337);
 
-    const bobErc20 = this.erc20.connect(this.signers.bob);
-
-    const tokenBob = this.instances.bob.getPublicKey(this.contractAddress)!;
-
-    const encryptedBalanceBob = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
-
-    // Decrypt the balance
-    const balanceBob = this.instances.bob.decrypt(this.contractAddress, encryptedBalanceBob);
-
+    // Decrypt Bob's balance
+    const balanceBobTxn = await this.erc20.decryptBalanceOf(this.signers.bob);
+    await balanceBobTxn.wait();
+    const balanceBob = await this.erc20.decryptedBalance();
     expect(balanceBob).to.equal(1337);
   });
 
@@ -78,28 +67,16 @@ describe('EncryptedERC20', function () {
     const tx = await this.erc20['transfer(address,bytes)'](this.signers.bob.address, encryptedTransferAmount);
     await tx.wait();
 
-    const tokenAlice = this.instances.alice.getPublicKey(this.contractAddress)!;
-
-    const encryptedBalanceAlice = await this.erc20.balanceOf(
-      this.signers.alice,
-      tokenAlice.publicKey,
-      tokenAlice.signature,
-    );
-
-    // Decrypt the balance
-    const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
-
+    // Decrypt Alice's balance
+    const balanceAliceTxn = await this.erc20.decryptBalanceOf(this.signers.alice);
+    await balanceAliceTxn.wait();
+    const balanceAlice = await this.erc20.decryptedBalance();
     expect(balanceAlice).to.equal(1000);
 
-    const bobErc20 = this.erc20.connect(this.signers.bob);
-
-    const tokenBob = this.instances.bob.getPublicKey(this.contractAddress)!;
-
-    const encryptedBalanceBob = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
-
-    // Decrypt the balance
-    const balanceBob = this.instances.bob.decrypt(this.contractAddress, encryptedBalanceBob);
-
+    // Decrypt Bob's balance
+    const balanceBobTxn = await this.erc20.decryptBalanceOf(this.signers.bob);
+    await balanceBobTxn.wait();
+    const balanceBob = await this.erc20.decryptedBalance();
     expect(balanceBob).to.equal(0);
   });
 
@@ -120,21 +97,16 @@ describe('EncryptedERC20', function () {
     );
     await tx2.wait();
 
-    const tokenAlice = this.instances.alice.getPublicKey(this.contractAddress)!;
-    const encryptedBalanceAlice = await this.erc20.balanceOf(
-      this.signers.alice,
-      tokenAlice.publicKey,
-      tokenAlice.signature,
-    );
-
-    // Decrypt the balance
-    const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
+    // Decrypt Alice's balance
+    const balanceAliceTxn = await this.erc20.decryptBalanceOf(this.signers.alice);
+    await balanceAliceTxn.wait();
+    const balanceAlice = await this.erc20.decryptedBalance();
     expect(balanceAlice).to.equal(10000); // check that transfer did not happen, as expected
 
-    const tokenBob = this.instances.bob.getPublicKey(this.contractAddress)!;
-    const encryptedBalanceBob = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
-    // Decrypt the balance
-    const balanceBob = this.instances.bob.decrypt(this.contractAddress, encryptedBalanceBob);
+    // Decrypt Bob's balance
+    const balanceBobTxn = await this.erc20.decryptBalanceOf(this.signers.bob);
+    await balanceBobTxn.wait();
+    const balanceBob = await this.erc20.decryptedBalance();
     expect(balanceBob).to.equal(0); // check that transfer did not happen, as expected
 
     const encryptedTransferAmount2 = this.instances.bob.encrypt64(1337); // below allowance so next tx should send token
@@ -145,17 +117,16 @@ describe('EncryptedERC20', function () {
     );
     await tx3.wait();
 
-    const encryptedBalanceAlice2 = await this.erc20.balanceOf(
-      this.signers.alice,
-      tokenAlice.publicKey,
-      tokenAlice.signature,
-    );
-    // Decrypt the balance
-    const balanceAlice2 = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice2);
+    // Decrypt Alice's balance
+    const balanceAliceTxn2 = await this.erc20.decryptBalanceOf(this.signers.alice);
+    await balanceAliceTxn2.wait();
+    const balanceAlice2 = await this.erc20.decryptedBalance();
     expect(balanceAlice2).to.equal(10000 - 1337); // check that transfer did happen this time
 
-    const encryptedBalanceBob2 = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
-    const balanceBob2 = this.instances.bob.decrypt(this.contractAddress, encryptedBalanceBob2);
+    // Decrypt Bob's balance
+    const balanceBobTxn2 = await this.erc20.decryptBalanceOf(this.signers.bob);
+    await balanceBobTxn2.wait();
+    const balanceBob2 = await this.erc20.decryptedBalance();
     expect(balanceBob2).to.equal(1337); // check that transfer did happen this time
   });
 });

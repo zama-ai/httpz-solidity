@@ -16,34 +16,42 @@ contract Rand {
 
     function generate8() public {
         value8 = TFHE.randEuint8();
+        TFHE.allow(value8, address(this));
     }
 
     function generate8UpperBound(uint8 upperBound) public {
         value8 = TFHE.randEuint8(upperBound);
+        TFHE.allow(value8, address(this));
     }
 
     function generate16() public {
         value16 = TFHE.randEuint16();
+        TFHE.allow(value16, address(this));
     }
 
     function generate16UpperBound(uint16 upperBound) public {
         value16 = TFHE.randEuint16(upperBound);
+        TFHE.allow(value16, address(this));
     }
 
     function generate32() public {
         value32 = TFHE.randEuint32();
+        TFHE.allow(value32, address(this));
     }
 
     function generate32UpperBound(uint32 upperBound) public {
         value32 = TFHE.randEuint32(upperBound);
+        TFHE.allow(value32, address(this));
     }
 
     function generate64() public {
         value64 = TFHE.randEuint64();
+        TFHE.allow(value64, address(this));
     }
 
     function generate64UpperBound(uint32 upperBound) public {
         value64 = TFHE.randEuint64(upperBound);
+        TFHE.allow(value64, address(this));
     }
 
     function decrypt8() public view returns (uint8) {
@@ -76,45 +84,5 @@ contract Rand {
 
     function decryptAndStore64() public {
         value64Decrypted = TFHE.decrypt(value64);
-    }
-
-    // Must fail.
-    function generate8InView() public view {
-        TFHE.randEuint8();
-    }
-
-    // Must fail.
-    function generate8UpperBoundInView(uint8 upperBound) public view {
-        TFHE.randEuint8(upperBound);
-    }
-
-    // Must fail.
-    function generate16InView() public view {
-        TFHE.randEuint16();
-    }
-
-    // Must fail.
-    function generate16UpperBoundInView(uint16 upperBound) public view {
-        TFHE.randEuint16(upperBound);
-    }
-
-    // Must fail.
-    function generate32InView() public view {
-        TFHE.randEuint32();
-    }
-
-    // Must fail.
-    function generate32UpperBoundInView(uint32 upperBound) public view {
-        TFHE.randEuint32(upperBound);
-    }
-
-    // Must fail.
-    function generate64InView() public view {
-        TFHE.randEuint64();
-    }
-
-    // Must fail.
-    function generate64UpperBoundInView(uint32 upperBound) public view {
-        TFHE.randEuint64(upperBound);
     }
 }
