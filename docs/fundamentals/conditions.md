@@ -9,7 +9,7 @@ fhEVM provides a method which acts as a ternary operator on encrypted integers. 
 ```solidity
 function bid(bytes calldata encryptedBid) internal {
   euint32 bid = TFHE.asEuint32(encryptedBid);
-  ebool isAbove = TFHE.le(bid, highestBid);
+  ebool isAbove = TFHE.lt(highestBid,bid);
 
   // Replace highest bid
   highestBid = TFHE.select(isAbove, bid, highestBid);
