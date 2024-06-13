@@ -80,7 +80,7 @@ task('task:computeKmsVerifierAddress').setAction(async function (taskArguments: 
 
 pragma solidity ^0.8.25;
 
-address constant Kms_VERIFIER_CONTRACT_ADDRESS = ${kmsVerfierAddress};\n`;
+address constant KMS_VERIFIER_CONTRACT_ADDRESS = ${kmsVerfierAddress};\n`;
 
   try {
     fs.writeFileSync('./lib/KmsVerifierAddress.sol', solidityTemplate, { encoding: 'utf8', flag: 'w' });

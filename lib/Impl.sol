@@ -160,10 +160,6 @@ library Impl {
         return acl.allowedTransient(handle, account);
     }
 
-    function cleanAllTransientAllowed() internal {
-        acl.cleanAllTransientAllowed();
-    }
-
     function allow(uint256 handle, address account) internal {
         acl.allow(handle, account);
     }
@@ -174,18 +170,6 @@ library Impl {
 
     function isAllowed(uint256 handle, address account) internal view returns (bool) {
         return acl.isAllowed(handle, account);
-    }
-
-    function delegateAccount(address delegatee) internal {
-        acl.delegateAccount(delegatee);
-    }
-
-    function removeDelegation(address delegatee) internal {
-        acl.removeDelegation(delegatee);
-    }
-
-    function allowedOnBehalf(address delegatee, uint256 handle, address account) internal view returns (bool) {
-        return acl.allowedOnBehalf(delegatee, handle, account);
     }
 
     function allowForDecryption(uint256[] memory ctsHandles) internal {

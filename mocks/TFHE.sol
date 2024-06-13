@@ -5903,10 +5903,6 @@ library TFHE {
         return eaddress.wrap(Impl.select(ebool.unwrap(control), eaddress.unwrap(a), eaddress.unwrap(b)));
     }
 
-    function cleanAllTransientAllowed() internal {
-        Impl.cleanAllTransientAllowed();
-    }
-
     // Decrypts the encrypted 'value'.
     function decrypt(ebool value) internal view returns (bool) {
         return (Impl.decrypt(ebool.unwrap(value)) % 2 == 1);
