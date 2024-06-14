@@ -28,7 +28,7 @@ const privKeyRelayer = process.env.PRIVATE_KEY_GATEWAY_RELAYER;
 const relayer = new ethers.Wallet(privKeyRelayer!, ethers.provider);
 
 const argEvents =
-  '(uint256 indexed requestID, tuple(uint256 ctHandle, uint8 ctType)[] cts, address contractCaller, bytes4 callbackSelector, uint256 msgValue, uint256 maxTimestamp)';
+  '(uint256 indexed requestID, uint256[] cts, address contractCaller, bytes4 callbackSelector, uint256 msgValue, uint256 maxTimestamp, bool passSignaturesToCaller)';
 const ifaceEventDecryption = new ethers.Interface(['event EventDecryption' + argEvents]);
 
 const argEvents2 = '(uint256 indexed requestID, bool success, bytes result)';
@@ -41,15 +41,20 @@ export const asyncDecrypt = async (): Promise<void> => {
   firstBlockListening = await ethers.provider.getBlockNumber();
   // this function will emit logs for every request and fulfilment of a decryption
   gateway = await ethers.getContractAt('GatewayContract', parsedEnv.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS);
+  
+  // Listen for EventDecryption events
   gateway.on(
     'EventDecryption',
-    async (requestID, cts, contractCaller, callbackSelector, msgValue, maxTimestamp, eventData) => {
+    async (requestID, cts, contractCaller, callbackSelector, msgValue, maxTimestamp, passSignaturesToCaller, eventData) => {
+      console.log("eventData")
+      console.log(eventData)
       const blockNumber = eventData.log.blockNumber;
       console.log(`${await currentTime()} - Requested decrypt on block ${blockNumber} (requestID ${requestID})`);
     },
   );
+
   gateway.on('ResultCallback', async (requestID, success, result, eventData) => {
-    const blockNumber = eventData.log.blockNumber;
+    const blockNumber = eventData.blockNumber;
     console.log(`${await currentTime()} - Fulfilled decrypt on block ${blockNumber} (requestID ${requestID})`);
   });
 };
@@ -61,7 +66,7 @@ export const awaitAllDecryptionResults = async (): Promise<void> => {
 };
 
 const getAlreadyFulfilledDecryptions = async (): Promise<[bigint]> => {
-  let results = [];
+  let results: any[] | PromiseLike<[bigint]> = [];
   const eventDecryptionResult = await gateway.filters.ResultCallback().getTopicFilter();
   const filterDecryptionResult = {
     address: process.env.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS,
@@ -86,7 +91,11 @@ const fulfillAllPastRequestsIds = async (mocked: boolean) => {
   };
   const pastRequests = await ethers.provider.getLogs(filterDecryption);
   for (const request of pastRequests) {
+    console.log("request")
+    // console.log(request)
     const event = ifaceEventDecryption.parseLog(request);
+    console.log("event")
+    // console.log(event)
     const requestID = event.args[0];
     const cts = event.args[1];
     const handles = cts.map((ct) => ct[0]);

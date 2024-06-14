@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.25;
 
 import "../lib/TFHE.sol";
 import "../gateway/GatewayCaller.sol";
@@ -32,14 +32,21 @@ contract TestAsyncDecrypt is GatewayCaller {
 
     constructor() {
         xBool = TFHE.asEbool(true);
+        TFHE.allow(xBool, address(this));
         xUint4 = TFHE.asEuint4(4);
+        TFHE.allow(xUint4, address(this));
         xUint8 = TFHE.asEuint8(42);
         TFHE.allow(xUint8, address(this));
         xUint16 = TFHE.asEuint16(16);
+        TFHE.allow(xUint16, address(this));
         xUint32 = TFHE.asEuint32(32);
+        TFHE.allow(xUint32, address(this));
         xUint64 = TFHE.asEuint64(18446744073709551600);
+        TFHE.allow(xUint64, address(this));
         xUint64_2 = TFHE.asEuint64(76575465786);
+        TFHE.allow(xUint64_2, address(this));
         xUint64_3 = TFHE.asEuint64(6400);
+        TFHE.allow(xUint64_3, address(this));
         xAddress = TFHE.asEaddress(0x8ba1f109551bD432803012645Ac136ddd64DBA72);
         xAddress2 = TFHE.asEaddress(0xf48b8840387ba3809DAE990c930F3b4766A86ca3);
     }
