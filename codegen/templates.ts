@@ -1378,6 +1378,23 @@ library Impl {
     // much as this is a mock).
     result = rand(randType) % upperBound;
   }
+
+  function allowTransient(uint256 handle, address account) internal {
+    // Not yet implemented
+  }
+
+  function allow(uint256 handle, address account) internal {
+    // Not yet implemented
+  }
+
+  function cleanTransientStorage() internal {
+    // Not yet implemented
+  }
+
+  function isAllowed(uint256 handle, address account) internal view returns (bool) {
+    // Not yet implemented
+    return true;
+  }
 `);
 
   res.push('}\n');
