@@ -1302,10 +1302,6 @@ library Impl {
       result = (control == 1) ? ifTrue : ifFalse;
   }
 
-  function select(uint256 control, uint256 ifTrue, uint256 ifFalse) internal pure returns (uint256 result) {
-      result = (control == 1) ? ifTrue : ifFalse;
-  }
-
   function optReq(uint256 ciphertext) internal view {
       this; // silence state mutability warning
       require(ciphertext == 1, "transaction execution reverted");
