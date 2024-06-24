@@ -86,6 +86,7 @@ const fulfillAllPastRequestsIds = async (mocked: boolean) => {
   };
   const pastRequests = await ethers.provider.getLogs(filterDecryption);
   for (const request of pastRequests) {
+    
     const event = ifaceEventDecryption.parseLog(request);
     const requestID = event.args[0];
     const cts = event.args[1];

@@ -48,7 +48,9 @@ contract TestAsyncDecrypt is GatewayCaller {
         xUint64_3 = TFHE.asEuint64(6400);
         TFHE.allow(xUint64_3, address(this));
         xAddress = TFHE.asEaddress(0x8ba1f109551bD432803012645Ac136ddd64DBA72);
+        TFHE.allow(xAddress, address(this));
         xAddress2 = TFHE.asEaddress(0xf48b8840387ba3809DAE990c930F3b4766A86ca3);
+        TFHE.allow(xAddress2, address(this));
     }
 
     function requestBoolInfinite() public {

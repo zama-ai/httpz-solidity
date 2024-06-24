@@ -4,7 +4,7 @@ import { ethers, network } from 'hardhat';
 import { asyncDecrypt, awaitAllDecryptionResults } from '../asyncDecrypt';
 import { getSigners, initSigners } from '../signers';
 
-describe.skip('TestAsyncDecrypt', function () {
+describe('TestAsyncDecrypt', function () {
   before(async function () {
     await asyncDecrypt();
     await initSigners(3);
@@ -113,7 +113,7 @@ describe.skip('TestAsyncDecrypt', function () {
   });
 
   it('test async decrypt uint8', async function () {
-    const tx2 = await this.contract.connect(this.signers.carol).requestUint8({ gasLimit: 500_000 });
+    const tx2 = await this.contract.connect(this.signers.carol).requestUint8({ gasLimit: 5_000_000 });
     await tx2.wait();
     await awaitAllDecryptionResults();
     const y = await this.contract.yUint8();
