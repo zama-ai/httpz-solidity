@@ -1312,7 +1312,7 @@ library Impl {
       key = hex"0123456789ABCDEF";
   }
 
-  function verify(einput inputHandle,
+  function verify(bytes32 inputHandle,
         bytes memory inputProof,
         uint8 toType) internal returns (uint256 result) {
       // TODO: fix implementation
