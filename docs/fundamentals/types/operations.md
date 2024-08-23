@@ -36,3 +36,9 @@ Overloaded operators `+`, `-`, `*`, `&`, ... on encrypted integers are supported
 More information about the supported operations can be found in the [function specifications](../../references/functions.md) page or in the [TFHE-rs docs](https://docs.zama.ai/tfhe-rs/getting-started/operations#arithmetic-operations.).
 
 If you find yourself in search of a missing feature, we encourage you to [consult our roadmap](../../developer/roadmap.md) for upcoming developments. Alternatively, don't hesitate to reach out to us on Discord or visit our community forum.
+
+{% hint style="success" %}
+**Zama 5-Question Developer Survey**
+
+We want to hear from you! Take 1 minute to share your thoughts and helping us enhance our documentation and libraries. **👉** [**Click here**](https://www.zama.ai/developer-survey) to participate.
+{% endhint %}
