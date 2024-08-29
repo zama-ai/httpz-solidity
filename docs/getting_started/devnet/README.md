@@ -1,8 +1,23 @@
 # Zama Devnet
 
-{% hint style="warning" %}
-**Devnet down** Our devnet is currently offline but will be up soon! In the meantime, develop your contracts using a local instance.
-{% endhint %}
+## Devnet information
+
+Our devnet is up and running.
+
+<!-- markdown-link-check-disable -->
+
+| Fields             | Value                                         |
+| ------------------ | --------------------------------------------- |
+| New RPC URL        | https://devnet.zama.ai                        |
+| Chain ID           | 9000                                          |
+| Currency symbol    | ZAMA                                          |
+| Gateway URL        | https://gateway.devnet.zama.ai                |
+| Faucet URL         | https://faucet.zama.ai                        |
+| Block explorer URL | https://explorer.devnet.zama.ai (coming soon) |
+
+<!-- markdown-link-check-enable -->
+
+## Configuring MetaMask
 
 <!-- markdown-link-check-disable -->
 
