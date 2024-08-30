@@ -37,13 +37,13 @@ Add these information to access to blockchain
 {% tabs %}
 {% tab title="Zama devnet" %}
 
-| Fields                        | Value                         |
-| ----------------------------- | ----------------------------- |
-| Network Name                  | Zama Network                  |
-| New RPC URL                   | https://devnet.zama.ai        |
-| Chain ID                      | 8009                          |
-| Currency symbol               | ZAMA                          |
-| Block explorer URL (Optional) | https://main.explorer.zama.ai |
+| Fields                        | Value                                         |
+| ----------------------------- | --------------------------------------------- |
+| Network Name                  | Zama Network                                  |
+| New RPC URL                   | https://devnet.zama.ai                        |
+| Chain ID                      | 9000                                          |
+| Currency symbol               | ZAMA                                          |
+| Block explorer URL (Optional) | https://explorer.devnet.zama.ai (coming soon) |
 
 {% endtab %}
 {% tab title="Local devnet" %}
