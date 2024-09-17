@@ -24,6 +24,8 @@
   <a href="https://slsa.dev"><img alt="SLSA 3" src="https://slsa.dev/images/gh-badge-level3.svg" /></a>
 </p>
 
+> [!IMPORTANT]
+> **Coming soon** - Learn more about Zama's fhEVM Coprocessor. [Get notified at launch](https://www.zama.ai/fhevm-coprocessor) ↗️
 ## About
 
 ### What is fhEVM
