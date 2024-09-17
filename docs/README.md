@@ -17,7 +17,7 @@ layout:
 
 # Welcome to fhEVM
 {% hint style="success" %}
-**[Coming soon]** Learn more about Zama's fhEVM Coprocessor. [Get notified at launch](https://www.zama.ai/fhevm-coprocessor) ↗️
+**Coming soon** - Learn more about Zama's fhEVM Coprocessor. [Get notified at launch](https://www.zama.ai/fhevm-coprocessor) ↗️
 {% endhint %}
 
 ## Get started
