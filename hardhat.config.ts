@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import * as fs from 'fs';
 import 'hardhat-deploy';
 import 'hardhat-ignore-warnings';
-import 'hardhat-preprocessor';
-import { TASK_PREPROCESS } from 'hardhat-preprocessor';
 import type { HardhatUserConfig, extendProvider } from 'hardhat/config';
 import { task } from 'hardhat/config';
 import type { NetworkUserConfig } from 'hardhat/types';
