@@ -2,13 +2,16 @@
 
 pragma solidity ^0.8.24;
 
+import "./PredeployAddress.sol";
 import "../GatewayContract.sol";
 import "../../lib/ACL.sol";
 import "../../lib/KMSVerifier.sol";
+import "../../lib/ACLAddress.sol";
+import "../../lib/KMSVerifierAddress.sol";
 
-GatewayContract constant gatewayContract = GatewayContract(0xc8c9303Cd7F337fab769686B593B87DC3403E0ce); // Replace by GatewayContract address
-ACL constant acl = ACL(0x2Fb4341027eb1d2aD8B5D9708187df8633cAFA92); // Replace by ACL address
-KMSVerifier constant kmsVerifier = KMSVerifier(address(0x12B064FB845C1cc05e9493856a1D637a73e944bE));
+GatewayContract constant gatewayContract = GatewayContract(GATEWAY_CONTRACT_PREDEPLOY_ADDRESS); // Replace by GatewayContract address
+ACL constant acl = ACL(aclAdd); // Replace by ACL address
+KMSVerifier constant kmsVerifier = KMSVerifier(address(KMS_VERIFIER_CONTRACT_ADDRESS));
 
 library Gateway {
     function GatewayContractAddress() internal pure returns (address) {
