@@ -43,7 +43,7 @@ if (!mnemonic) {
 
 const chainIds = {
   zama: 8009,
-  local: 9000,
+  local: 12345,
   localNetwork1: 9000,
   multipleValidatorTestnet: 8009,
 };
@@ -52,7 +52,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   let jsonRpcUrl: string;
   switch (chain) {
     case 'local':
-      jsonRpcUrl = 'http://localhost:8545';
+      jsonRpcUrl = 'http://localhost:8745';
       break;
     case 'localNetwork1':
       jsonRpcUrl = 'http://127.0.0.1:9650/ext/bc/fhevm/rpc';

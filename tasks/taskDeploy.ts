@@ -125,17 +125,18 @@ task('task:deployFHEPayment').setAction(async function (taskArguments: TaskArgum
   console.log('FHEPayment was deployed at address:', address);
 });
 
-task('task:addSigners').setAction(async function (taskArguments: TaskArguments, { ethers }) {
-  const deployer = (await ethers.getSigners())[9];
-  const factory = await ethers.getContractFactory('KMSVerifier', deployer);
-  const kmsAdd = dotenv.parse(fs.readFileSync('lib/.env.kmsverifier')).KMS_VERIFIER_CONTRACT_ADDRESS;
-  const kmsVerifier = await factory.attach(kmsAdd);
+task('task:addSigners')
+  .addParam('numSigners', 'Number of signers')
+  .setAction(async function (taskArguments: TaskArguments, { ethers }) {
+    const deployer = (await ethers.getSigners())[9];
+    const factory = await ethers.getContractFactory('KMSVerifier', deployer);
+    const kmsAdd = dotenv.parse(fs.readFileSync('lib/.env.kmsverifier')).KMS_VERIFIER_CONTRACT_ADDRESS;
+    const kmsVerifier = await factory.attach(kmsAdd);
 
-  for (let idx = 0; idx < taskArguments.numSigners; idx++) {
-    const privKeySigner = process.env[`PRIVATE_KEY_KMS_SIGNER_${idx}`];
-    const kmsSigner = new ethers.Wallet(privKeySigner).connect(ethers.provider);
-    const tx = await kmsVerifier.addSigner(kmsSigner.address);
-    await tx.wait();
-    console.log(`KMS signer no${idx} (${kmsSigner.address}) was added to KMSVerifier contract`);
-  }
-});
+    for (let idx = 0; idx < taskArguments.numSigners; idx++) {
+      const kmsSigner = "0x71d5363c030D94613cC306192a2B81cE9ded7815";
+      const tx = await kmsVerifier.addSigner(kmsSigner);
+      await tx.wait();
+      console.log(`KMS signer no${idx} (${kmsSigner}) was added to KMSVerifier contract`);
+    }
+  });
