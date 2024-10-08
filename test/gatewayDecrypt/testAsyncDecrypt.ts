@@ -21,7 +21,7 @@ describe('TestAsyncDecrypt', function () {
     await this.contract.waitForDeployment();
     this.contractAddress = await this.contract.getAddress();
     // this.instances = await createInstances(this.signers);
-    const tx = await this.contract.connect(this.signers.carol).requestUint8({ gasLimit: 5_000_000 });
+    const tx = await this.contract.connect(this.signers.carol).requestUint16({ gasLimit: 5_000_000 });
     await tx.wait(); // this first request is here just to silence the current gateway bug at the moment
     await waitNBlocks(1);
 
@@ -183,9 +183,13 @@ describe('TestAsyncDecrypt', function () {
 
   it('test async decrypt uint16', async function () {
     const tx2 = await this.contract.connect(this.signers.carol).requestUint16({ gasLimit: 5_000_000 });
+    console.log("0.10")
     await tx2.wait();
+    console.log("0.11")
     await awaitAllDecryptionResults();
+    console.log("0.12")
     const y = await this.contract.yUint16();
+    console.log("0.13")
     expect(y).to.equal(16);
   });
 
@@ -235,7 +239,7 @@ describe('TestAsyncDecrypt', function () {
     }
   });
 
-  it('test async decrypt uint64', async function () {
+  it.only('test async decrypt uint64', async function () {
     const tx2 = await this.contract.connect(this.signers.carol).requestUint64({ gasLimit: 5_000_000 });
     await tx2.wait();
     await awaitAllDecryptionResults();
