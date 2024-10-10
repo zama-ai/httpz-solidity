@@ -134,7 +134,7 @@ task('task:addSigners')
     const kmsVerifier = await factory.attach(kmsAdd);
 
     for (let idx = 0; idx < taskArguments.numSigners; idx++) {
-      const kmsSigner = "0x12d6342cEA3f986388185D3C1a763134BE4cAf53";
+      const kmsSigner = "0x65Ce58AECEfc902056b3B4d86f373a8f4e98ec24";
       const tx = await kmsVerifier.addSigner(kmsSigner);
       await tx.wait();
       console.log(`KMS signer no${idx} (${kmsSigner}) was added to KMSVerifier contract`);
