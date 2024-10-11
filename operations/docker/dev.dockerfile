@@ -12,6 +12,8 @@ COPY lib ./lib/
 COPY tasks ./tasks/
 COPY gateway ./gateway/
 COPY *.sh ./
+COPY precompute-addresses.sh ./
+COPY launch-fhevm.sh ./
 COPY *.ts ./
 COPY tsconfig.json ./
 

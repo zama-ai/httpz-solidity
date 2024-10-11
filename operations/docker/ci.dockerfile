@@ -14,3 +14,5 @@ COPY gateway ./gateway/
 COPY *.sh ./
 COPY *.ts ./
 COPY tsconfig.json ./
+COPY precompute-addresses.sh ./
+COPY launch-fhevm* ./
