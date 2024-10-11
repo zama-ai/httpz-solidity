@@ -87,7 +87,7 @@ const getAlreadyFulfilledDecryptions = async (): Promise<[bigint]> => {
   let results = [];
   const eventDecryptionResult = await gateway.filters.ResultCallback().getTopicFilter();
   const filterDecryptionResult = {
-    address: process.env.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS,
+    address: parsedEnv.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS,
     fromBlock: firstBlockListening,
     toBlock: 'latest',
     topics: eventDecryptionResult,
@@ -104,7 +104,7 @@ const fulfillAllPastRequestsIds = async (mocked: boolean) => {
   const eventDecryption = await gateway.filters.EventDecryption().getTopicFilter();
   const results = await getAlreadyFulfilledDecryptions();
   const filterDecryption = {
-    address: process.env.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS,
+    address: parsedEnv.GATEWAY_CONTRACT_PREDEPLOY_ADDRESS,
     fromBlock: firstBlockListening,
     toBlock: 'latest',
     topics: eventDecryption,
