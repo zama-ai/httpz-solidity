@@ -28,7 +28,7 @@ describe('TestAsyncDecrypt', function () {
 
   beforeEach(async function () {
     const contractFactory = await ethers.getContractFactory('TestAsyncDecrypt');
-    this.contract = await contractFactory.connect(this.signers.alice).deploy();
+    this.contract = await contractFactory.connect(this.signers.carol).deploy();
     this.contractAddress = await this.contract.getAddress();
     this.instances = await createInstances(this.signers);
   });
