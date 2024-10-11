@@ -1,25 +1,24 @@
-name: 'fhEVM smart contracts Pipeline Run'
+name: "fhEVM smart contracts Pipeline Run"
 
 on:
   push:
-    branches: ['test-sc']
+    branches: ["test-sc"]
 
 jobs:
-
   docker-smart-contracts:
     uses: ./.github/workflows/common-docker.yml
     permissions:
-      contents: 'read'
-      id-token: 'write'
-      packages: 'write'
+      contents: "read"
+      id-token: "write"
+      packages: "write"
     with:
-      working-directory: '.'
+      working-directory: "."
       push_image: true
-      image-name: 'fhevm-smart-contracts'
-      image-dev-name: 'fhevm-smart-contracts-dev'
+      image-name: "fhevm-smart-contracts"
+      image-dev-name: "fhevm-smart-contracts-dev"
       generate-dev-image: true
-      docker-file-dev: 'dev.dockerfile'
-      image-dev-description: 'fhEVM smart contracts dev Image'
+      docker-file-dev: "dev.dockerfile"
+      image-dev-description: "fhEVM smart contracts dev Image"
       arm-build: true
 
     secrets:
@@ -34,4 +33,3 @@ jobs:
         run: echo Pipeline Done
     needs:
       - docker-smart-contracts
-
