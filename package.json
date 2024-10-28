@@ -71,7 +71,7 @@
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "ethers": "^6.8.0",
-    "fhevmjs": "^0.6.0-4",
+    "fhevmjs": "../fhevmjs",
     "hardhat": "^2.22.10",
     "hardhat-deploy": "^0.11.29",
     "hardhat-gas-reporter": "^1.0.2",
@@ -90,6 +90,8 @@
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.1",
     "extra-bigint": "^1.1.18",
-    "sqlite3": "^5.1.7"
+    "sha3": "^2.1.4",
+    "sqlite3": "^5.1.7",
+    "web3-validator": "^2.0.6"
   }
 }
