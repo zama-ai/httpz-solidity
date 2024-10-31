@@ -80,6 +80,17 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
+      - uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
+        with:
+          dockerfile: ${{ inputs.working-directory }}/operations/docker/${{ inputs.docker-file }}
+          failure-threshold: none
+
+      - uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
+        if: ${{ inputs.generate-dev-image }}
+        with:
+          dockerfile: ${{ inputs.working-directory }}/operations/docker/${{ inputs.docker-file-dev }}
+          failure-threshold: none
+
       - name: Set up SSH
         if: inputs.arm-build
         uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
