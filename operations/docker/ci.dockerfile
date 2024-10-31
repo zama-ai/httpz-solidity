@@ -1,11 +1,14 @@
-FROM node:20
+FROM node:20-slim
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
-COPY package.json ./
 
-# Install the dependencies
-RUN npm install
+# Copy only necessary files for npm install
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install && \
+    npm cache clean --force
 
 COPY .env.example.deployment ./
 COPY lib ./lib/
@@ -14,3 +17,5 @@ COPY gateway ./gateway/
 COPY *.sh ./
 COPY *.ts ./
 COPY tsconfig.json ./
+
+RUN chmod +x *.sh
