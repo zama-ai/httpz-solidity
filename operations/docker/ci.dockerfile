@@ -10,12 +10,10 @@ COPY package.json package-lock.json ./
 RUN npm install && \
     npm cache clean --force
 
-COPY .env.example.deployment ./
+# Copy the application files
+COPY .env.example.deployment *.sh *.ts tsconfig.json ./
 COPY lib ./lib/
 COPY tasks ./tasks/
 COPY gateway ./gateway/
-COPY *.sh ./
-COPY *.ts ./
-COPY tsconfig.json ./
 
 RUN chmod +x *.sh
