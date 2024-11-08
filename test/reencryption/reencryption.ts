@@ -27,6 +27,7 @@ describe('Reencryption', function () {
       { Reencrypt: eip712.types.Reencrypt },
       eip712.message,
     );
+    console.log('5.1', handle, privateKey, publicKey, signature, this.contractAddress, this.signers.alice.address);
     const decryptedValue = await this.instances.alice.reencrypt(
       handle,
       privateKey,
@@ -35,6 +36,7 @@ describe('Reencryption', function () {
       this.contractAddress,
       this.signers.alice.address,
     );
+    console.log('5.2');
     expect(decryptedValue).to.equal(1);
 
     // on the other hand, Bob should be unable to read Alice's balance
