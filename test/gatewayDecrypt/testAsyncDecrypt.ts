@@ -235,6 +235,73 @@ describe('TestAsyncDecrypt', function () {
     expect(y).to.equal(18446744073709551600n);
   });
 
+  it('test async addition decrypt uint64', async function () {
+    const tx2 = await this.contract.connect(this.signers.carol).requestUint64Addition({ gasLimit: 5_000_000 });
+    await tx2.wait();
+    await awaitAllDecryptionResults();
+    const y = await this.contract.yUint64();
+    expect(y).to.equal(76575472186);
+  });
+
+  it('test async decrypt addition uint64 non-trivial', async function () {
+    const inputAlice = this.instances.alice.createEncryptedInput(this.contractAddress, this.signers.alice.address);
+    inputAlice.add64(1000n);
+    const encryptedAmount = await inputAlice.encrypt();
+    const inputAlice2 = this.instances.alice.createEncryptedInput(this.contractAddress, this.signers.alice.address);
+    inputAlice2.add64(1002n);
+    const encryptedAmount2 = await inputAlice2.encrypt();
+    console.log("1.0");
+
+    const tx = await this.contract.prepare2Uint64NonTrivial(encryptedAmount.handles[0], encryptedAmount.inputProof, encryptedAmount2.handles[0], encryptedAmount2.inputProof, {
+      gasLimit: 5_000_000,
+    });
+    await tx.wait();
+    console.log("2.0");
+
+    const tx2 = await this.contract.request2Uint64NonTrivial({
+      gasLimit: 5_000_000,
+    });
+    await tx2.wait();
+
+    console.log("3.0");
+
+
+    await awaitAllDecryptionResults();
+    console.log("4.0");
+
+    const y = await this.contract.yUint64();
+    expect(y).to.equal(2002);
+  });
+
+  it('test async decrypt addition uint64 non-trivial bigger value', async function () {
+    const inputAlice = this.instances.alice.createEncryptedInput(this.contractAddress, this.signers.alice.address);
+    inputAlice.add64(8446744073709550040n);
+    inputAlice.add64(1002n);
+
+    const encryptedAmounts = await inputAlice.encrypt();
+    console.log("1.0");
+
+    const tx = await this.contract.prepare2Uint64NonTrivialMultiple(encryptedAmounts.handles[0], encryptedAmounts.handles[1], encryptedAmounts.inputProof, {
+      gasLimit: 5_000_000,
+    });
+    await tx.wait();
+    console.log("2.0");
+
+    const tx2 = await this.contract.request2Uint64NonTrivial({
+      gasLimit: 5_000_000,
+    });
+    await tx2.wait();
+
+    console.log("3.0");
+
+
+    await awaitAllDecryptionResults();
+    console.log("4.0");
+
+    const y = await this.contract.yUint64();
+    expect(y).to.equal(8446744073709551042n);
+  });
+
   it('test async decrypt uint128', async function () {
     const tx2 = await this.contract.connect(this.signers.carol).requestUint128({ gasLimit: 5_000_000 });
     await tx2.wait();

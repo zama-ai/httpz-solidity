@@ -16,6 +16,7 @@ contract TestAsyncDecrypt is GatewayCaller {
     euint64 xUint64;
     euint64 xUint64_2;
     euint64 xUint64_3;
+    euint64 x64;
     euint128 xUint128;
     eaddress xAddress;
     eaddress xAddress2;
@@ -269,6 +270,22 @@ contract TestAsyncDecrypt is GatewayCaller {
         Gateway.requestDecryption(cts, this.callbackUint64.selector, 0, block.timestamp + 100, false);
     }
 
+    /// @notice Request decryption of a 64-bit unsigned integer
+    function request2Uint64NonTrivial() public {
+        uint256[] memory cts = new uint256[](1);
+        cts[0] = Gateway.toUint256(x64);
+        Gateway.requestDecryption(cts, this.callbackUint64.selector, 0, block.timestamp + 100, false);
+    }
+
+    /// @notice Request decryption of a 64-bit unsigned integer
+    function requestUint64Addition() public {
+        euint64 res = TFHE.add(xUint64_2, xUint64_3);
+        TFHE.allowThis(res);
+        uint256[] memory cts = new uint256[](1);
+        cts[0] = Gateway.toUint256(res);
+        Gateway.requestDecryption(cts, this.callbackUint64.selector, 0, block.timestamp + 100, false);
+    }
+
     /// @notice Attempt to request decryption of a fake 64-bit unsigned integer (should revert)
     function requestFakeUint64() public {
         uint256[] memory cts = new uint256[](1);
@@ -285,6 +302,36 @@ contract TestAsyncDecrypt is GatewayCaller {
         uint256[] memory cts = new uint256[](1);
         cts[0] = Gateway.toUint256(inputNonTrivial);
         Gateway.requestDecryption(cts, this.callbackUint64.selector, 0, block.timestamp + 100, false);
+    }
+
+    /// @notice Request decryption of a non-trivial 64-bit unsigned integer
+    /// @param inputHandle The input handle for the encrypted value
+    /// @param inputProof The input proof for the encrypted value
+    function prepare2Uint64NonTrivial(
+        einput inputHandle,
+        bytes calldata inputProof,
+        einput inputHandle2,
+        bytes calldata inputProof2
+    ) public {
+        euint64 inputNonTrivial = TFHE.asEuint64(inputHandle, inputProof);
+        euint64 inputNonTrivial2 = TFHE.asEuint64(inputHandle2, inputProof2);
+        x64 = TFHE.add(inputNonTrivial, inputNonTrivial2);
+        TFHE.allowThis(x64);
+    }
+
+    /// @notice Request decryption of a non-trivial 64-bit unsigned integer
+    /// @param inputHandle1 The input handle for the encrypted value
+    /// @param inputHandle2 The input handle for the encrypted value
+    /// @param inputProof The input proof for the encrypted value
+    function prepare2Uint64NonTrivialMultiple(
+        einput inputHandle1,
+        einput inputHandle2,
+        bytes calldata inputProof
+    ) public {
+        euint64 inputNonTrivial = TFHE.asEuint64(inputHandle1, inputProof);
+        euint64 inputNonTrivial2 = TFHE.asEuint64(inputHandle2, inputProof);
+        x64 = TFHE.add(inputNonTrivial, inputNonTrivial2);
+        TFHE.allowThis(x64);
     }
 
     /// @notice Callback function for 64-bit unsigned integer decryption
