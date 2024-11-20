@@ -26,11 +26,11 @@ The following encrypted data types are defined:
 | `euint16`   | yes             |
 | `euint32`   | yes             |
 | `euint64`   | yes             |
-| `euint128`  | no, coming soon |
-| `euint256`  | no, coming soon |
+| `euint128`  | yes             |
+| `euint256`  | yes             |
 | `eaddress`  | yes             |
-| `ebytes64`  | no, coming soon |
-| `ebytes128` | no, coming soon |
+| `ebytes64`  | yes             |
+| `ebytes128` | yes             |
 | `ebytes256` | yes             |
 | `eint8`     | no, coming soon |
 | `eint16`    | no, coming soon |
@@ -43,13 +43,50 @@ Higher-precision integers are supported in the `TFHE-rs` library and can be adde
 
 ## Casting
 
-You can cast types with `asEuint`/`asEbool` methods:
+You can cast types with `asEuintXX`/`asEbool` methods:
 
 ```solidity
 euint64 value64 = TFHE.asEuint64(7262);
 euint32 value32 = TFHE.asEuint32(value64);
 ebool valueBool = TFHE.asEbool(value32);
 ```
+
+| From Type | To Type | Function |
+| --------- | ------- | -------- |
+| `uintX` | `euint4` | `TFHE.asEuint4` |
+| `uintX` | `euint8` | `TFHE.asEuint8` |
+| `uintX` | `euint16` | `TFHE.asEuint16` |
+| `uintX` | `euint32` | `TFHE.asEuint32` |
+| `uintX` | `euint64` | `TFHE.asEuint64` |
+| `uintX` | `euint128` | `TFHE.asEuint128` |
+| `uintX` | `euint256` | `TFHE.asEuint256` |
+| `euint4` | `euint8` | `TFHE.asEuint8` |
+| `euint4` | `euint16` | `TFHE.asEuint16` |
+| `euint4` | `euint32` | `TFHE.asEuint32` |
+| `euint4` | `euint64` | `TFHE.asEuint64` |
+| `euint4` | `euint128` | `TFHE.asEuint128` |
+| `euint4` | `euint256` | `TFHE.asEuint256` |
+| `euint8` | `euint16` | `TFHE.asEuint16` |
+| `euint8` | `euint32` | `TFHE.asEuint32` |
+| `euint8` | `euint64` | `TFHE.asEuint64` |
+| `euint8` | `euint128` | `TFHE.asEuint128` |
+| `euint8` | `euint256` | `TFHE.asEuint256` |
+| `euint16` | `euint32` | `TFHE.asEuint32` |
+| `euint16` | `euint64` | `TFHE.asEuint64` |
+| `euint16` | `euint128` | `TFHE.asEuint128` |
+| `euint16` | `euint256` | `TFHE.asEuint256` |
+| `euint32` | `euint64` | `TFHE.asEuint64` |
+| `euint32` | `euint128` | `TFHE.asEuint128` |
+| `euint32` | `euint256` | `TFHE.asEuint256` |
+| `euint64` | `euint128` | `TFHE.asEuint128` |
+| `euint64` | `euint256` | `TFHE.asEuint256` |
+| `euint128` | `euint256` | `TFHE.asEuint256` |
+| `euintX` | `ebool` | `TFHE.asEbool` |
+| `address` | `eaddress` | `TFHE.asEaddress` |
+| `bytes64` | `ebytes64` | `TFHE.asEbytes64` |
+| `bytes128` | `ebytes128` | `TFHE.asEbytes128` |
+| `bytes256` | `ebytes256` | `TFHE.asEbytes256` |
+
 
 ## Contracting state variables
 

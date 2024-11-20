@@ -18,10 +18,10 @@ This document explains the supported operations with Fully Homomorphic Encryptio
 ## Bitwise operations
 | Name                    | Function name       | Symbol | Type    |
 | ----------------------- | ------------------- | ------ | ------- |
-| Bitwise AND                  | `TFHE.and`          | `&`    | Binary  |
-| Bitwise OR                   | `TFHE.or`           | `\|`   | Binary  |
-| Bitwise XOR                  | `TFHE.xor`          | `^`    | Binary  |
-| Bitwise NOT                     | `TFHE.not`          | `~`    | Unary   |
+| Bitwise AND             | `TFHE.and`          | `&`    | Binary  |
+| Bitwise OR              | `TFHE.or`           | `\|`   | Binary  |
+| Bitwise XOR             | `TFHE.xor`          | `^`    | Binary  |
+| Bitwise NOT             | `TFHE.not`          | `~`    | Unary   |
 | Shift Right             | `TFHE.shr`          |        | Binary  |
 | Shift Left              | `TFHE.shl`          |        | Binary  |
 | Rotate Right            | `TFHE.rotr`         |        | Binary  |
@@ -55,9 +55,7 @@ This document explains the supported operations with Fully Homomorphic Encryptio
 ## Overload operators
 Overloaded operators such as `+`, `-`, `*`, and `&` on encrypted integers are supported with the [`using for`](https://docs.soliditylang.org/en/v0.8.22/contracts.html#using-for) syntax. As of now, overloaded operators call the versions without an overflow check.
 
-For more information about the supported operations, refer to the [function specifications](../../references/functions.md) page or the [TFHE-rs docs](https://docs.zama.ai/tfhe-rs/getting-started/operations#arithmetic-operations.).
-
-If you need a feature that is not currently available, please [consult our roadmap](../../developer/roadmap.md) for upcoming developments. You can also reach out to us on Discord or visit our community forum.
+For more information about the supported operations, refer to the [fhEVM API specifications](../../references/functions.md) page.
 
 If you find yourself in search of a missing feature, we encourage you to [consult our roadmap](../../developer/roadmap.md) for upcoming developments. Alternatively, don't hesitate to reach out to us on [Discord](https://discord.com/invite/fhe-org) or visit our [Community Forum](https://community.zama.ai/c/fhevm/15).
 

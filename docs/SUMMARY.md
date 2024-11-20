@@ -4,50 +4,54 @@
 
 ## Getting Started
 
-- [What is fhEVM](getting_started/overview.md)
-- Write contract
+- [Quick overview](getting_started/overview.md)
+  - [Key concepts and features](getting_started/key_concepts.md)
+  - [Repositories](getting_started/repositories.md)
+  - [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
+- [Get started on Ethereum](getting_started/ethereum.md)
+- [Get started on ZAMA Devnet](getting_started/devnet.md)
+- [Create a smart contract]()
   - [Using Hardhat](getting_started/write_contract/hardhat.md)
   - [Using Remix](getting_started/write_contract/remix.md)
   - [Other development environment](getting_started/write_contract/others.md)
   - [Installing packages](getting_started/write_contract/installation.md)
-- [Deploy on fhEVM native](getting_started/devnet.md)
-- [Deploy on Ethereum](getting_started/ethereum.md)
-- [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
 
 ## Fundamentals
 
-- Encrypted types
+- [Architecture Overview](fundamentals/architecture_overview.md)
+  - [Decrypt and reencrypt](fundamentals/decrypt.md)
+  - [Encryption](fundamentals/encryption.md)
+  - [Decryption](guides/decrypt.msd)
+  - [Reencryption](guides/reencryption.md)
+- [Encrypted types]()
   - [Supported types](fundamentals/types/README.md)
   - [Operations on encrypted types](fundamentals/types/operations.md)
-  - [Branching in FHE](fundamentals/types/conditions.md)
-  - [Generate random number](fundamentals/types/random.md)
 - [Encrypted inputs](fundamentals/inputs.md)
 - [Access Control List](fundamentals/acl.md)
-- [Decrypt and reencrypt](fundamentals/decrypt.md)
 - [Contracts standard library](fundamentals/contracts.md)
 
 ## Guides
 
-- [Decryption](guides/decrypt.md)
-- [Reencryption](guides/reencryption.md)
-- [Build a web application](guides/webapp.md)
-- [Build with Node](guides/node.md)
-- [Common pitfalls and best practises](guides/pitfalls.md)
-- [How can I break a loop ?](guides/loop.md)
-- [Gas estimation on devnet](guides/gas.md)
-- [Use the CLI](guides/cli.md)
-- [Common webpack errors](guides/webpack.md)
+- [Smart Contracts]()
+  - [Common pitfalls and best practises](guides/pitfalls.md)
+  - [If sentances](guides/loop.md)
+  - [Branching in FHE](fundamentals/types/conditions.md)
+  - [Generate random number](fundamentals/types/random.md)
+  - [Gas estimation on devnet](guides/gas.md)
+- [Frontend/Testing]()
+  - [Build a web application](guides/webapp.md)
+  - [Build with Node](guides/node.md)
+  - [Using the CLI](guides/cli.md)
+  - [Common webpack errors](guides/webpack.md)
 
 ## Tutorials
 
 - [See all tutorials](tutorials/see-all-tutorials.md)
-- [Write confidential smart contract with fhEVM](https://www.zama.ai/post/video-tutorial-how-to-write-confidential-smart-contracts-using-zamas-fhevm)
 
 ## References
 
-- [API function specifications](references/functions.md)
-- [fhevmjs function specifications](references/fhevmjs.md)
-- [Repositories](references/repositories.md)
+- [Smart contracts - fhEVM API](references/functions.md)
+- [Frontend - fhevmjs lib](references/fhevmjs.md)
 
 ## Developer
 
