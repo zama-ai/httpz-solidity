@@ -66,14 +66,11 @@ The fhEVM (Fully Homomorphic Ethereum Virtual Machine) represents a transformati
 
 ---
 
-## **1. High-Level Design**
+## **High-Level Design**
 The fhEVM merges cutting-edge cryptographic techniques to ensure confidentiality and composability of smart contracts:
 - **Fully Homomorphic Encryption (FHE)**: Enables computations directly on encrypted data without decryption.
 - **Threshold Multi-Party Computation (MPC)**: Distributes key management across multiple entities to prevent single points of failure.
 - **Zero-Knowledge Proofs of Knowledge (ZKPoK)**: Ensures correctness of encrypted inputs without revealing the plaintext.
 
-The protocol is compatible with Ethereum and other EVM-compatible blockchains and offers flexibility with two deployment variants:
-1. **fhEVM-native**: Integrated into Layer 1/2/3 blockchains.
-2. **fhEVM-coprocessor**: Works as an off-chain service for non-native EVM systems.
 
 For a detailed exploration of the fhEVM architecture, including components, workflows, and deployment models, see [Architecture Overview](../fundamentals/architecture_overview.md).

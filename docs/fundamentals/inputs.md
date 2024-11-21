@@ -1,35 +1,51 @@
-# Encrypted inputs
+# **Encrypted Inputs in fhEVM**
 
-This document introduces the concept of encrypted inputs in the fhEVM, explaining how they are used, structured, and validated within smart contracts.
+This document introduces the concept of encrypted inputs in the fhEVM, explaining their role, structure, validation process, and how developers can integrate them into smart contracts and applications.
 
-Inputs are a cornerstone of fhEVM: they allow users to push encrypted data onto the blockchain.
+> **_NOTE:_** Understanding how encryption, decryption and reencryption works is a prerequisit before implementation, see [Encryption, Decryption, Re-encryption, and Computation](../fundamentals/decrypt.md)
 
-To prevent any attacks, a user must provide proof of knowledge of the plaintext value underlying the ciphertext. This proof ensures that a ciphertext cannot be reused once stored on the blockchain.
+Encrypted inputs are a core feature of fhEVM, enabling users to push encrypted data onto the blockchain while ensuring data confidentiality and integrity. 
 
-All inputs are packed into a single ciphertext in a user-defined order, thereby minimizing the size and time required to create a zero-knowledge proof.
 
-When a function is called, there are two types of parameters:
+## **What Are Encrypted Inputs?**
 
-- `einput`: Represents the index of the encrypted parameter.
-- `bytes`: Contains the actual ciphertext and the associated zero-knowledge proof.
+Encrypted inputs are data values submitted by users in ciphertext form. These inputs allow sensitive information to remain confidential while still being processed by smart contracts. They are accompanied by **Zero-Knowledge Proofs of Knowledge (ZKPoKs)** to ensure the validity of the encrypted data without revealing the plaintext.
 
-For example, if a function requires 3 encrypted parameters, it could be written as follows:
+### **Key Characteristics of Encrypted Inputs**:
+1. **Confidentiality**: Data is encrypted using the public FHE key, ensuring that only authorized parties can decrypt or process the values.
+2. **Validation via ZKPoKs**: Each encrypted input is accompanied by a proof verifying that the user knows the plaintext value of the ciphertext, preventing replay attacks or misuse.
+3. **Efficient Packing**: All inputs for a transaction are packed into a single ciphertext in a user-defined order, optimizing the size and generation of the zero-knowledge proof.
+
+
+## **Parameters in Encrypted Functions**
+
+When a function in a smart contract is called, it may accept two types of parameters for encrypted inputs:
+
+1. **`einput`**: Refers to the index of the encrypted parameter, representing a specific encrypted input handle.
+2. **`bytes`**: Contains the ciphertext and the associated zero-knowledge proof used for validation.
+
+Here’s an example of a Solidity function accepting multiple encrypted parameters:
 
 ```solidity
 function myExample(
-  address account
+  address account,
   einput param1,
   uint id,
   einput param2,
   einput param3,
   bool isAllowed,
   bytes calldata inputProof
-) {}
+) public {
+  // Function logic here
+}
 ```
 
-### Client-side implementation
+In this example, `param1`, `param2`, and `param3` are encrypted inputs, while `inputProof` contains the corresponding ZKPoK to validate their authenticity.
 
-On client side, you can interact with the the previous function using [fhevmjs](https://github.com/zama-ai/fhevmjs). Here's an example:
+
+## **Client-Side Implementation**
+
+To interact with such a function, developers can use the [fhevmjs](https://github.com/zama-ai/fhevmjs) library to create and manage encrypted inputs. Below is an example implementation:
 
 ```javascript
 const instance = await createInstance({
@@ -39,28 +55,93 @@ const instance = await createInstance({
   gatewayUrl: "https://gateway.zama.ai/",
 });
 
+// Create encrypted inputs
 const input = instance.createEncryptedInput(contractAddress, userAddress);
-const inputs = input.add64(64).addBool(true).add8(4).encrypt(); // Encrypt the three parameters
+const inputs = input.add64(64).addBool(true).add8(4).encrypt(); // Encrypt the parameters
 
+// Call the smart contract function with encrypted inputs
 contract.myExample(
-  "0xa5e1defb98EFe38EBb2D958CEe052410247F4c80",
-  inputs.handles[0],
-  32,
-  inputs.handles[1],
-  inputs.handles[2],
-  true,
-  inputs.inputProof,
+  "0xa5e1defb98EFe38EBb2D958CEe052410247F4c80", // Account address
+  inputs.handles[0], // Handle for the first parameter
+  32, // Plaintext parameter
+  inputs.handles[1], // Handle for the second parameter
+  inputs.handles[2], // Handle for the third parameter
+  true, // Plaintext boolean parameter
+  inputs.inputProof, // Proof to validate all encrypted inputs
 );
 ```
 
-### Validate input
+In this example:
+- **`add64`, `addBool`, and `add8`**: Specify the types and values of inputs to encrypt.
+- **`encrypt`**: Generates the encrypted inputs and the zero-knowledge proof.
 
-A contract can use an encrypted parameter by calling `TFHE.asEuintXX(param, proof)` (or `TFHE.asEbool` or `TFHE.asEaddress`). This function will transform the input as a valid encrypted type:
+
+
+## **Validating Encrypted Inputs**
+
+Smart contracts process encrypted inputs by verifying them against the associated zero-knowledge proof. This is done using the `TFHE.asEuintXX`, `TFHE.asEbool`, or `TFHE.asEaddress` functions, which validate the input and convert it into the appropriate encrypted type.
+
+### **Example Validation that goes along the Client-Side implementation**
+This example demonstrates a function that performs multiple encrypted operations, such as updating a user's encrypted balance and toggling an encrypted boolean flag:
 
 ```solidity
-function transfer(address to, einput encryptedAmount, bytes calldata inputProof) public {
-  // Verify the provided encrypted amount
+  function myExample(
+    einput encryptedAmount,
+    einput encryptedToggle,
+    bytes calldata inputProof
+  ) public {
+    // Validate and convert the encrypted inputs
+    euint64 amount = TFHE.asEuint64(encryptedAmount, inputProof);
+    ebool toggleFlag = TFHE.asEbool(encryptedToggle, inputProof);
+
+    // Update the user's encrypted balance
+    balances[msg.sender] = TFHE.add(balances[msg.sender], amount);
+
+    // Toggle the user's encrypted flag
+    userFlags[msg.sender] = TFHE.not(toggleFlag);
+  }
+
+  // Function to retrieve a user's encrypted balance
+  function getEncryptedBalance() public view returns (euint64) {
+    return balances[msg.sender];
+  }
+
+  // Function to retrieve a user's encrypted flag
+  function getEncryptedFlag() public view returns (ebool) {
+    return userFlags[msg.sender];
+  }
+}
+```
+
+### **Example Validation in the `encyrptedERC20.sol` Smart Contract**
+Here’s an example of a smart contract function that verifies an encrypted input before proceeding:
+
+```solidity
+function transfer(
+  address to,
+  einput encryptedAmount,
+  bytes calldata inputProof
+) public {
+  // Verify the provided encrypted amount and convert it into an encrypted uint64
   euint64 amount = TFHE.asEuint64(encryptedAmount, inputProof);
+
+  // Function logic here, such as transferring funds
   ...
 }
 ```
+
+### **How Validation Works**
+1. **Input Verification**:  
+   The `TFHE.asEuintXX` function ensures that the input is a valid ciphertext with a corresponding ZKPoK.  
+2. **Type Conversion**:  
+   The function transforms the `einput` into the appropriate encrypted type (`euintXX`, `ebool`, etc.) for further operations within the contract.
+
+---
+
+## **Best Practices**
+
+- **Input Packing**: Minimize the size and complexity of zero-knowledge proofs by packing all encrypted inputs into a single ciphertext.  
+- **Frontend Encryption**: Always encrypt inputs using the FHE public key on the client side to ensure data confidentiality.  
+- **Proof Management**: Ensure that the correct zero-knowledge proof is associated with each encrypted input to avoid validation errors.  
+
+Encrypted inputs and their validation form the backbone of secure and private interactions in the fhEVM. By leveraging these tools, developers can create robust, privacy-preserving smart contracts without compromising functionality or scalability.

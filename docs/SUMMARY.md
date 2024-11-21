@@ -9,7 +9,6 @@
   - [Repositories](getting_started/repositories.md)
   - [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
 - [Get started on Ethereum](getting_started/ethereum.md)
-- [Get started on ZAMA Devnet](getting_started/devnet.md)
 - [Create a smart contract]()
   - [Using Hardhat](getting_started/write_contract/hardhat.md)
   - [Using Remix](getting_started/write_contract/remix.md)
@@ -18,31 +17,30 @@
 
 ## Fundamentals
 
-- [Architecture Overview](fundamentals/architecture_overview.md)
-  - [Decrypt and reencrypt](fundamentals/decrypt.md)
-  - [Encryption](fundamentals/encryption.md)
-  - [Decryption](guides/decrypt.msd)
-  - [Reencryption](guides/reencryption.md)
-- [Encrypted types]()
+- [Architecture overview](fundamentals/architecture_overview.md)
+  - [Encryption, decryption, re-encryption, and computation](fundamentals/decrypt.md)
+  - [Access control list](fundamentals/acl.md)
+- [First step](fundamentals/start.md)
   - [Supported types](fundamentals/types/README.md)
   - [Operations on encrypted types](fundamentals/types/operations.md)
-- [Encrypted inputs](fundamentals/inputs.md)
-- [Access Control List](fundamentals/acl.md)
-- [Contracts standard library](fundamentals/contracts.md)
+  - [Encryption](fundamentals/inputs.md)
+  - [Decryption](fundamentals/decrypt.md)
+  - [Reencryption](fundamentals/reencryption.md)
 
 ## Guides
 
-- [Smart Contracts]()
+- Smart Contracts
   - [Common pitfalls and best practises](guides/pitfalls.md)
   - [If sentances](guides/loop.md)
-  - [Branching in FHE](fundamentals/types/conditions.md)
-  - [Generate random number](fundamentals/types/random.md)
+  - [Branching in FHE](guides/types/conditions.md)
+  - [Generate random numbers](guides/types/random.md)
   - [Gas estimation on devnet](guides/gas.md)
-- [Frontend/Testing]()
-  - [Build a web application](guides/webapp.md)
-  - [Build with Node](guides/node.md)
-  - [Using the CLI](guides/cli.md)
-  - [Common webpack errors](guides/webpack.md)
+  - [Error handling](guides/types/error_handling.md)
+- Frontend
+  - [Build a web application](guides/frontend/webapp.md)
+  - [Build with Node](guides/frontend/node.md)
+  - [Using the CLI](guides/frontend/cli.md)
+  - [Common webpack errors](guides/frontend/webpack.md)
 
 ## Tutorials
 
@@ -58,5 +56,5 @@
 - [Contributing](developer/contribute.md)
 - [Development roadmap](developer/roadmap.md)
 - [Release note](https://github.com/zama-ai/fhevm/releases)
-- [Feature request](https://github.com/zama-ai/fhevm/issues/new)
-- [Bug report](https://github.com/zama-ai/fhevm/issues/new)
+- [Feature request](https://github.com/zama-ai/fhevm/issues/new?assignees=&labels=enhancement&projects=&template=feature-request.md&title=)
+- [Bug report](https://github.com/zama-ai/fhevm/issues/new?assignees=&labels=bug&projects=&template=bug_report_fhevm.md&title=)

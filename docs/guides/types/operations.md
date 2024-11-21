@@ -1,8 +1,9 @@
 # Operations on encrypted types
 
-This document explains the supported operations with Fully Homomorphic Encryption (FHE) ciphertexts in the `TFHE` library.
+This document outlines the operations supported on encrypted types in the `TFHE` library, enabling arithmetic, bitwise, comparison, and more on Fully Homomorphic Encryption (FHE) ciphertexts.
 
 ## Arithmetic operations
+The following arithmetic operations are supported for encrypted integers (`euintX`):
 
 | Name                    | Function name       | Symbol | Type    |
 | ----------------------- | ------------------- | ------ | ------- |
@@ -15,7 +16,12 @@ This document explains the supported operations with Fully Homomorphic Encryptio
 | Min                     | `TFHE.min`          |        | Binary  |
 | Max                     | `TFHE.max`          |        | Binary  |
 
+> **Note**: Division (TFHE.div) and remainder (TFHE.rem) operations are currently supported only with plaintext divisors.
+
 ## Bitwise operations
+
+The TFHE library also supports bitwise operations, including shifts and rotations:
+
 | Name                    | Function name       | Symbol | Type    |
 | ----------------------- | ------------------- | ------ | ------- |
 | Bitwise AND             | `TFHE.and`          | `&`    | Binary  |
@@ -32,6 +38,7 @@ This document explains the supported operations with Fully Homomorphic Encryptio
  {% endhinr %}
 
 ## Comparison operations
+Encrypted integers can be compared using the following functions:
 | Name                    | Function name       | Symbol | Type    |
 | ----------------------- | ------------------- | ------ | ------- |
 | Equal                   | `TFHE.eq`           |        | Binary  |
@@ -42,22 +49,43 @@ This document explains the supported operations with Fully Homomorphic Encryptio
 | Less than               | `TFHE.lt`           |        | Binary  |
 
 ## Ternary operation 
+
+The `TFHE.select` function is a ternary operation that selects one of two encrypted values based on an encrypted condition:
+
 | Name                    | Function name       | Symbol | Type    |
 | ----------------------- | ------------------- | ------ | ------- |
 | Select                  | `TFHE.select`       |        | Ternary |
 
-## Random operation
-| Name                    | Function name       | Symbol | Type    |
-| ----------------------- | ------------------- | ------ | ------- |
-| Random unsigned int     | `TFHE.randEuintX()` |        | Random  |
+## Random operations
 
+You can generate cryptographically secure random numbers fully on-chain:
+
+| **Name**               | **Function Name**       | **Symbol** | **Type**  |
+|-------------------------|-------------------------|------------|-----------|
+| Random Unsigned Integer | `TFHE.randEuintX()`    |            | Random    |
+
+For more details, refer to the [Random Encrypted Numbers](./random.md) document.
 
 ## Overload operators
-Overloaded operators such as `+`, `-`, `*`, and `&` on encrypted integers are supported with the [`using for`](https://docs.soliditylang.org/en/v0.8.22/contracts.html#using-for) syntax. As of now, overloaded operators call the versions without an overflow check.
 
-For more information about the supported operations, refer to the [fhEVM API specifications](../../references/functions.md) page.
+The `TFHE` library supports operator overloading for encrypted integers (e.g., `+`, `-`, `*`, `&`) using the Solidity [`using for`](https://docs.soliditylang.org/en/v0.8.22/contracts.html#using-for) syntax. These overloaded operators currently perform unchecked operations, meaning they do not include overflow checks.
 
-If you find yourself in search of a missing feature, we encourage you to [consult our roadmap](../../developer/roadmap.md) for upcoming developments. Alternatively, don't hesitate to reach out to us on [Discord](https://discord.com/invite/fhe-org) or visit our [Community Forum](https://community.zama.ai/c/fhevm/15).
+> **Example**:  
+> Overloaded operators make code more concise:
+```solidity
+euint64 a = TFHE.asEuint64(42);
+euint64 b = TFHE.asEuint64(58);
+euint64 sum = a + b; // Calls TFHE.add under the hood
+```
+
+
+## Additional Resources
+
+- For detailed API specifications, visit the [fhEVM API Documentation](../../references/functions.md).  
+- Check our [Roadmap](../../developer/roadmap.md) for upcoming features or submit a feature request on [Discord](https://discord.com/invite/fhe-org).  
+- Join the discussion on the [Community Forum](https://community.zama.ai/c/fhevm/15).
+
+---
 
 {% hint style="success" %}
 **Zama 5-Question Developer Survey**
