@@ -2,12 +2,24 @@
 
 ### Code examples in GitHub
 
+**Solidity smart contracts - templates**
+
 - [ERC-20](https://github.com/zama-ai/fhevm-contracts/tree/main/contracts/token/ERC20): A variation of the standard ERC20 smart contract that incorporates encrypted balances, providing additional privacy for token holders.
-- [Blind Auction](https://github.com/zama-ai/fhevm/blob/main/examples/BlindAuction.sol): A smart contract for conducting blind auctions where bids are encrypted and the winning bid remains private.
 - [Governor DAO](https://github.com/zama-ai/fhevm-contracts/tree/main/contracts/governance): A DAO smart contract that facilitates governance decisions through encrypted voting
-- [Decentralized ID](https://github.com/poppyseedDev/FHEPass): A blockchain-based identity management system using smart contracts to store and manage encrypted personal data.
 
 For more information on individual contracts, see the [fhevm-contracts repository](https://github.com/zama-ai/fhevm-contracts).
+
+**Solidity smart contract examples**
+
+- [Blind Auction](https://github.com/zama-ai/fhevm/blob/main/examples/BlindAuction.sol): A smart contract for conducting blind auctions where bids are encrypted and the winning bid remains private.
+- [Decentralized ID](https://github.com/poppyseedDev/FHEPass): A blockchain-based identity management system using smart contracts to store and manage encrypted personal data.
+- [Cipherbomb](https://github.com/immortal-tofu/cipherbomb): A multiplayer game where players must defuse an encrypted bomb by guessing the correct sequence of numbers.
+- [Voting example](https://github.com/allemanfredi/suffragium): Suffragium is a secure, privacy-preserving voting system that combines zero-knowledge proofs (ZKP) and Fully Homomorphic Encryption (FHE) to create a trustless and tamper-resistant voting platform.
+
+**Frontend examples**
+
+- [Cipherbomb UI](https://github.com/immortal-tofu/cipherbomb-ui): A multiplayer game where players must defuse an encrypted bomb by guessing the correct sequence of numbers.
+
 
 ### Blog tutorials:
 - [Suffragium: An Encrypted Onchain Voting System Leveraging ZK and FHE Using Zama's fhEVM](https://www.zama.ai/post/encrypted-onchain-voting-using-zk-and-fhe-with-zama-fhevm)

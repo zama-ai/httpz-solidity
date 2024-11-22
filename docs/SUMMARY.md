@@ -18,14 +18,14 @@
 ## Fundamentals
 
 - [Architecture overview](fundamentals/architecture_overview.md)
-  - [Encryption, decryption, re-encryption, and computation](fundamentals/decrypt.md)
+  - [Encryption, decryption, re-encryption, and computation](fundamentals/d_re_ecrypt_compute.md)
   - [Access control list](fundamentals/acl.md)
-- [First step](fundamentals/start.md)
-  - [Supported types](fundamentals/types/README.md)
-  - [Operations on encrypted types](fundamentals/types/operations.md)
-  - [Encryption](fundamentals/inputs.md)
-  - [Decryption](fundamentals/decrypt.md)
-  - [Reencryption](fundamentals/reencryption.md)
+- [First step](fundamentals/first_step/start.md)
+  - [Supported types](fundamentals/first_step/types.md)
+  - [Operations on encrypted types](fundamentals/first_step/operations.md)
+  - [Encryption](fundamentals/first_step/inputs.md)
+  - [Decryption](fundamentals/first_step/decrypt.md)
+  - [Reencryption](fundamentals/first_step/reencryption.md)
 
 ## Guides
 
