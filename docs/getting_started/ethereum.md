@@ -7,12 +7,12 @@ Our testnet is up and running on Ethereum Sepolia.
 | Fields             | Value                                         |
 | ------------------ | --------------------------------------------- |
 | Network            | Ethereum Sepolia                              |
-| RPC URL            | https://eth-sepolia.g.alchemy.com/v2/[API-KEY]|
+| RPC URL            | https://eth-sepolia.g.alchemy.com/v2/[API-KEY\]|
 | Chain ID           | 11155111                                      |
 | Currency symbol    | ETH                                           |
 | Block explorer URL | https://sepolia.etherscan.io                  |
 
-## Getting Test ETH
+## Getting test ETH
 
 You can get test ETH for Sepolia from these faucets:
 

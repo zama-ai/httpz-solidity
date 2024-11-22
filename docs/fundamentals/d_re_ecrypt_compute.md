@@ -64,7 +64,7 @@ Decryption is used when plaintext results are required for contract logic or for
 
 <figure style="text-align: center"><img src="../.gitbook/assets/decryption.png" alt="decryption"></figure>
 
-- **How It Works**:  
+- **How it works**:  
    Validators on the blockchain do not possess the private key needed for decryption. Instead, the **Key Management System (KMS)** securely holds the private key. If plaintext values are needed, the process is facilitated by a service called the **Gateway**, which provides two options:  
    
    1. **For Smart Contract Logic**:  
@@ -73,7 +73,7 @@ Decryption is used when plaintext results are required for contract logic or for
    2. **For dApps**:  
       If a dApp needs plaintext values, the Gateway enables re-encryption of the ciphertext. The KMS securely re-encrypts the ciphertext with the dApp's public key, ensuring that only the dApp can decrypt and access the plaintext.
 
-- **Data Flow**:
+- **Data flow**:
    - **Source**: Blockchain or dApp (ciphertext).  
    - **Processing**: KMS performs decryption or re-encryption via the Gateway.  
    - **Destination**: Plaintext is either sent to the smart contract or re-encrypted and delivered to the dApp.  
@@ -86,23 +86,58 @@ You can read about the implemention details in [our decryption guide](../guides/
 ---
 
 ### **4. Re-encryption**
-Re-encryption ensures that encrypted data can be shared or repurposed under a different key without exposing the plaintext.
 
-- **How It Works**:  
-   - Similar to decryption, the Gateway facilitates re-encryption requests.  
-   - The **KMS** uses its private key to re-encrypt the ciphertext with the target entity's public key, ensuring the plaintext remains protected while enabling secure data sharing.
+Re-encryption enables encrypted data to be securely shared or reused under a different encryption key without ever revealing the plaintext. This process is essential for scenarios where data needs to be accessed by another contract, dApp, or user while maintaining confidentiality.
 
-- **Data Flow**:
-   - **Source**: Original ciphertext from the blockchain or dApp.  
-   - **Processing**: Gateway forwards re-encryption requests to the KMS.  
-   - **Destination**: Re-encrypted ciphertext is sent to the intended recipient (e.g., a different contract, dApp, or user).
 
-Reencryption is performed on the client side by calling the gateway service using the [fhevmjs](https://github.com/zama-ai/fhevmjs/) library. To do this, you need to provide a view function that returns the ciphertext to be reencrypted.
+#### How it works
 
-1. The dApp retrieves the handle from the view function (e.g., balanceOf).
-2. The dApp generates a keypair for the user and requests the user to sign the public key.
-3. The dApp calls the gateway, providing the handle, public key, user address, contract address, and the user's signature.
-4. The dApp decrypts the received value with the private key.
+Re-encryption is facilitated by the **Gateway** in collaboration with the **Key Management System (KMS)**:  
+1. The Gateway receives a re-encryption request, which includes details of the original ciphertext and the target public key.  
+2. The KMS securely decrypts the ciphertext using its private key and re-encrypts the data with the recipient's public key.  
+3. The re-encrypted ciphertext is then sent to the intended recipient.
+
+---
+
+#### Data flow
+
+1. **source**:  
+   - The process starts with an original ciphertext retrieved from the blockchain or a dApp.  
+
+2. **processing**:  
+   - The Gateway forwards the re-encryption request to the KMS.  
+   - The KMS handles decryption and re-encryption using the appropriate keys.
+
+3. **destination**:  
+   - The re-encrypted ciphertext is delivered to the target entity, such as a dApp, user, or another contract.
+
+<figure style="text-align: center"><img src="../.gitbook/assets/reencryption.png" alt="re-encryption"><figcaption>re-encryption process</figcaption></figure>
+
+---
+
+#### Client-side implementation
+
+Re-encryption is initiated on the client side via the **Gateway service** using the [`fhevmjs`](https://github.com/zama-ai/fhevmjs/) library. Here’s the general workflow:
+
+1. **Retrieve the ciphertext**:  
+   - The dApp calls a view function (e.g., `balanceOf`) on the smart contract to get the handle of the ciphertext to be re-encrypted.
+
+2. **Generate and sign a keypair**:  
+   - The dApp generates a keypair for the user.  
+   - The user signs the public key to ensure authenticity.
+
+3. **Submit re-encryption request**:  
+   - The dApp calls the Gateway, providing the following information:  
+     - The ciphertext handle.  
+     - The user’s public key.  
+     - The user’s address.  
+     - The smart contract address.  
+     - The user’s signature.  
+
+4. **Decrypt the re-encrypted ciphertext**:  
+   - The dApp receives the re-encrypted ciphertext from the Gateway.  
+   - The dApp decrypts the ciphertext locally using the private key.
+
 
 <figure><img src="../.gitbook/assets/reencryption.png" alt="re-encryption"><figcaption>re-encryption</figcaption></figure>
 

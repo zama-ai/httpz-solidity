@@ -46,18 +46,16 @@ However, integrating a standalone FHE library like TFHE-rs into a blockchain env
 ### **2.2 Challenges in blockchain integration**
 Integrating FHE into blockchain systems posed several challenges that needed to be addressed to achieve the goals of confidentiality, composability, and scalability:
 
-1. **Transparency and Privacy**: Blockchains are inherently transparent, where all on-chain data is publicly visible. FHE solves this by keeping all sensitive data encrypted, ensuring privacy without sacrificing usability.
-2. **Public Verifiability**: On-chain computations need to be verifiable by all participants. This required a mechanism to confirm the correctness of encrypted computations without revealing their inputs or outputs.
+1. **Transparency and privacy**: Blockchains are inherently transparent, where all on-chain data is publicly visible. FHE solves this by keeping all sensitive data encrypted, ensuring privacy without sacrificing usability.
+2. **Public verifiability**: On-chain computations need to be verifiable by all participants. This required a mechanism to confirm the correctness of encrypted computations without revealing their inputs or outputs.
 3. **Composability**: Smart contracts needed to interact seamlessly with each other, even when operating on encrypted data.
-4. **Performance and Scalability**: FHE computations are resource-intensive, and blockchain systems require high throughput to remain practical.
+4. **Performance and scalability**: FHE computations are resource-intensive, and blockchain systems require high throughput to remain practical.
 
 
 To overcome these challenges, Zama introduced a hybrid architecture for fhEVM that combines:
 
  - **On-chain** functionality for managing state and enforcing access controls.
  - **Off-chain** processing via a coprocessor to execute resource-intensive FHE computations.
-
-
 
 ## **3 fhEVM components overview**
 
@@ -79,10 +77,10 @@ The fhEVM architecture is built around four primary components, each contributin
 
 As a developer working with fhEVM, your workflow typically involves two key elements:  
 
-1. **Frontend Development**:  
+1. **Frontend development**:  
    You create a frontend interface for users to interact with your confidential application. This includes encrypting inputs using the public FHE key and submitting them to the blockchain.
 
-2. **Smart Contract Development**:  
+2. **Smart contract development**:  
    You write Solidity contracts deployed on the same blockchain as the fhEVM smart contracts. These contracts leverage the `TFHE.sol` library to perform operations on encrypted data. Below, we explore the major components involved.
 
 ---
@@ -113,7 +111,7 @@ The coprocessor is the backbone for handling computationally intensive FHE tasks
 
 #### **Key functions**:
 1. **Execution**: Performs operations such as addition, multiplication, and comparison on encrypted data.  
-2. **Ciphertext Management**: Stores encrypted inputs, states, and outputs securely, either off-chain or in a dedicated on-chain database.  
+2. **Ciphertext management**: Stores encrypted inputs, states, and outputs securely, either off-chain or in a dedicated on-chain database.  
 
 ---
 
@@ -122,9 +120,9 @@ The coprocessor is the backbone for handling computationally intensive FHE tasks
 The Gateway acts as the bridge between the blockchain, coprocessor, and KMS.  
 
 #### **Key functions**:
-- **API for Developers**: Exposes endpoints for submitting encrypted inputs, retrieving outputs, and managing ciphertexts.  
-- **Proof Validation**: Forwards ZKPoKs to the KMS for verification.  
-- **Off-chain Coordination**: Relays encrypted data and computation results between on-chain and off-chain systems.  
+- **API for developers**: Exposes endpoints for submitting encrypted inputs, retrieving outputs, and managing ciphertexts.  
+- **Proof validation**: Forwards ZKPoKs to the KMS for verification.  
+- **Off-chain coordination**: Relays encrypted data and computation results between on-chain and off-chain systems.  
 
 The Gateway simplifies the development process by abstracting the complexity of cryptographic operations.
 
@@ -135,16 +133,16 @@ The Gateway simplifies the development process by abstracting the complexity of 
 The KMS securely manages the cryptographic backbone of fhEVM by maintaining and distributing the global FHE keys.  
 
 #### **Key functions**:
-- **Threshold Decryption**: Uses Multi-Party Computation (MPC) to securely decrypt ciphertexts without exposing the private key to any single entity.  
-- **ZKPoK Validation**: Verifies proofs of plaintext knowledge to ensure that encrypted inputs are valid.  
-- **Key Distribution**: Maintains the global FHE keys, which include:  
-  - **Public Key**: Used for encrypting data (accessible to the frontend and smart contracts).  
-  - **Private Key**: Stored securely in the KMS and used for decryption.  
-  - **Evaluation Key**: Used by the coprocessor to perform FHE computations.  
+- **Threshold decryption**: Uses Multi-Party Computation (MPC) to securely decrypt ciphertexts without exposing the private key to any single entity.  
+- **ZKPoK validation**: Verifies proofs of plaintext knowledge to ensure that encrypted inputs are valid.  
+- **Key distribution**: Maintains the global FHE keys, which include:  
+  - **Public key**: Used for encrypting data (accessible to the frontend and smart contracts).  
+  - **Private key**: Stored securely in the KMS and used for decryption.  
+  - **Evaluation key**: Used by the coprocessor to perform FHE computations.  
 
 The KMS ensures robust cryptographic security, preventing single points of failure and maintaining public verifiability.
 
 
 ---
 
-In the next section, we will dive deeper into encryption, re-encryption, and decryption processes, including how they interact with the KMS and Gateway services. For more details, see [Decrypt and re-encrypt](decrypt.md).
+In the next section, we will dive deeper into encryption, re-encryption, and decryption processes, including how they interact with the KMS and Gateway services. For more details, see [Decrypt and re-encrypt](./d_re_ecrypt_compute.md).

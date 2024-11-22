@@ -71,3 +71,5 @@ const userBalance = instance.reencrypt(
 
 console.log(userBalance);
 ```
+
+

@@ -8,12 +8,11 @@
   - [Key concepts and features](getting_started/key_concepts.md)
   - [Repositories](getting_started/repositories.md)
   - [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
-- [Get started on Ethereum](getting_started/ethereum.md)
+- [Get started](getting_started/ethereum.md)
 - [Create a smart contract]()
   - [Using Hardhat](getting_started/write_contract/hardhat.md)
   - [Using Remix](getting_started/write_contract/remix.md)
   - [Other development environment](getting_started/write_contract/others.md)
-  - [Installing packages](getting_started/write_contract/installation.md)
 
 ## Fundamentals
 
@@ -25,7 +24,9 @@
   - [Operations on encrypted types](fundamentals/first_step/operations.md)
   - [Encryption](fundamentals/first_step/inputs.md)
   - [Decryption](fundamentals/first_step/decrypt.md)
+  - [Decryption in depth](fundamentals/first_step/decrypt_details.md)
   - [Reencryption](fundamentals/first_step/reencryption.md)
+  - [ACL examples](fundamentals/first_step/acl_examples.md)
 
 ## Guides
 
