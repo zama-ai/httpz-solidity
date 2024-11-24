@@ -1,14 +1,30 @@
-# How to get a re-encryption
+# Re-encryption: sharing encrypted data securely  
 
 This document explains how to perform re-encryption. Re-encryption is required when you want a user to access their private data without it being exposed to the blockchain.
 
-To preform the process you will first need to retrieve the ciphertext from the blockchain and then use the client-side code to preform the re-encryption.
+Re-encryption in fhEVM enables the secure sharing or reuse of encrypted data under a new public key without exposing the plaintext. This feature is essential for scenarios where encrypted data must be transferred between contracts, dApps, or users while maintaining its confidentiality.  
 
-Re-encryption allows you to securely convert the encrypted ciphertext from one form - encrypted with a FHE blockchain key - to another - encrypted with a Client-side public key (NaCl public key) without revealing the underlying plaintext in between.
+> **_NOTE:_** Before implementing re-encryption, ensure you are familiar with the foundational concepts of encryption, re-encryption and computation. Refer to [Encryption, Decryption, Re-encryption, and Computation](../d_re_ecrypt_compute.md).  
 
-## Retrieve the ciphertext
+## When to use re-encryption  
 
-To retrieve the ciphertext that needs to be re-encrypted, you must implement a view function in your contract. Here's is an example:
+Re-encryption is particularly useful in scenarios such as:
+1. **User Access**: Allowing individual users to securely access and read their encrypted private data, such as balances or counters.
+
+## Overview  
+
+The re-encryption process involves retrieving ciphertext from the blockchain and performing re-encryption on the client-side. In other words we take the data that has been encrypted by the KMS, decrypt it and encrypt it with the users private key, so only he can access the information.
+
+This ensures that the data remains encrypted under the blockchain’s FHE key but can be securely shared with a user by re-encrypting it under the user’s NaCl public key.
+
+Re-encryption is facilitated by the **Gateway** and the **Key Management System (KMS)**. The workflow consists of the following:
+ 1. Retrieving the ciphertext from the blockchain using a contract’s view function.
+ 2. Re-encrypting the ciphertext client-side with the user’s public key, ensuring only the user can decrypt it.
+
+
+## Step 1: retrieve the ciphertext
+
+To retrieve the ciphertext that needs to be re-encrypted, you can implement a view function in your smart contract. Below is an example implementation:
 
 ```solidity
 import "fhevm/lib/TFHE.sol";
@@ -21,12 +37,13 @@ contract EncryptedERC20 {
   ...
 }
 ```
+Here, `balanceOf` allows retrieval of the user’s encrypted balance stored on the blockchain.
 
-## Re-encrypt the ciphertext
+## Step 2: re-encrypt the ciphertext
 
-Then, you can implement the client-side code to re-encrypt the ciphertext. This step is designed to run in a browser, here is an example:
+Re-encryption is performed client-side using the `fhevmjs` library. Below is an example of how to implement this in a dApp:
 
-```javascript
+```ts
 import abi from "./abi.json";
 import { Contract, BrowserProvider } from "ethers";
 import { createInstance } from "fhevmjs";
@@ -72,4 +89,157 @@ const userBalance = instance.reencrypt(
 console.log(userBalance);
 ```
 
+This code retrieves the user’s encrypted balance, re-encrypts it with their public key, and decrypts it on the client-side using their private key.
 
+### Key additions to the code  
+
+ 1. **`instance.generateKeypair()`**: Generates a public-private keypair for the user.
+
+ 2. **`instance.createEIP712(publicKey, CONTRACT_ADDRESS)`**: Creates an EIP712 object for signing the user’s public key.
+
+ 3. **`instance.reencrypt()`**: Facilitates the re-encryption process by contacting the Gateway and decrypting the data locally with the private key.
+
+## Applying re-encryption to the counter example  
+
+Here’s an enhanced **Encrypted Counter** example where each user maintains their own encrypted counter. Re-encryption is used to securely share counter values with individual users.
+
+### Encrypted counter with re-encryption  
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "fhevm/lib/TFHE.sol";
+
+/// @title EncryptedCounter4
+/// @notice A contract that maintains encrypted counters for each user and is meant for demonstrating how re-encryption works
+/// @dev Uses TFHE library for fully homomorphic encryption operations
+/// @custom:security Each user can only access and modify their own counter
+/// @custom:experimental This contract is experimental and uses FHE technology
+contract EncryptedCounter4 {
+    // Mapping from user address to their encrypted counter value
+    mapping(address => euint8) private counters;
+
+    constructor() {
+        TFHE.setFHEVM(FHEVMConfig.defaultConfig());
+    }
+
+    function incrementBy(einput amount, bytes calldata inputProof) public {
+        // Initialize counter if it doesn't exist
+        if (!TFHE.isInitialized(counters[msg.sender])) {
+            counters[msg.sender] = TFHE.asEuint8(0);
+        }
+
+        // Convert input to euint8 and add to sender's counter
+        euint8 incrementAmount = TFHE.asEuint8(amount, inputProof);
+        counters[msg.sender] = TFHE.add(counters[msg.sender], incrementAmount);
+        TFHE.allowThis(counters[msg.sender]);
+        TFHE.allow(counters[msg.sender], msg.sender);
+    }
+
+    function getCounter() public view returns (euint8) {
+        // Return the encrypted counter value for the sender
+        return counters[msg.sender];
+    }
+}
+
+```
+
+---
+
+### Frontend code of re-encryption / tests for EncryptedCounter4
+
+Here’s a sample test to verify re-encryption functionality:  
+
+```ts
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+import { initGateway, awaitAllReEncryptionResults } from "../asyncReEncrypt";
+import { createInstances } from "../instance";
+import { getSigners, initSigners } from "../signers";
+
+import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
+import { expect } from "chai";
+import type { FhevmInstance } from "fhevmjs";
+import { ethers } from "hardhat";
+
+import { createInstances } from "../instance";
+import { getSigners, initSigners } from "../signers";
+
+/**
+ * Helper function to setup reencryption
+ */
+async function setupReencryption(instance: FhevmInstance, signer: HardhatEthersSigner, contractAddress: string) {
+  const { publicKey, privateKey } = instance.generateKeypair();
+  const eip712 = instance.createEIP712(publicKey, contractAddress);
+  const signature = await signer.signTypedData(eip712.domain, { Reencrypt: eip712.types.Reencrypt }, eip712.message);
+
+  return { publicKey, privateKey, signature: signature.replace("0x", "") };
+}
+
+describe("EncryptedCounter4", function () {
+  before(async function () {
+    await initSigners(2); // Initialize signers
+    this.signers = await getSigners();
+  });
+
+  beforeEach(async function () {
+    const CounterFactory = await ethers.getContractFactory("EncryptedCounter4");
+    this.counterContract = await CounterFactory.connect(this.signers.alice).deploy();
+    await this.counterContract.waitForDeployment();
+    this.contractAddress = await this.counterContract.getAddress();
+    this.instances = await createInstances(this.signers); // Set up instances for testing
+  });
+
+  it("should allow reencryption and decryption of counter value", async function () {
+    const input = this.instances.alice.createEncryptedInput(this.contractAddress, this.signers.alice.address);
+    input.add8(1); // Increment by 1 as an example
+    const encryptedAmount = await input.encrypt();
+
+    // Call incrementBy with encrypted amount
+    const tx = await this.counterContract.incrementBy(encryptedAmount.handles[0], encryptedAmount.inputProof);
+    await tx.wait();
+
+    // Get the encrypted counter value
+    const encryptedCounter = await this.counterContract.getCounter();
+
+    // Set up reencryption keys and signature
+    const { publicKey, privateKey, signature } = await setupReencryption(
+      this.instances.alice,
+      this.signers.alice,
+      this.contractAddress,
+    );
+
+    // Perform reencryption and decryption
+    const decryptedValue = await this.instances.alice.reencrypt(
+      encryptedCounter,
+      privateKey,
+      publicKey,
+      signature,
+      this.contractAddress,
+      this.signers.alice.address,
+    );
+
+    // Verify the decrypted value is 1
+    expect(decryptedValue).to.equal(1);
+  });
+});
+
+```
+---
+
+### Key additions in testing  
+
+ 1. **`setupReencryption():`** Prepares the re-encryption process by generating keys and a signature for the user.
+
+ 2. **`instance.reencrypt():`** Facilitates re-encryption and local decryption of the data for testing purposes.
+
+ 3. **Validation:** Confirms that the decrypted counter matches the expected value.
+
+---
+
+## next steps  
+
+- Learn more about re-encryption in [Re-encryption in Depth](./reencrypt_details.md).  
+- Understand related concepts in [Decryption](./decrypt.md).  

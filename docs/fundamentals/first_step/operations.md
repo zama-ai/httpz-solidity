@@ -64,7 +64,7 @@ You can generate cryptographically secure random numbers fully on-chain:
 |-------------------------|-------------------------|------------|-----------|
 | Random Unsigned Integer | `TFHE.randEuintX()`    |            | Random    |
 
-For more details, refer to the [Random Encrypted Numbers](./random.md) document.
+For more details, refer to the [Random Encrypted Numbers](../../guides/random.md) document.
 
 ## Overload operators
 

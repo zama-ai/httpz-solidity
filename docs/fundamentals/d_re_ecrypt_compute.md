@@ -1,5 +1,7 @@
 # **Encryption, Decryption, Re-encryption, and Computation**
 
+This document introduces the core cryptographic operations in the fhEVM system, including how data is encrypted, decrypted, re-encrypted and computed upon while maintaining privacy.
+
 The fhEVM system ensures end-to-end confidentiality by leveraging Fully Homomorphic Encryption (FHE). The encryption, decryption, re-encryption, and computation processes rely on a coordinated flow of information and cryptographic keys across the fhEVM components. This section details how these operations work and outlines the role of the FHE keys in enabling secure and private processing.
 
 ---
@@ -38,7 +40,7 @@ Encryption is the starting point for any interaction with the fhEVM system, ensu
 
 <figure style="text-align: center"><img src="../.gitbook/assets/encrypt.png" alt="re-encryption" width="600"></figure>
 
-You can read about the implemention details in [our encryption guide](../guides/encrypt.md).
+You can read about the implemention details in [our encryption guide](../fundamentals//first_step/inputs.md).
 
 ---
 
@@ -81,7 +83,7 @@ Decryption is used when plaintext results are required for contract logic or for
 
 <figure><img src="../.gitbook/assets/asyncDecrypt.png" alt="re-encryption"><figcaption>re-encryption</figcaption></figure>
 
-You can read about the implemention details in [our decryption guide](../guides/decrypt.md).
+You can read about the implemention details in [our decryption guide](../fundamentals//first_step/decrypt.md).
 
 ---
 
@@ -142,7 +144,7 @@ Re-encryption is initiated on the client side via the **Gateway service** using 
 <figure><img src="../.gitbook/assets/reencryption.png" alt="re-encryption"><figcaption>re-encryption</figcaption></figure>
 
 
-You can read [our guide explaining how to use it](../guides/reencryption.md).
+You can read [our guide explaining how to use it](../fundamentals/first_step/reencryption.md).
 
 
 

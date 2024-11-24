@@ -27,7 +27,7 @@ Learn the basics of fhEVM, set it up, and make it run with ease.
 
 Start developing fhEVM smart contracts in Solidity by exploring its core features, discovering essential guides, and learning more with user-friendly tutorials.
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>Fundamentals</strong></td><td>Explore core features.</td><td><ul><li><a href="getting_started/write_contract/">Write contract</a></li><li><a href="fundamentals/types/README.md">Use encrypted types</a></li></ul></td><td><a href=".gitbook/assets/build1.png">build1.png</a></td></tr><tr><td><strong>Guides</strong></td><td>Deploy your project.</td><td><ul><li><a href="guides/gas.md">Gas estimation</a></li><li><a href="guides/pitfalls.md">Common pitfalls and best practices</a></li></ul></td><td><a href=".gitbook/assets/build2.png">build2.png</a></td></tr><tr><td><strong>Tutorials</strong></td><td>Learn more with tutorials.</td><td><ul><li><a href="tutorials/see-all-tutorials.md#start-here">Start here</a></li><li><a href="tutorials/see-all-tutorials.md#go-further">Go further</a></li></ul></td><td><a href=".gitbook/assets/build3.png">build3.png</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>Fundamentals</strong></td><td>Explore core features.</td><td><ul><li><a href="getting_started/write_contract/">Write contract</a></li><li><a href="fundamentals/first_step/types.md">Use encrypted types</a></li></ul></td><td><a href=".gitbook/assets/build1.png">build1.png</a></td></tr><tr><td><strong>Guides</strong></td><td>Deploy your project.</td><td><ul><li><a href="guides/gas.md">Gas estimation</a></li><li><a href="guides/pitfalls.md">Common pitfalls and best practices</a></li></ul></td><td><a href=".gitbook/assets/build2.png">build2.png</a></td></tr><tr><td><strong>Tutorials</strong></td><td>Learn more with tutorials.</td><td><ul><li><a href="tutorials/see-all-tutorials.md#start-here">Start here</a></li><li><a href="tutorials/see-all-tutorials.md#go-further">Go further</a></li></ul></td><td><a href=".gitbook/assets/build3.png">build3.png</a></td></tr></tbody></table>
 
 ## Explore more
 
@@ -38,7 +38,7 @@ Access to additional resources and join the Zama community.
 Refer to the API and access additional resources for in-depth explanations while working with fhEVM.
 
 - [API function specifications](references/functions.md)
-- [Repositories](references/repositories.md)
+- [Repositories](getting_started/repositories.md)
 
 ### Supports
 

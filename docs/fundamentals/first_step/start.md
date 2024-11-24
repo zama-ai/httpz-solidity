@@ -1,68 +1,12 @@
 # **Start Creating Confidential Smart Contracts**
 
-Welcome to your first steps in writing Solidity smart contracts! This guide will introduce you to configuring your contract for encrypted operations using the `fhEVM`. After setting up your development environment, you will learn how to initialize and configure the `fhEVM` for confidential computations.
+This document introduces the fundamentals of writing confidential smart contracts using the fhEVM (Fully Homomorphic Encryption Virtual Machine). You'll learn how to create contracts that can perform computations on encrypted data while maintaining data privacy.
+
+Welcome to your first steps in writing confidential Solidity smart contracts! In this guide, we'll walk through creating a basic smart contract that demonstrates core fhEVM concepts and encrypted operations.
 
 ---
 
-## Typical workflow for writing confidential smart contracts
-
-1. Use our custom [`fhevm-hardhat-template` repository](https://github.com/zama-ai/fhevm-hardhat-template). Hardhat is a popular development environment for Solidity developers and lets you test and deploy your contracts to the fhEVM using TypeScript.
-
-2. Start with an unencrypted version of the contract you want to implement, as you would usually do on a regular EVM chain. It is easier to reason first on cleartext variables before adding confidentiality.
-
-3. When you're ready, add confidentiality by using the `TFHE` Solidity library. Typically, this involves converting some `uintX` types to `euintX`. Follow the detailed advices provided in the [pitfalls to avoid and best practises](../../guides/pitfalls.md) section of the documentation. For inspiration, refer to the examples inside the [`fhevm` contracts repository](https://github.com/zama-ai/fhevm-contracts). If you're using the Hardhat template, read the advices in the [Hardhat section](../../getting_started/write_contract/hardhat.md).
-
-## Configuring your smart contract
-
-To enable encrypted computations in your smart contract, you must configure the `fhEVM` environment. The core configuration involves setting up the FHEVM configuration using the `setFHEVM` function.
-
----
-
-### Core configuration functions
-
-#### 1. `setFHEVM`
-
-This function sets the FHEVM configuration required for encrypted operations.
-
-```solidity
-function setFHEVM(FHEVMConfig.FHEVMConfigStruct memory fhevmConfig) public
-```
-
-- **Purpose**: Establishes the encryption parameters for the contract, such as cryptographic keys and supported ciphertext types.  
-- **Usage**: Must be called during contract initialization, typically in the constructor.  
-- **Default Configuration**: Use `FHEVMConfig.defaultConfig()` to apply the standard encryption setup.
-
-#### Example usage in a constructor
-
-```solidity
-constructor() {
-    // Initialize the FHEVM with default configuration
-    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-}
-```
-
----
-
-#### **2. `isInitialized`**
-
-This internal utility function checks if a given variable is initialized.
-
-```solidity
-function isInitialized(T v) internal pure returns (bool)
-```
-
-- **Purpose**: Ensures that an encrypted variable is properly initialized before use.  
-- **Usage**: Called internally to validate state variables.  
-
-#### **Example Initialization Check**
-
-```solidity
-require(TFHE.isInitialized(counter), "Counter not initialized!");
-```
-
----
-
-## Your first contract
+# Your first smart contract
 
 Let’s build a simple **Encrypted Counter** smart contract to demonstrate the configuration process and the use of encrypted state variables.
 
@@ -106,7 +50,7 @@ contract EncryptedCounter1 {
 
 ```
 
-## How it works
+### How it works
 
 1. **Configuring fhevm**:  
    The constructor initializes the FHEVM environment with a default configuration using `TFHE.setFHEVM(FHEVMConfig.defaultConfig())`.
@@ -119,7 +63,7 @@ contract EncryptedCounter1 {
 3. **Encrypted operations**:  
    The `increment()` function adds the encrypted constant `CONST_ONE` to the `counter` using `TFHE.add`.
 
-## 👀 Can you spot a problem with this contract?
+### 👀 Can you spot a problem with this contract?
 
 There are two notable issues with this contract:
 
@@ -132,11 +76,74 @@ There are two notable issues with this contract:
    - [decryption](./decrypt.md)  
    - [re-encryption](./reencryption.md)
 
+## Your first tests
+With any contracts that you write you will need to write tests as well. You can start by using something like this as a template:
+
+```ts
+import { ethers } from "hardhat";
+
+import { createInstances } from "../instance";
+import { getSigners, initSigners } from "../signers";
+
+describe("EncryptedCounter1", function () {
+  before(async function () {
+    await initSigners(2); // Initialize signers
+    this.signers = await getSigners();
+  });
+
+  beforeEach(async function () {
+    const CounterFactory = await ethers.getContractFactory("EncryptedCounter1");
+    this.counterContract = await CounterFactory.connect(this.signers.alice).deploy();
+    await this.counterContract.waitForDeployment();
+    this.contractAddress = await this.counterContract.getAddress();
+    this.instances = await createInstances(this.signers); // Set up instances for testing
+  });
+
+  it("should increment the counter", async function () {
+    // Perform the increment action
+    const tx = await this.counterContract.increment();
+    await tx.wait();
+  });
+});
+```
+
+### How the tests work
+
+The test file demonstrates key concepts for testing fhEVM smart contracts:
+
+1. **Test Setup**:
+   - `before`: Initializes test signers (users) that will interact with the contract
+   - `beforeEach`: Deploys a fresh instance of the contract before each test
+   - Creates FHE instances for each signer to handle encryption/decryption
+
+2. **Test Structure**:
+   ```ts
+   describe("Contract Name", function() {
+     // Setup hooks
+     before(async function() { ... })
+     beforeEach(async function() { ... }) 
+     
+     // Individual test cases
+     it("should do something", async function() { ... })
+   });
+   ```
+
+3. **Key Components**:
+   - `createInstances()`: Sets up FHE instances for each signer to handle encrypted operations
+   - `getSigners()`: Provides test accounts to interact with the contract
+   - `contractFactory.deploy()`: Creates a new contract instance for testing
+   - `tx.wait()`: Ensures transactions are mined before continuing
+
+4. **Best Practices**:
+   - Deploy fresh contract instances for each test to ensure isolation
+   - Use descriptive test names that explain the expected behavior
+   - Handle asynchronous operations properly with async/await
+   - Set up proper encryption instances for testing encrypted values
+
 ## **Next Steps**
 
 Congratulations! You’ve configured and written your first confidential smart contract. Here are some ideas to expand your knowledge:
 
-- **Understand Initialization Checks**: Use `TFHE.isInitialized` to ensure all encrypted variables are properly initialized.  
 - **Explore Advanced Configurations**: Customize the `FHEVMConfig` to suit specific encryption requirements.  
 - **Add Functionalities**: Extend the contract by adding decrement functionality or resetting the counter.  
 - **Integrate Frontend**: Learn how to decrypt and display encrypted data in a dApp using the `fhevmjs` library.

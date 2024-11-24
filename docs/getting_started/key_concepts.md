@@ -39,7 +39,7 @@ fhEVM introduces encrypted data types compatible with Solidity:
 
 Encrypted data is represented as ciphertext handles, ensuring secure computation and interaction.
 
-For more information see [use of encrypted types](../fundamentals/types/README.md).
+For more information see [use of encrypted types](../fundamentals/first_step/types.md).
 
 ### 1.4.2. Casting types
 fhEVM provides functions to cast between encrypted types:
@@ -48,7 +48,7 @@ fhEVM provides functions to cast between encrypted types:
 - **Casting to encrypted addresses**: `TFHE.asEaddress` converts plaintext addresses to encrypted addresses
 - **Casting to encrypted bytes**: `TFHE.asEbytesX` converts plaintext bytes to encrypted bytes
 
-For more information see [use of encrypted types](../fundamentals/types/README.md).
+For more information see [use of encrypted types](../fundamentals/first_step/types.md).
 
 
 ### 1.4.3. Confidential computation
@@ -59,9 +59,9 @@ fhEVM enables symbolic execution of encrypted operations, supporting:
 - Comparison: `TFHE.eq`, `TFHE.ne`, `TFHE.lt`, `TFHE.le`, `TFHE.gt`, `TFHE.ge`
 - Advanced: `TFHE.select` for branching on encrypted conditions, `TFHE.randEuintX` for on-chain randomness.
 
-For more information on operations, see [Operations on encrypted types](../fundamentals/types/operations.md).
-For more information on conditional branching, see [Conditional logic in FHE](../fundamentals/types/conditions.md).
-For more information on random number generation, see [Generate Random Encrypted Numbers](../fundamentals/types/random.md).
+For more information on operations, see [Operations on encrypted types](../fundamentals/first_step/operations.md).
+For more information on conditional branching, see [Conditional logic in FHE](../guides/conditions.md).
+For more information on random number generation, see [Generate Random Encrypted Numbers](../guides/random.md).
 
 
 ### 1.4.4. Access control mechanism

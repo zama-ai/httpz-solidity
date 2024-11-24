@@ -7,7 +7,7 @@ Our testnet is up and running on Ethereum Sepolia.
 | Fields             | Value                                         |
 | ------------------ | --------------------------------------------- |
 | Network            | Ethereum Sepolia                              |
-| RPC URL            | https://eth-sepolia.g.alchemy.com/v2/[API-KEY\]|
+| RPC URL            | `https://eth-sepolia.g.alchemy.com/v2/[API-KEY\]`|
 | Chain ID           | 11155111                                      |
 | Currency symbol    | ETH                                           |
 | Block explorer URL | https://sepolia.etherscan.io                  |
@@ -16,8 +16,7 @@ Our testnet is up and running on Ethereum Sepolia.
 
 You can get test ETH for Sepolia from these faucets:
 
-- [Alchemy Sepolia Faucet](https://sepoliafaucet.com/)
-- [Infura Sepolia Faucet](https://www.infura.io/faucet/sepolia)
+- [Alchemy Sepolia Faucet](https://www.alchemy.com/faucets/ethereum-sepolia)
 - [QuickNode Sepolia Faucet](https://faucet.quicknode.com/ethereum/sepolia)
 
 ## Configuring MetaMask
