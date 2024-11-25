@@ -236,10 +236,3 @@ describe("EncryptedCounter4", function () {
  2. **`instance.reencrypt():`** Facilitates re-encryption and local decryption of the data for testing purposes.
 
  3. **Validation:** Confirms that the decrypted counter matches the expected value.
-
----
-
-## next steps  
-
-- Learn more about re-encryption in [Re-encryption in Depth](./reencrypt_details.md).  
-- Understand related concepts in [Decryption](./decrypt.md).  
