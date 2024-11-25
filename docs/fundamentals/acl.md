@@ -69,4 +69,4 @@ To check if an entity has permission to access a ciphertext, use functions like 
 
 ---
 
-For a detailed explanation of the ACL's functionality, including code examples and advanced configurations, see [working with the acl](acl-usage.md).
+For a detailed explanation of the ACL's functionality, including code examples and advanced configurations, see [working with the acl](./first_step/acl_examples.md).
