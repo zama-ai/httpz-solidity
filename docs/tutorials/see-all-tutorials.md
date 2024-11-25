@@ -5,7 +5,7 @@
 **Solidity smart contracts - templates**
 
 - [ERC-20](https://github.com/zama-ai/fhevm-contracts/tree/main/contracts/token/ERC20): A variation of the standard ERC20 smart contract that incorporates encrypted balances, providing additional privacy for token holders.
-- [Governor DAO](https://github.com/zama-ai/fhevm-contracts/tree/main/contracts/governance): A DAO smart contract that facilitates governance decisions through encrypted voting
+- [Governance](https://github.com/zama-ai/fhevm-contracts/tree/main/contracts/governance): A DAO smart contract that facilitates governance decisions through encrypted voting
 
 For more information on individual contracts, see the [fhevm-contracts repository](https://github.com/zama-ai/fhevm-contracts).
 
@@ -20,8 +20,8 @@ For more information on individual contracts, see the [fhevm-contracts repositor
 
 - [Cipherbomb UI](https://github.com/immortal-tofu/cipherbomb-ui): A multiplayer game where players must defuse an encrypted bomb by guessing the correct sequence of numbers.
 
-
 ### Blog tutorials:
+
 - [Suffragium: An Encrypted Onchain Voting System Leveraging ZK and FHE Using Zama's fhEVM](https://www.zama.ai/post/encrypted-onchain-voting-using-zk-and-fhe-with-zama-fhevm)
 
 #### Legacy - Not compatible with latest fhEVM
@@ -33,14 +33,15 @@ For more information on individual contracts, see the [fhevm-contracts repositor
 - [Confidential ERC-20 Tokens Using Homomorphic Encryption and the fhEVM](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption) - June 2023
 
 ### Video tutorials:
- - [Zama - FHE on Ethereum (Presentation at The Zama CoFHE Shop during EthCC 7)](https://www.youtube.com/watch?v=WngC5cvV_fc&ab_channel=Zama)
+
+- [Zama - FHE on Ethereum (Presentation at The Zama CoFHE Shop during EthCC 7)](https://www.youtube.com/watch?v=WngC5cvV_fc&ab_channel=Zama)
 
 #### Legacy - Not compatible with latest fhEVM
 
-- [\[Video tutorial\] How to Write Confidential Smart Contracts Using Zama's fhEVM](https://www.zama.ai/post/video-tutorial-how-to-write-confidential-smart-contracts-using-zamas-fhevm) - October 2023
 - [Using asynchronous decryption in Solidity contracts with fhEVM](https://www.zama.ai/post/video-tutorial-using-asynchronous-decryption-in-solidity-contracts-with-fhevm) - April 2024
 - [Accelerate your code testing and get code coverage using fhEVM mocks](https://www.zama.ai/post/video-tutorial-accelerate-your-code-testing-and-get-code-coverage-using-fhevm-mocks) - January 2024
 - [Use the CMUX operator on Zama’s fhEVM](https://www.youtube.com/watch?v=7icM0EOSvU0) - October 2023
+- [\[Video tutorial\] How to Write Confidential Smart Contracts Using Zama's fhEVM](https://www.zama.ai/post/video-tutorial-how-to-write-confidential-smart-contracts-using-zamas-fhevm) - October 2023
 - [Workshop during ETHcc: Homomorphic Encryption in the EVM](https://www.youtube.com/watch?v=eivfVykPP8U) - July 2023
 
 {% hint style="success" %}

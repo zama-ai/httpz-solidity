@@ -1,26 +1,27 @@
-# Re-encryption: sharing encrypted data securely  
+# Re-encryption: sharing encrypted data securely
 
 This document explains how to perform re-encryption. Re-encryption is required when you want a user to access their private data without it being exposed to the blockchain.
 
-Re-encryption in fhEVM enables the secure sharing or reuse of encrypted data under a new public key without exposing the plaintext. This feature is essential for scenarios where encrypted data must be transferred between contracts, dApps, or users while maintaining its confidentiality.  
+Re-encryption in fhEVM enables the secure sharing or reuse of encrypted data under a new public key without exposing the plaintext. This feature is essential for scenarios where encrypted data must be transferred between contracts, dApps, or users while maintaining its confidentiality.
 
-> **_NOTE:_** Before implementing re-encryption, ensure you are familiar with the foundational concepts of encryption, re-encryption and computation. Refer to [Encryption, Decryption, Re-encryption, and Computation](../d_re_ecrypt_compute.md).  
+> **_NOTE:_** Before implementing re-encryption, ensure you are familiar with the foundational concepts of encryption, re-encryption and computation. Refer to [Encryption, Decryption, Re-encryption, and Computation](../d_re_ecrypt_compute.md).
 
-## When to use re-encryption  
+## When to use re-encryption
 
 Re-encryption is particularly useful in scenarios such as:
+
 1. **User Access**: Allowing individual users to securely access and read their encrypted private data, such as balances or counters.
 
-## Overview  
+## Overview
 
 The re-encryption process involves retrieving ciphertext from the blockchain and performing re-encryption on the client-side. In other words we take the data that has been encrypted by the KMS, decrypt it and encrypt it with the users private key, so only he can access the information.
 
 This ensures that the data remains encrypted under the blockchain’s FHE key but can be securely shared with a user by re-encrypting it under the user’s NaCl public key.
 
 Re-encryption is facilitated by the **Gateway** and the **Key Management System (KMS)**. The workflow consists of the following:
- 1. Retrieving the ciphertext from the blockchain using a contract’s view function.
- 2. Re-encrypting the ciphertext client-side with the user’s public key, ensuring only the user can decrypt it.
 
+1.  Retrieving the ciphertext from the blockchain using a contract’s view function.
+2.  Re-encrypting the ciphertext client-side with the user’s public key, ensuring only the user can decrypt it.
 
 ## Step 1: retrieve the ciphertext
 
@@ -37,6 +38,7 @@ contract EncryptedERC20 {
   ...
 }
 ```
+
 Here, `balanceOf` allows retrieval of the user’s encrypted balance stored on the blockchain.
 
 ## Step 2: re-encrypt the ciphertext
@@ -91,19 +93,19 @@ console.log(userBalance);
 
 This code retrieves the user’s encrypted balance, re-encrypts it with their public key, and decrypts it on the client-side using their private key.
 
-### Key additions to the code  
+### Key additions to the code
 
- 1. **`instance.generateKeypair()`**: Generates a public-private keypair for the user.
+1.  **`instance.generateKeypair()`**: Generates a public-private keypair for the user.
 
- 2. **`instance.createEIP712(publicKey, CONTRACT_ADDRESS)`**: Creates an EIP712 object for signing the user’s public key.
+2.  **`instance.createEIP712(publicKey, CONTRACT_ADDRESS)`**: Creates an EIP712 object for signing the user’s public key.
 
- 3. **`instance.reencrypt()`**: Facilitates the re-encryption process by contacting the Gateway and decrypting the data locally with the private key.
+3.  **`instance.reencrypt()`**: Facilitates the re-encryption process by contacting the Gateway and decrypting the data locally with the private key.
 
-## Applying re-encryption to the counter example  
+## Applying re-encryption to the counter example
 
 Here’s an enhanced **Encrypted Counter** example where each user maintains their own encrypted counter. Re-encryption is used to securely share counter values with individual users.
 
-### Encrypted counter with re-encryption  
+### Encrypted counter with re-encryption
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -117,39 +119,38 @@ import "fhevm/lib/TFHE.sol";
 /// @custom:security Each user can only access and modify their own counter
 /// @custom:experimental This contract is experimental and uses FHE technology
 contract EncryptedCounter4 {
-    // Mapping from user address to their encrypted counter value
-    mapping(address => euint8) private counters;
+  // Mapping from user address to their encrypted counter value
+  mapping(address => euint8) private counters;
 
-    constructor() {
-        TFHE.setFHEVM(FHEVMConfig.defaultConfig());
+  constructor() {
+    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
+  }
+
+  function incrementBy(einput amount, bytes calldata inputProof) public {
+    // Initialize counter if it doesn't exist
+    if (!TFHE.isInitialized(counters[msg.sender])) {
+      counters[msg.sender] = TFHE.asEuint8(0);
     }
 
-    function incrementBy(einput amount, bytes calldata inputProof) public {
-        // Initialize counter if it doesn't exist
-        if (!TFHE.isInitialized(counters[msg.sender])) {
-            counters[msg.sender] = TFHE.asEuint8(0);
-        }
+    // Convert input to euint8 and add to sender's counter
+    euint8 incrementAmount = TFHE.asEuint8(amount, inputProof);
+    counters[msg.sender] = TFHE.add(counters[msg.sender], incrementAmount);
+    TFHE.allowThis(counters[msg.sender]);
+    TFHE.allow(counters[msg.sender], msg.sender);
+  }
 
-        // Convert input to euint8 and add to sender's counter
-        euint8 incrementAmount = TFHE.asEuint8(amount, inputProof);
-        counters[msg.sender] = TFHE.add(counters[msg.sender], incrementAmount);
-        TFHE.allowThis(counters[msg.sender]);
-        TFHE.allow(counters[msg.sender], msg.sender);
-    }
-
-    function getCounter() public view returns (euint8) {
-        // Return the encrypted counter value for the sender
-        return counters[msg.sender];
-    }
+  function getCounter() public view returns (euint8) {
+    // Return the encrypted counter value for the sender
+    return counters[msg.sender];
+  }
 }
-
 ```
 
 ---
 
 ### Frontend code of re-encryption / tests for EncryptedCounter4
 
-Here’s a sample test to verify re-encryption functionality:  
+Here’s a sample test to verify re-encryption functionality:
 
 ```ts
 import { expect } from "chai";
@@ -227,12 +228,13 @@ describe("EncryptedCounter4", function () {
 });
 
 ```
+
 ---
 
-### Key additions in testing  
+### Key additions in testing
 
- 1. **`setupReencryption():`** Prepares the re-encryption process by generating keys and a signature for the user.
+1.  **`setupReencryption():`** Prepares the re-encryption process by generating keys and a signature for the user.
 
- 2. **`instance.reencrypt():`** Facilitates re-encryption and local decryption of the data for testing purposes.
+2.  **`instance.reencrypt():`** Facilitates re-encryption and local decryption of the data for testing purposes.
 
- 3. **Validation:** Confirms that the decrypted counter matches the expected value.
+3.  **Validation:** Confirms that the decrypted counter matches the expected value.

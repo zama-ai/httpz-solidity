@@ -4,13 +4,12 @@ This document explains how to generate cryptographically secure random encrypted
 
 ## **Key Notes on Random Number Generation**
 
-- **On-Chain Execution**: Random number generation must be executed during a transaction, as it requires the pseudo-random number generator (PRNG) state to be updated on-chain. This operation cannot be performed using the `eth_call` RPC method.  
-- **Cryptographic Security**: The generated random numbers are cryptographically secure and encrypted, ensuring privacy and unpredictability.  
+- **On-Chain Execution**: Random number generation must be executed during a transaction, as it requires the pseudo-random number generator (PRNG) state to be updated on-chain. This operation cannot be performed using the `eth_call` RPC method.
+- **Cryptographic Security**: The generated random numbers are cryptographically secure and encrypted, ensuring privacy and unpredictability.
 
 {% hint style="info" %}
 Random number generation must be performed during transactions, as it requires the pseudo-random number generator (PRNG) state to be mutated on-chain. Therefore, it cannot be executed using the `eth_call` RPC method.
 {% endhint %}
-
 
 ## **Basic Usage**
 
@@ -29,9 +28,10 @@ euint256 r256 = TFHE.randEuint256(); // Random 256-bit number
 ```
 
 ### **Example: Random Boolean**
+
 ```solidity
 function randomBoolean() public returns (ebool) {
-    return TFHE.randEbool();
+  return TFHE.randEbool();
 }
 ```
 
@@ -47,9 +47,10 @@ euint32 r32 = TFHE.randEuint32(1000000); // Random number between 0-999999
 ```
 
 ### **Example: Random Number with Upper Bound**
+
 ```solidity
 function randomBoundedNumber(uint16 upperBound) public returns (euint16) {
-    return TFHE.randEuint16(upperBound);
+  return TFHE.randEuint16(upperBound);
 }
 ```
 
@@ -67,9 +68,10 @@ ebytes256 rb256 = TFHE.randEbytes256(); // 256 bytes (2048 bits)
 ```
 
 ### **Example: Random Bytes**
+
 ```solidity
 function randomBytes256() public returns (ebytes256) {
-    return TFHE.randEbytes256();
+  return TFHE.randEbytes256();
 }
 ```
 
@@ -78,11 +80,10 @@ function randomBytes256() public returns (ebytes256) {
 ## **Security Considerations**
 
 1. **Cryptographic Security**:  
-   The random numbers are generated using a cryptographically secure pseudo-random number generator (CSPRNG) and remain encrypted until explicitly decrypted.  
+   The random numbers are generated using a cryptographically secure pseudo-random number generator (CSPRNG) and remain encrypted until explicitly decrypted.
 
 2. **Gas Consumption**:  
-   Each call to a random number generation function consumes gas. Developers should optimize the use of these functions, especially in gas-sensitive contracts.  
+   Each call to a random number generation function consumes gas. Developers should optimize the use of these functions, especially in gas-sensitive contracts.
 
 3. **Privacy Guarantee**:  
-   Random values are fully encrypted, ensuring they cannot be accessed or predicted by unauthorized parties.  
-
+   Random values are fully encrypted, ensuring they cannot be accessed or predicted by unauthorized parties.

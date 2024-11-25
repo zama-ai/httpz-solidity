@@ -1,10 +1,13 @@
 # 1. TFHE Library API Documentation
+
 This document provides an overview of the functions available in the `TFHE` Solidity library. The TFHE library provides functionality for working with encrypted types and performing operations on them. It implements fully homomorphic encryption (FHE) operations in Solidity.
 
 ## 1.1. Overview
+
 The `TFHE` Solidity library provides essential functionality for working with encrypted data types and performing fully homomorphic encryption (FHE) operations in smart contracts. It is designed to streamline the developer experience while maintaining flexibility and performance.
 
 ### 1.1.1. **Core Functionality**
+
 - **Homomorphic Operations**: Enables arithmetic, bitwise, and comparison operations on encrypted values.
 - **Ciphertext-Plaintext Interoperability**: Supports operations that mix encrypted and plaintext operands, provided the plaintext operand's size does not exceed the encrypted operand's size.
   - Example: `add(uint8 a, euint8 b)` is valid, but `add(uint32 a, euint16 b)` is not.
@@ -12,12 +15,12 @@ The `TFHE` Solidity library provides essential functionality for working with en
 - **Implicit Upcasting**: Automatically adjusts operand types when necessary to ensure compatibility during operations on encrypted data.
 
 ### 1.1.2. **Key Features**
+
 - **Flexibility**: Handles a wide range of encrypted data types, including booleans, integers, addresses, and byte arrays.
 - **Performance Optimization**: Prioritizes efficient computation by supporting optimized operator versions for mixed plaintext and ciphertext inputs.
 - **Ease of Use**: Offers consistent APIs across all supported data types, enabling a smooth developer experience.
 
 The library ensures that all operations on encrypted data follow the constraints of FHE while abstracting complexity, allowing developers to focus on building privacy-preserving smart contracts.
-
 
 ## 1.2. Table of Contents
 
@@ -75,17 +78,18 @@ The library ensures that all operations on encrypted data follow the constraints
   - [5.3. Example](#53-example)
 - [6. Additional Notes](#6-additional-notes)
 
-
 # 2. Types
 
 ## 2.1. Encrypted Data Types
 
 ### 2.1.1. Boolean
+
 - `ebool`: Encrypted boolean value
 
 ### 2.1.2. Unsigned Integers
+
 - `euint4`: Encrypted 4-bit unsigned integer
-- `euint8`: Encrypted 8-bit unsigned integer  
+- `euint8`: Encrypted 8-bit unsigned integer
 - `euint16`: Encrypted 16-bit unsigned integer
 - `euint32`: Encrypted 32-bit unsigned integer
 - `euint64`: Encrypted 64-bit unsigned integer
@@ -93,15 +97,18 @@ The library ensures that all operations on encrypted data follow the constraints
 - `euint256`: Encrypted 256-bit unsigned integer
 
 ### 2.1.3. Addresses & Bytes
+
 - `eaddress`: Encrypted Ethereum address
 - `ebytes64`: Encrypted 64-byte value
-- `ebytes128`: Encrypted 128-byte value 
+- `ebytes128`: Encrypted 128-byte value
 - `ebytes256`: Encrypted 256-byte value
 
 ### 2.1.4. Special Types
+
 - `einput`: Input type for encrypted operations (bytes32)
 
 ## 2.2. Casting Types
+
 - **Casting between encrypted types**: `TFHE.asEbool` converts encrypted integers to encrypted booleans
 - **Casting to encrypted types**: `TFHE.asEuintX` converts plaintext values to encrypted types
 - **Casting to encrypted addresses**: `TFHE.asEaddress` converts plaintext addresses to encrypted addresses
@@ -139,32 +146,37 @@ function asEuint16(uint16 value) internal view returns (euint16)
 
 The `asEbool` functions behave similarly to the `asEuint` functions, but for encrypted boolean values.
 
-
 # 3. Core Functions
 
 ## 3.1. Configuration
+
 ```solidity
 function setFHEVM(FHEVMConfig.FHEVMConfigStruct memory fhevmConfig) internal
 ```
+
 Sets the FHEVM configuration for encrypted operations.
 
 ## 3.2. Initialization Checks
+
 ```solidity
 function isInitialized(T v) internal pure returns (bool)
 ```
+
 Returns true if the encrypted value is initialized, false otherwise.
 Supported for all encrypted types (T can be ebool, euint*, eaddress, ebytes*).
 
 ## 3.3. Arithmetic operations
-Available for euint* types:
+
+Available for euint\* types:
+
 ```solidity
 function add(T a, T b) internal returns (T)
-function sub(T a, T b) internal returns (T) 
+function sub(T a, T b) internal returns (T)
 function mul(T a, T b) internal returns (T)
 ```
+
 - Arithmetic: `TFHE.add`, `TFHE.sub`, `TFHE.mul`, `TFHE.min`, `TFHE.max`, `TFHE.neg`, `TFHE.div`, `TFHE.rem`
   - Note: `div` and `rem` operations are supported only with plaintext divisors
-
 
 ### 3.3.1. Arithmetic operations (`add`, `sub`, `mul`, `div`, `rem`)
 
@@ -187,7 +199,9 @@ function div(euint32 a, uint32 b) internal pure returns (euint32)
 ```
 
 ### 3.3.2. Min/Max Operations - `min`, `max`
-Available for euint* types:
+
+Available for euint\* types:
+
 ```solidity
 function min(T a, T b) internal returns (T)
 function max(T a, T b) internal returns (T)
@@ -213,8 +227,8 @@ The `not` operator returns the value obtained after flipping all the bits of the
 
 > **_NOTE:_** More information about the behavior of these operators can be found at the [TFHE-rs docs](https://docs.zama.ai/tfhe-rs/getting-started/operations#arithmetic-operations.).
 
-
 ## 3.4. Bitwise operations
+
 - Bitwise: `TFHE.and`, `TFHE.or`, `TFHE.xor`, `TFHE.not`, `TFHE.shl`, `TFHE.shr`, `TFHE.rotl`, `TFHE.rotr`
 
 ### 3.4.1. Bitwise operations (`AND`, `OR`, `XOR`)
@@ -223,7 +237,8 @@ Unlike other binary operations, bitwise operations do not natively accept a mix 
 To ease developer experience, the `TFHE` library adds function overloads for these operations.
 Such overloads implicitely do a trivial encryption before actually calling the operation function, as shown in the examples below.
 
-Available for euint* types:
+Available for euint\* types:
+
 ```solidity
 function and(T a, T b) internal returns (T)
 function or(T a, T b) internal returns (T)
@@ -265,22 +280,24 @@ function rotr(euint32 a, euint16 b) internal view returns (euint32)
 ```
 
 ## 3.5. Comparison operation (`eq`, `ne`, `ge`, `gt`, `le`, `lt`)
+
 > **Note** that in the case of ciphertext-plaintext operations, since our backend only accepts plaintext right operands, calling the operation with a plaintext left operand will actually invert the operand order and call the _opposite_ comparison.
 
 The result of comparison operations is an encrypted boolean (`ebool`). In the backend, the boolean is represented by an encrypted unsinged integer of bit width 8, but this is abstracted away by the Solidity library.
 
-
 Available for all encrypted types:
+
 ```solidity
 function eq(T a, T b) internal returns (ebool)
 function ne(T a, T b) internal returns (ebool)
 ```
 
-Additional comparisons for euint* types:
+Additional comparisons for euint\* types:
+
 ```solidity
 function ge(T a, T b) internal returns (ebool)
 function gt(T a, T b) internal returns (ebool)
-function le(T a, T b) internal returns (ebool) 
+function le(T a, T b) internal returns (ebool)
 function lt(T a, T b) internal returns (ebool)
 ```
 
@@ -298,11 +315,13 @@ function gt(euint16 a, uint32 b) internal view returns (ebool)
 ```
 
 ## 3.6. Multiplexer operator (`select`)
+
 ```solidity
 function select(ebool control, T a, T b) internal returns (T)
 ```
+
 If control is true, returns a, otherwise returns b.
-Available for ebool, eaddress, and ebytes* types.
+Available for ebool, eaddress, and ebytes\* types.
 
 This operator takes three inputs. The first input `b` is of type `ebool` and the two others of type `euintX`.
 If `b` is an encryption of `true`, the first integer parameter is returned. Otherwise, the second integer parameter is returned.
@@ -337,6 +356,7 @@ The `TFHE` library provides a robust set of access control functions for managin
 ## 4.1. Permission management
 
 ### 4.1.1. Functions
+
 ```solidity
 function allow(T value, address account) internal
 function allowThis(T value) internal
@@ -344,8 +364,9 @@ function allowTransient(T value, address account) internal
 ```
 
 #### 4.1.1.1. Descriptions
-- **`allow`**: Grants **permanent access** to a specific address. Permissions are stored persistently in a dedicated ACL contract.  
-- **`allowThis`**: Grants the **current contract** access to an encrypted value.  
+
+- **`allow`**: Grants **permanent access** to a specific address. Permissions are stored persistently in a dedicated ACL contract.
+- **`allowThis`**: Grants the **current contract** access to an encrypted value.
 - **`allowTransient`**: Grants **temporary access** to a specific address for the duration of the transaction. Permissions are stored in transient storage for reduced gas costs.
 
 ### 4.1.2. Access control list (ACL) overview
@@ -353,6 +374,7 @@ function allowTransient(T value, address account) internal
 The `allow` and `allowTransient` functions enable fine-grained control over who can access, decrypt, and reencrypt encrypted values. Temporary permissions (`allowTransient`) are ideal for minimizing gas usage in scenarios where access is needed only within a single transaction.
 
 #### 4.1.2.1. Example: granting access
+
 ```solidity
 // Store an encrypted value.
 euint32 r = TFHE.asEuint32(94);
@@ -370,13 +392,15 @@ TFHE.allowTransient(r, 0x1234567890abcdef1234567890abcdef12345678);
 ## 4.2. Permission checks
 
 ### 4.2.1. Functions
+
 ```solidity
 function isAllowed(T value, address account) internal view returns (bool)
 function isSenderAllowed(T value) internal view returns (bool)
 ```
 
 ### 4.2.2. Descriptions
-- **`isAllowed`**: Checks whether a specific address has permission to access a ciphertext.  
+
+- **`isAllowed`**: Checks whether a specific address has permission to access a ciphertext.
 - **`isSenderAllowed`**: Similar to `isAllowed`, but automatically checks permissions for the `msg.sender`.
 
 > **Note**: Both functions return `true` if the ciphertext is authorized for the specified address, regardless of whether the allowance is stored in the ACL contract or in transient storage.
@@ -386,6 +410,7 @@ function isSenderAllowed(T value) internal view returns (bool)
 These functions help ensure that only authorized accounts or contracts can access encrypted values.
 
 #### 4.2.3.1. Example: permission verification
+
 ```solidity
 // Store an encrypted value.
 euint32 r = TFHE.asEuint32(94);
@@ -400,21 +425,24 @@ bool isCallerAllowed = TFHE.isSenderAllowed(r); // depends on msg.sender
 # 5. Storage Management
 
 ## 5.1. **Function**
+
 ```solidity
 function cleanTransientStorage() internal
 ```
 
 ## 5.2. Description
+
 - **`cleanTransientStorage`**: Removes all temporary permissions from transient storage. Use this function at the end of a transaction to ensure no residual permissions remain.
 
 ## 5.3. Example
+
 ```solidity
 // Clean up transient storage at the end of a function.
 function finalize() public {
-    // Perform operations...
-    
-    // Clean up transient storage.
-    TFHE.cleanTransientStorage();
+  // Perform operations...
+
+  // Clean up transient storage.
+  TFHE.cleanTransientStorage();
 }
 ```
 

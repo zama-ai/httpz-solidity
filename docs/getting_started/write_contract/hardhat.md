@@ -10,7 +10,7 @@ To start writing smart contracts with fhEVM, we recommend using our [Hardhat tem
 
 This document guides you to start with fhEVM by using our [Hardhat template](https://github.com/zama-ai/fhevm-hardhat-template).
 
-## Using hardhat with fhevm
+## Using hardhat with fhEVM
 
 To start writing smart contracts with fhEVM, we recommend using our [Hardhat template](https://github.com/zama-ai/fhevm-hardhat-template). This template simplifies the development process by allowing you to launch an fhEVM Docker image and run your smart contracts on it. For more details, refer to the [README](https://github.com/zama-ai/fhevm-hardhat-template/blob/main/README.md).
 
@@ -20,7 +20,8 @@ To start writing smart contracts with fhEVM, we recommend using our [Hardhat tem
 
 The Hardhat template comes pre-configured with tools and libraries to streamline the development process:
 
-- **Frameworks and Libraries**:  
+- **Frameworks and Libraries**:
+
   - [Hardhat](https://github.com/nomiclabs/hardhat): Compile, deploy, and test smart contracts.
   - [TypeChain](https://github.com/ethereum-ts/TypeChain): Generate TypeScript bindings for contracts.
   - [Ethers.js](https://github.com/ethers-io/ethers.js/): Ethereum library for interactions.
@@ -40,11 +41,13 @@ The Hardhat template comes pre-configured with tools and libraries to streamline
 
 ### Prerequisites
 
-1. **Install [pnpm](https://pnpm.io/installation)** for dependency management.  
+1. **Install [pnpm](https://pnpm.io/installation)** for dependency management.
 2. **Set up a mnemonic**: Create a `.env` file by copying `.env.example`:
+
    ```bash
    cp .env.example .env
    ```
+
    Generate a mnemonic using [this tool](https://iancoleman.io/bip39/) if needed.
 
 3. **Install dependencies**: Ensure you’re using Node.js v20 or later:
@@ -58,15 +61,15 @@ The Hardhat template comes pre-configured with tools and libraries to streamline
 
 Here’s a list of essential commands to work with the Hardhat template:
 
-| **Command**          | **Description**                                                                                 |
-|-----------------------|-------------------------------------------------------------------------------------------------|
-| `pnpm compile`        | Compiles the smart contracts.                                                                  |
-| `pnpm typechain`      | Compiles contracts and generates TypeChain bindings.                                           |
-| `pnpm test`           | Runs tests locally in mocked mode, simulating FHE operations.                                  |
-| `pnpm lint:sol`       | Lints Solidity code.                                                                           |
-| `pnpm lint:ts`        | Lints TypeScript code.                                                                         |
-| `pnpm clean`          | Cleans contract artifacts, cache, and coverage reports.                                       |
-| `pnpm coverage`       | Analyzes test coverage (mocked mode only).                                                     |
+| **Command**      | **Description**                                               |
+| ---------------- | ------------------------------------------------------------- |
+| `pnpm compile`   | Compiles the smart contracts.                                 |
+| `pnpm typechain` | Compiles contracts and generates TypeChain bindings.          |
+| `pnpm test`      | Runs tests locally in mocked mode, simulating FHE operations. |
+| `pnpm lint:sol`  | Lints Solidity code.                                          |
+| `pnpm lint:ts`   | Lints TypeScript code.                                        |
+| `pnpm clean`     | Cleans contract artifacts, cache, and coverage reports.       |
+| `pnpm coverage`  | Analyzes test coverage (mocked mode only).                    |
 
 ---
 
@@ -74,14 +77,15 @@ Here’s a list of essential commands to work with the Hardhat template:
 
 ### Mocked mode
 
-Mocked mode allows faster testing by simulating FHE operations. This mode runs tests on a local Hardhat network without requiring a real fhEVM node. Use the following commands:  
+Mocked mode allows faster testing by simulating FHE operations. This mode runs tests on a local Hardhat network without requiring a real fhEVM node. Use the following commands:
 
-- **Run tests**:  
+- **Run tests**:
+
   ```bash
   pnpm test
   ```
 
-- **Analyze coverage**:  
+- **Analyze coverage**:
   ```bash
   pnpm coverage
   ```
@@ -92,9 +96,10 @@ Mocked mode allows faster testing by simulating FHE operations. This mode runs t
 
 ### Non-mocked mode
 
-Non-mocked mode uses a real fhEVM node, such as the coprocessor on the Sepolia test network.  
+Non-mocked mode uses a real fhEVM node, such as the coprocessor on the Sepolia test network.
 
-- **Run tests on Sepolia**:  
+- **Run tests on Sepolia**:
+
   ```bash
   npx hardhat test [PATH_TO_TEST] --network sepolia
   ```

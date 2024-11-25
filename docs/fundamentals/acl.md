@@ -14,25 +14,25 @@ Encrypted data in fhEVM is entirely confidential, meaning that without proper ac
 - **Secure Computations**: Ensure that only authorized entities can manipulate or decrypt encrypted data.
 - **Gas Efficiency**: Optimize permissions using transient access for temporary needs, reducing storage and gas costs.
 
-
 ## How does the ACL work?
 
 ### Types of access
 
-1. **Permanent Allowance**:  
-   - Configured using `TFHE.allow(ciphertext, address)`.  
-   - Grants long-term access to the ciphertext for a specific address.  
+1. **Permanent Allowance**:
+
+   - Configured using `TFHE.allow(ciphertext, address)`.
+   - Grants long-term access to the ciphertext for a specific address.
    - Stored in a dedicated contract for persistent storage.
 
-2. **Transient Allowance**:  
-   - Configured using `TFHE.allowTransient(ciphertext, address)`.  
-   - Grants access to the ciphertext only for the duration of the current transaction.  
-   - Stored in transient storage, reducing gas costs.  
+2. **Transient Allowance**:
+   - Configured using `TFHE.allowTransient(ciphertext, address)`.
+   - Grants access to the ciphertext only for the duration of the current transaction.
+   - Stored in transient storage, reducing gas costs.
    - Ideal for temporary operations like passing ciphertexts to external functions.
 
-**Syntactic sugar**:  
-- `TFHE.allowThis(ciphertext)` is shorthand for `TFHE.allow(ciphertext, address(this))`. It authorizes the current contract to reuse a ciphertext handle in future transactions.
+**Syntactic sugar**:
 
+- `TFHE.allowThis(ciphertext)` is shorthand for `TFHE.allow(ciphertext, address(this))`. It authorizes the current contract to reuse a ciphertext handle in future transactions.
 
 ### Transient vs. permanent allowance
 
@@ -40,7 +40,6 @@ Encrypted data in fhEVM is entirely confidential, meaning that without proper ac
 | ------------------ | ---------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | **Transient**      | Temporary access during a transaction.         | [Transient storage](https://eips.ethereum.org/EIPS/eip-1153) (EIP-1153) | Calling external functions or computations with ciphertexts. Use when wanting to save on gas costs. |
 | **Permanent**      | Long-term access across multiple transactions. | Dedicated contract storage                                              | Persistent ciphertexts for contracts or users requiring ongoing access.                             |
-
 
 ## Granting and verifying access
 

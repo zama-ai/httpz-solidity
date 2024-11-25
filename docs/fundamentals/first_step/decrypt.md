@@ -4,22 +4,22 @@ As a continuation of your journey in writing confidential smart contracts, this 
 
 > **_NOTE:_** Understanding how encryption, decryption and reencryption works is a prerequisit before implementation, see [Encryption, Decryption, Re-encryption, and Computation](../d_re_ecrypt_compute.md)
 
-# decryption: accessing encrypted data securely  
+# decryption: accessing encrypted data securely
 
-As a continuation of your journey in writing confidential smart contracts, this section explains how to handle decryption in fhEVM. Decryption allows plaintext data to be accessed when required for contract logic or user presentation, ensuring confidentiality is maintained throughout the process.  
+As a continuation of your journey in writing confidential smart contracts, this section explains how to handle decryption in fhEVM. Decryption allows plaintext data to be accessed when required for contract logic or user presentation, ensuring confidentiality is maintained throughout the process.
 
 ---
 
 ## When to use decryption?
 
 Decryption is essential in two primary cases:
-1. **Smart Contract Logic**: A contract requires plaintext values for computations or decision-making.  
+
+1. **Smart Contract Logic**: A contract requires plaintext values for computations or decision-making.
 2. **User Interaction**: Plaintext data needs to be revealed to all users, such as revealing the decision of the vote.
 
 ---
 
 To learn how decryption works see [Encryption, Decryption, Re-encryption, and Computation](../d_re_ecrypt_compute.md)
-
 
 ## Overview
 
@@ -59,22 +59,22 @@ contract TestAsyncDecrypt is GatewayCaller {
   }
 ```
 
-### Key additions to the code  
+### Key additions to the code
 
 1. **`GatewayCaller` import**:  
-   The `GatewayCaller` contract is imported to enable decryption requests.  
+   The `GatewayCaller` contract is imported to enable decryption requests.
 
    ```solidity
    import "fhevm/gateway/GatewayCaller.sol";
    ```
 
 2. **`Gateway.setGateway` function**:  
-   This function sets the address of the Gateway contract, which processes decryption requests. It is typically called in the constructor:  
+   This function sets the address of the Gateway contract, which processes decryption requests. It is typically called in the constructor:
 
    ```solidity
    constructor() {
-       TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-       Gateway.setGateway(Gateway.defaultGatewayAddress());
+     TFHE.setFHEVM(FHEVMConfig.defaultConfig());
+     Gateway.setGateway(Gateway.defaultGatewayAddress());
    }
    ```
 
@@ -138,18 +138,16 @@ contract EncryptedCounter3 is GatewayCaller {
 
 ```
 
-
 ## Tests for `EncryptedCounter3`
 
 Here’s a sample test for the Encrypted Counter contract using Hardhat:
 
 ```ts
-import { expect } from "chai";
-import { ethers } from "hardhat";
-
 import { awaitAllDecryptionResults, initGateway } from "../asyncDecrypt";
 import { createInstances } from "../instance";
 import { getSigners, initSigners } from "../signers";
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 describe("EncryptedCounter3", function () {
   before(async function () {
@@ -187,32 +185,33 @@ describe("EncryptedCounter3", function () {
     expect(decryptedValue).to.equal(5);
   });
 });
-
 ```
 
-### Key additions in testing  
+### Key additions in testing
 
-1. **Initialize the Gateway**:  
+1. **Initialize the Gateway**:
+
    ```typescript
    await initGateway(); // Initialize the gateway for decryption
    ```
 
-2. **Request decryption and wait for results**:  
+2. **Request decryption and wait for results**:
+
    ```typescript
    const decryptTx = await this.counterContract.requestDecryptCounter({ gasLimit: 5_000_000 });
    await decryptTx.wait();
    await awaitAllDecryptionResults();
    ```
 
-3. **Verify the decrypted value**:  
+3. **Verify the decrypted value**:
    ```typescript
    const decryptedValue = await this.counterContract.getDecryptedCounter();
    expect(decryptedValue).to.equal(5);
    ```
 
+## Next steps
 
-## Next steps  
+Explore advanced decryption techniques and learn more about re-encryption:
 
-Explore advanced decryption techniques and learn more about re-encryption:  
-- [Decryption in Depth](./decrypt_details.md)  
-- [Re-encryption](./reencryption.md)  
+- [Decryption in Depth](./decrypt_details.md)
+- [Re-encryption](./reencryption.md)

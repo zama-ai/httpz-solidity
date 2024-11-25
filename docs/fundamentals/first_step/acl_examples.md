@@ -1,32 +1,36 @@
-# implementing access control with acl
+# Implementing access control with acl
 
 This page provides detailed instructions and examples on how to use and implement the ACL (Access Control List) in fhEVM. For an overview of ACL concepts and their importance, refer to the [access control list (ACL) overview](../acl.md).
 
 ---
 
-## controlling access: permanent and transient allowances
+## Controlling access: permanent and transient allowances
 
 The ACL system allows you to define two types of permissions for accessing ciphertexts:
 
-### permanent allowance
-- **Function**: `TFHE.allow(ciphertext, address)`  
-- **Purpose**: Grants persistent access to a ciphertext for a specific address.  
-- **Storage**: Permissions are saved in a dedicated ACL contract, making them available across transactions.  
+### Permanent allowance
 
-### transient allowance
-- **Function**: `TFHE.allowTransient(ciphertext, address)`  
-- **Purpose**: Grants temporary access for the duration of a single transaction.  
-- **Storage**: Permissions are stored in transient storage to save gas costs.  
+- **Function**: `TFHE.allow(ciphertext, address)`
+- **Purpose**: Grants persistent access to a ciphertext for a specific address.
+- **Storage**: Permissions are saved in a dedicated ACL contract, making them available across transactions.
+
+### Transient allowance
+
+- **Function**: `TFHE.allowTransient(ciphertext, address)`
+- **Purpose**: Grants temporary access for the duration of a single transaction.
+- **Storage**: Permissions are stored in transient storage to save gas costs.
 - **Use Case**: Ideal for passing encrypted values between functions or contracts during a transaction.
 
-### syntactic sugar
-- **Function**: `TFHE.allowThis(ciphertext)`  
-- **Equivalent To**: `TFHE.allow(ciphertext, address(this))`  
+### Syntactic sugar
+
+- **Function**: `TFHE.allowThis(ciphertext)`
+- **Equivalent To**: `TFHE.allow(ciphertext, address(this))`
 - **Purpose**: Simplifies granting permanent access to the current contract for managing ciphertexts.
 
 ---
 
 ### Example: granting permissions in a multi-contract setup
+
 ```solidity
 import "fhevm/lib/TFHE.sol";
 
@@ -75,14 +79,15 @@ contract SecretStore {
 
 Some functions automatically grant transient allowances to the calling contract, simplifying workflow. These include:
 
-- **Type Conversion**:  
-  - `TFHE.asEuintXX()`, `TFHE.asEbool()`, `TFHE.asEaddress()`  
-- **Random Value Generation**:  
-  - `TFHE.randXX()`  
-- **Computation Results**:  
-  - `TFHE.add()`, `TFHE.select()`  
+- **Type Conversion**:
+  - `TFHE.asEuintXX()`, `TFHE.asEbool()`, `TFHE.asEaddress()`
+- **Random Value Generation**:
+  - `TFHE.randXX()`
+- **Computation Results**:
+  - `TFHE.add()`, `TFHE.select()`
 
-### example: random value generation
+### Example: random value generation
+
 ```solidity
 function randomize() public {
   // Generate a random encrypted value with transient allowance
@@ -98,9 +103,26 @@ function randomize() public {
 ## Security best practices
 
 ### Verifying sender access
-When receiving ciphertexts as input, always verify that the sender is authorized to access them. Use the `TFHE.isSenderAllowed()` function to enforce this check.
+
+When processing ciphertexts as input, it’s essential to validate that the sender is authorized to interact with the provided encrypted data. Failing to perform this verification can expose the system to inference attacks where malicious actors attempt to deduce private information.
+
+#### Example scenario: Encrypted ERC20 attack
+
+Consider an **Encrypted ERC20 token**. An attacker controlling two accounts, **Account A** and **Account B**, with 100 tokens in Account A, could exploit the system as follows:
+
+1. The attacker attempts to send the target user's encrypted balance from **Account A** to **Account B**.
+2. Observing the transaction outcome, the attacker gains information:
+   - **If successful**: The target's balance is equal to or less than 100 tokens.
+   - **If failed**: The target's balance exceeds 100 tokens.
+
+This type of attack allows the attacker to infer private balances without explicit access.
+
+To prevent this, always use the `TFHE.isSenderAllowed()` function to verify that the sender has legitimate access to the encrypted amount being transferred.
+
+---
 
 #### Example: secure verification
+
 ```solidity
 function transfer(address to, euint64 encryptedAmount, bytes calldata inputProof) public {
   // Ensure the sender is authorized to access the encrypted amount
@@ -112,14 +134,16 @@ function transfer(address to, euint64 encryptedAmount, bytes calldata inputProof
 }
 ```
 
+By enforcing this check, you can safeguard against inference attacks and ensure that encrypted values are only manipulated by authorized entities.
+
 ## ACL for reencryption
 
-If a ciphertext must be reencrypted by a user, then explicit access must be granted to them. If this authorization is not given, the user will be unable to request a reencryption of this ciphertext.
+If a ciphertext can be reencrypted by a user, explicit access must be granted to them. Additionally, the reencryption mechanism requires the signature of a public key associated with the contract address. Therefore, a value that needs to be reencrypted must be explicitly authorized for both the user and the contract.
 
 Due to the reencryption mechanism, a user signs a public key associated with a specific contract; therefore, the ciphertext also needs to be allowed for the contract.
 
-
 ### Example: Secure Transfer in Encrypted ERC-20
+
 ```solidity
 function transfer(address to, euint64 encryptedAmount) public {
   require(TFHE.isSenderAllowed(encryptedAmount), "The caller is not authorized to access this encrypted amount.");

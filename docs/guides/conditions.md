@@ -49,33 +49,38 @@ function bid(einput encryptedValue, bytes calldata inputProof) external onlyBefo
 > **Note**: This is a simplified example to demonstrate the functionality. For a complete implementation with proper error handling and additional features, see the [BlindAuction contract example](https://github.com/zama-ai/fhevm/blob/29fe1f12236010737d86df156dc22eb6dedd0caa/examples/BlindAuction.sol#L92-L143).
 
 ### **How It Works**
-1. **Comparison**:  
-   - The `TFHE.lt` function compares `highestBid` and `bid`, returning an `ebool` (`isAbove`) that indicates whether the new bid is higher.  
 
-2. **Selection**:  
+1. **Comparison**:
+
+   - The `TFHE.lt` function compares `highestBid` and `bid`, returning an `ebool` (`isAbove`) that indicates whether the new bid is higher.
+
+2. **Selection**:
+
    - The `TFHE.select` function updates `highestBid` to either the new bid or the previous highest bid, based on the encrypted condition `isAbove`.
 
-3. **Permission Handling**:  
+3. **Permission Handling**:
    - After updating `highestBid`, the contract reauthorizes itself to manipulate the updated ciphertext using `TFHE.allowThis`.
-
 
 ## **Key Considerations**
 
 ### **1. Value Change Behavior**
+
 Each time `TFHE.select` assigns a value, a new ciphertext is created, even if the underlying plaintext value remains unchanged. This behavior is inherent to FHE and ensures data confidentiality, but developers should account for it when designing their smart contracts.
 
 ### **2. Gas Consumption**
+
 Using `TFHE.select` and other encrypted operations incurs additional gas costs compared to traditional Solidity logic. Optimize your code to minimize unnecessary operations.
 
 ### **3. Access Control**
+
 Always use appropriate ACL functions (e.g., `TFHE.allowThis`, `TFHE.allow`) to ensure the updated ciphertexts are authorized for use in future computations or transactions.
 
 ---
 
 ## **Summary**
 
-- **`TFHE.select`** is a powerful tool for conditional logic on encrypted values.  
-- Encrypted booleans (`ebool`) and values maintain confidentiality, enabling privacy-preserving logic.  
-- Developers should account for gas costs and ciphertext behavior when designing conditional operations.  
+- **`TFHE.select`** is a powerful tool for conditional logic on encrypted values.
+- Encrypted booleans (`ebool`) and values maintain confidentiality, enabling privacy-preserving logic.
+- Developers should account for gas costs and ciphertext behavior when designing conditional operations.
 
 For more information on the supported operations, see the [fhEVM API documentation](../references/functions.md).

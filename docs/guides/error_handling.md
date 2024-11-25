@@ -5,6 +5,7 @@ This document explains how to handle errors effectively in fhEVM smart contracts
 ## **Challenges in Error Handling**
 
 In the context of encrypted data:
+
 1. **No Automatic Reversion**: Transactions do not revert if a condition fails, making it challenging to notify users of issues like insufficient funds or invalid inputs.
 2. **Limited Feedback**: Encrypted computations lack direct mechanisms for exposing failure reasons while maintaining confidentiality.
 
@@ -15,6 +16,11 @@ In the context of encrypted data:
 To address these challenges, implement an **error handler** that records the most recent error for each user. This allows dApps or frontends to query error states and provide appropriate feedback to users.
 
 ### **Example Implementation**
+
+For a complete implementation of error handling, see our reference contracts:
+
+- [EncryptedErrors.sol](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/utils/EncryptedErrors.sol) - Base error handling contract
+- [EncryptedERC20WithErrors.sol](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/extensions/EncryptedERC20WithErrors.sol) - Example usage in an ERC20 token
 
 The following contract demonstrates how to implement and use an error handler:
 
@@ -78,14 +84,17 @@ function _transfer(address from, address to, euint32 amount) internal {
 ## **How It Works**
 
 1. **Define Error Codes**:
+
    - `NO_ERROR`: Indicates a successful operation.
    - `NOT_ENOUGH_FUNDS`: Indicates insufficient balance for a transfer.
 
 2. **Record Errors**:
+
    - Use the `setLastError` function to log the latest error for a specific address along with the current timestamp.
    - Emit the `ErrorChanged` event to notify external systems (e.g., dApps) about the error state change.
 
 3. **Conditional Updates**:
+
    - Use the `TFHE.select` function to update balances and log errors based on the transfer condition (`canTransfer`).
 
 4. **Frontend Integration**:
