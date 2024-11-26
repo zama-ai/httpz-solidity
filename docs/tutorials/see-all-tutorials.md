@@ -15,7 +15,6 @@ For more information on individual contracts, see the [README](https://github.co
 
 #### Legacy - Not compatible with latest fhEVM
 
-- [Governor DAO](https://github.com/zama-ai/fhevm/tree/main/examples/legacy/Governor): A DAO smart contract that facilitates governance decisions through encrypted voting
 - [Decentralized ID](https://github.com/zama-ai/fhevm/tree/main/examples/legacy/Identity): A blockchain-based identity management system using smart contracts to store and manage encrypted personal data.
 
 ### Blog tutorials:
