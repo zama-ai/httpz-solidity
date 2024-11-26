@@ -1,9 +1,4 @@
 #!/bin/bash
-PRIVATE_KEY_GATEWAY_DEPLOYER=$(grep PRIVATE_KEY_GATEWAY_DEPLOYER .env | cut -d '"' -f 2)
-PRIVATE_KEY_FHEVM_DEPLOYER=$(grep PRIVATE_KEY_FHEVM_DEPLOYER .env | cut -d '"' -f 2)
-NUM_KMS_SIGNERS=$(grep NUM_KMS_SIGNERS .env | cut -d '"' -f 2)
-IS_COPROCESSOR=$(grep IS_COPROCESSOR .env | cut -d '"' -f 2)
-
 fund_account() {
 	account_name=$1
 	account_address=$2
