@@ -23,7 +23,7 @@ let lastCounterRand = 0;
 let counterRand = 0;
 
 const contractABI = JSON.parse(
-  fs.readFileSync('artifacts/fhevmTemp/contracts/TFHEExecutor.sol/TFHEExecutor.json').toString(),
+  fs.readFileSync('artifacts/fhevmTemp/fhevm-core-contracts/contracts/TFHEExecutor.sol/TFHEExecutor.json').toString(),
 ).abi;
 
 const iface = new ethers.Interface(contractABI);
