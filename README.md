@@ -209,49 +209,16 @@ npm run fhevm:start
 # in another terminal
 npm i
 cp .env.example .env
-./scripts/faucet.sh
-npm test
+npm run test:mock
 ```
 
 </details>
 
-##### Docker
-
-We provide a docker image to spin up a fhEVM node for local development.
+##### Run test on a real fhEVM
 
 ```bash
-npm run fhevm:start
-# stop
-npm run fhevm:stop
+npm run test -- --network sepolia
 ```
-
-##### Run test
-
-```bash
-npm test
-```
-
-<details>
-  <summary>Error: insufficient funds</summary>
-
-Ensure the faucet command was successful.
-
-</details>
-
-##### Run tests for network1 network
-
-Network1 doesn't support shanghai, so you should update the `evmVersion` [here](https://github.com/zama-ai/fhevm/blob/main/hardhat.config.ts#L170) to use `paris`, and make sure contracts are compiled using that version.
-
-```bash
-# codegen for network1 network
-TARGET_NETWORK=Network1 npx ts-node codegen/main.ts && npm run prettier
-# run tests for network1 network, assumes network1 rpc already running locally
-npx hardhat test --network localNetwork1
-```
-
-<p align="right">
-  <a href="#about" > ↑ Back to top </a>
-</p>
 
 #### Adding new operators
 
