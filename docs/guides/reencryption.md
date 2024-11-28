@@ -33,7 +33,8 @@ const USER_ADDRESS = accounts[0];
 
 // Create a fhevmjs instance using the Zama's network and the Zama's Gateway
 const instance = await createInstance({
-  chainId: 8009,
+  aclAddress: '0x2Fb4341027eb1d2aD8B5D9708187df8633cAFA92',
+  chainId: 9000,
   networkUrl: "https://devnet.zama.ai",
   gatewayUrl: "https://gateway.zama.ai",
 });
