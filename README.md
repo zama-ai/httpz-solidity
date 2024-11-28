@@ -74,7 +74,6 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
 - **[Resources](#resources)**
   - [White paper](#white-paper)
     [Demos](#demos-and-tutorials)
-  - [Tutorials](#tutorials)
   - [Documentation](#documentation)
   - [Blockchain Implementation](#blockchain-implementation)
 - **[Working with fhEVM](#working-with-fhevm)**
