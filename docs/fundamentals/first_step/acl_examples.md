@@ -33,12 +33,12 @@ The ACL system allows you to define two types of permissions for accessing ciphe
 
 ```solidity
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 
-contract SecretGiver {
+contract SecretGiver is MockZamaFHEVMConfig {
   SecretStore public secretStore;
 
   constructor() {
-    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
     secretStore = new SecretStore();
   }
 
@@ -53,8 +53,10 @@ contract SecretGiver {
     secretStore.storeSecret(mySecret);
   }
 }
+```
 
-contract SecretStore {
+```
+contract SecretStore is MockZamaFHEVMConfig {
   euint16 public secretResult;
 
   function storeSecret(euint16 callerSecret) public {
@@ -100,7 +102,7 @@ function randomize() public {
 
 ---
 
-## Security best practices
+## 🔧 Best practices
 
 ### Verifying sender access
 

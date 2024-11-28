@@ -33,16 +33,15 @@ Here’s an example of how to request decryption in a contract:
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
 import "fhevm/gateway/GatewayCaller.sol";
 
-contract TestAsyncDecrypt is GatewayCaller {
+contract TestAsyncDecrypt is MockZamaFHEVMConfig, MockZamaGatewayConfig, GatewayCaller {
   ebool xBool;
   bool public yBool;
 
   constructor() {
-      TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-      Gateway.setGateway(Gateway.defaultGatewayAddress());
-
       xBool = TFHE.asEbool(true);
       TFHE.allowThis(xBool);
   }
@@ -61,21 +60,20 @@ contract TestAsyncDecrypt is GatewayCaller {
 
 ### Key additions to the code
 
-1. **`GatewayCaller` import**:  
+1. **Configuration imports**:
+   The configuration contracts are imported to set up the FHEVM environment and Gateway.
+
+   ```solidity
+   import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+   import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
+   ```
+
+
+2. **`GatewayCaller` import**:  
    The `GatewayCaller` contract is imported to enable decryption requests.
 
    ```solidity
    import "fhevm/gateway/GatewayCaller.sol";
-   ```
-
-2. **`Gateway.setGateway` function**:  
-   This function sets the address of the Gateway contract, which processes decryption requests. It is typically called in the constructor:
-
-   ```solidity
-   constructor() {
-     TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-     Gateway.setGateway(Gateway.defaultGatewayAddress());
-   }
    ```
 
 ## Applying decryption to the counter example
@@ -87,19 +85,20 @@ Remember our **Encrypted Counter** contract from before? Here’s an improved ve
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
 import "fhevm/gateway/GatewayCaller.sol";
 
 /// @title EncryptedCounter3
 /// @notice A contract that maintains an encrypted counter and is meant for demonstrating how decryption works
 /// @dev Uses TFHE library for fully homomorphic encryption operations and Gateway for decryption
 /// @custom:experimental This contract is experimental and uses FHE technology with decryption capabilities
-contract EncryptedCounter3 is GatewayCaller {
+contract EncryptedCounter3 is MockZamaFHEVMConfig, MockZamaGatewayConfig, GatewayCaller {
     /// @dev Decrypted state variable
     euint8 counter;
     uint8 public decryptedCounter;
 
     constructor() {
-        TFHE.setFHEVM(FHEVMConfig.defaultConfig());
         Gateway.setGateway(Gateway.defaultGatewayAddress());
 
         // Initialize counter with an encrypted zero value

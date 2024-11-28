@@ -19,7 +19,8 @@
 - [Architecture overview](fundamentals/architecture_overview.md)
   - [Encryption, decryption, re-encryption, and computation](fundamentals/d_re_ecrypt_compute.md)
   - [Access control list](fundamentals/acl.md)
-- [Configuration](fundamentals/first_step/configure.md)
+- [Workflow for SC development](fundamentals/first_step/index.md)
+  - [Configuration](fundamentals/first_step/configure.md)
   - [First smart contract](fundamentals/first_step/start.md)
   - [Supported types](fundamentals/first_step/types.md)
   - [Operations on encrypted types](fundamentals/first_step/operations.md)
@@ -32,11 +33,10 @@
 ## Guides
 
 - Smart Contracts
-  - [Common pitfalls and best practises](guides/pitfalls.md)
+  - [fhevm-contracts](guides/contracts.md)
   - [If sentances](guides/loop.md)
   - [Branching in FHE](guides/conditions.md)
   - [Generate random numbers](guides/random.md)
-  - [Gas estimation on devnet](guides/gas.md)
   - [Error handling](guides/error_handling.md)
 - Frontend
   - [Build a web application](guides/frontend/webapp.md)

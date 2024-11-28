@@ -73,7 +73,7 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
   - [A Simple Example](#a-simple-example)
 - **[Resources](#resources)**
   - [White paper](#white-paper)
-  - [Demos](#demos)
+[Demos](#demos-and-tutorials)
   - [Tutorials](#tutorials)
   - [Documentation](#documentation)
   - [Blockchain Implementation](#blockchain-implementation)
@@ -142,34 +142,9 @@ _More examples are available [here](https://github.com/zama-ai/fhevm/tree/main/e
 - [Confidential EVM Smart Contracts using Fully Homomorphic Encryption](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)
   <br></br>
 
-### Demos
+### Demos and Tutorials
 
-#### Finance
-
-- [ERC-20](https://github.com/zama-ai/fhevm/blob/main/examples/EncryptedERC20.sol): A variation of the standard ERC20 smart contract that incorporates encrypted balances, providing additional privacy for token holders.
-- [Darkpool](https://github.com/omurovec/fhe-darkpools): A smart contract that enables anonymous trading of cryptocurrencies or assets, typically used to execute large orders without affecting the market price. - by [Owen Murovec](https://github.com/omurovec)
-
-#### Games:
-
-- [Cipherbomb](https://github.com/immortal-tofu/cipherbomb): A Hardhat-based template for developing Solidity smart contracts, with sensible defaults. - by Clément Danjou
-- [Battleship](https://github.com/battleship-fhevm/battleship-hardhat): A smart contract that replicates the classic Battleship game on a blockchain in a transparent manner. - by [Owen Murovec](https://github.com/omurovec)
-
-#### Others
-
-- [Blind auction](https://github.com/zama-ai/fhevm/blob/main/examples/BlindAuction.sol): A smart contract for conducting blind auctions where bids are encrypted and the winning bid remains private.
-
-_If you have built awesome projects using fhEVM, please let us know and we will be happy to showcase them here!_
-<br></br>
-
-### Tutorials
-
-- [[Video tutorial] How to Write Confidential Smart Contracts Using Zama's fhEVM](https://www.zama.ai/post/video-tutorial-how-to-write-confidential-smart-contracts-using-zamas-fhevm)
-- [Confidential ERC-20 Tokens Using Homomorphic Encryption and the fhEVM](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption)
-- [On-chain Blind Auctions Using Homomorphic Encryption and the fhEVM](https://www.zama.ai/post/on-chain-blind-auctions-using-homomorphic-encryption)
-- [Programmable Privacy and Onchain Compliance using Homomorphic Encryption](https://www.zama.ai/post/programmable-privacy-and-onchain-compliance-using-homomorphic-encryption)
-
-_Explore more useful resources in [fhEVM tutorials](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials) and [Awesome Zama repo](https://github.com/zama-ai/awesome-zama)._
-<br></br>
+For a comprehensive list of demos and tutorials, visit our [tutorials page](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials). 
 
 ### Documentation
 

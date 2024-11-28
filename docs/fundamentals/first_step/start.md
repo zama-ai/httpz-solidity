@@ -19,6 +19,7 @@ Create a new file called `EncryptedCounter.sol` in your `contracts/` folder and 
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 
 /// @title EncryptedCounter1
 /// @notice A basic contract demonstrating the setup of encrypted types
@@ -26,13 +27,11 @@ import "fhevm/lib/TFHE.sol";
 /// @custom:experimental This is a minimal example contract intended only for learning purposes
 /// @custom:notice This contract has limited real-world utility and serves primarily as a starting point
 /// for understanding how to implement basic FHE operations in Solidity
-contract EncryptedCounter1 {
+contract EncryptedCounter1 is MockZamaFHEVMConfig {
   euint8 counter;
   euint8 CONST_ONE;
 
   constructor() {
-    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-
     // Initialize counter with an encrypted zero value
     counter = TFHE.asEuint8(0);
     TFHE.allowThis(counter);
@@ -51,8 +50,28 @@ contract EncryptedCounter1 {
 
 ### How it works
 
-1. **Configuring fhevm**:  
-   The constructor initializes the FHEVM environment with a default configuration using `TFHE.setFHEVM(FHEVMConfig.defaultConfig())`.
+1. **Configuring fhEVM**:  
+   The contract inherits from `MockZamaFHEVMConfig` which provides the necessary configuration for local development and testing. This configuration includes the addresses of the TFHE library and Gateway contracts.
+
+   When deploying to different networks, you can use the appropriate configuration:
+
+   ```solidity
+   // For local testing
+   import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+   contract MyContract is MockZamaFHEVMConfig { ... }
+
+   // For Sepolia testnet
+   import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol"; 
+   contract MyContract is SepoliaZamaFHEVMConfig { ... }
+
+   // For Ethereum (when ready)
+    import { EthereumZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol"; 
+   contract MyContract is EthereumZamaFHEVMConfig { ... }
+   ```
+
+   The configuration handles setting up:
+   - TFHE library address for encrypted operations
+   - Network-specific parameters
 
 2. **Initializing encrypted variables**:
 
@@ -138,11 +157,45 @@ The test file demonstrates key concepts for testing fhEVM smart contracts:
    - `contractFactory.deploy()`: Creates a new contract instance for testing
    - `tx.wait()`: Ensures transactions are mined before continuing
 
-4. **Best Practices**:
+## 🔧 Best Practices
+
+### General best practices
    - Deploy fresh contract instances for each test to ensure isolation
    - Use descriptive test names that explain the expected behavior
    - Handle asynchronous operations properly with async/await
    - Set up proper encryption instances for testing encrypted values
+
+### No constant nor immutable encrypted state variables
+
+Never use encrypted types for constant or immutable state variables, even if they should actually stay constants, or else any transaction involving those will fail. This is because ciphertexts should always be stored in the privileged storage of the contract (see paragraph 4.4 of [whitepaper](../../fhevm-whitepaper.pdf)) while constant and immutable variables are just appended to the bytecode of the deployed contract at construction time.
+
+❌ So, even if `a` and `b` should never change after construction, the following example :
+
+```solidity
+contract C {
+  euint32 internal constant a = TFHE.asEuint32(42);
+  euint32 internal immutable b;
+
+  constructor(uint32 _b) {
+    b = TFHE.asEuint32(_b);
+    TFHE.allowThis(b);
+  }
+}
+```
+
+✅ Should be replaced by this snippet:
+
+```solidity
+contract C {
+  euint32 internal a = TFHE.asEuint32(42);
+  euint32 internal b;
+
+  constructor(uint32 _b) {
+    b = TFHE.asEuint32(_b);
+    TFHE.allowThis(b);
+  }
+}
+```
 
 ## **Next Steps**
 

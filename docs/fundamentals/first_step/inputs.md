@@ -1,4 +1,4 @@
-# Encryption and Encrypted Inputs in fhEVM
+# Encryption and encrypted inputs in fhEVM
 
 This document introduces the concept of encrypted inputs in the fhEVM, explaining their role, structure, validation process, and how developers can integrate them into smart contracts and applications.
 
@@ -6,17 +6,17 @@ This document introduces the concept of encrypted inputs in the fhEVM, explainin
 
 Encrypted inputs are a core feature of fhEVM, enabling users to push encrypted data onto the blockchain while ensuring data confidentiality and integrity.
 
-## What Are Encrypted Inputs?
+## What are encrypted inputs?
 
 Encrypted inputs are data values submitted by users in ciphertext form. These inputs allow sensitive information to remain confidential while still being processed by smart contracts. They are accompanied by **Zero-Knowledge Proofs of Knowledge (ZKPoKs)** to ensure the validity of the encrypted data without revealing the plaintext.
 
-### **Key Characteristics of Encrypted Inputs**:
+### Key characteristics of encrypted inputs:
 
 1. **Confidentiality**: Data is encrypted using the public FHE key, ensuring that only authorized parties can decrypt or process the values.
 2. **Validation via ZKPoKs**: Each encrypted input is accompanied by a proof verifying that the user knows the plaintext value of the ciphertext, preventing replay attacks or misuse.
 3. **Efficient Packing**: All inputs for a transaction are packed into a single ciphertext in a user-defined order, optimizing the size and generation of the zero-knowledge proof.
 
-## Parameters in Encrypted Functions
+## Parameters in encrypted functions
 
 When a function in a smart contract is called, it may accept two types of parameters for encrypted inputs:
 
@@ -41,7 +41,7 @@ function myExample(
 
 In this example, `param1`, `param2`, and `param3` are encrypted inputs, while `inputProof` contains the corresponding ZKPoK to validate their authenticity.
 
-## Client-Side Implementation
+## Client-Side implementation
 
 To interact with such a function, developers can use the [fhevmjs](https://github.com/zama-ai/fhevmjs) library to create and manage encrypted inputs. Below is an example implementation:
 
@@ -74,11 +74,11 @@ In this example:
 - **`add64`, `addBool`, and `add8`**: Specify the types and values of inputs to encrypt.
 - **`encrypt`**: Generates the encrypted inputs and the zero-knowledge proof.
 
-## Validating Encrypted Inputs
+## Validating encrypted inputs
 
 Smart contracts process encrypted inputs by verifying them against the associated zero-knowledge proof. This is done using the `TFHE.asEuintXX`, `TFHE.asEbool`, or `TFHE.asEaddress` functions, which validate the input and convert it into the appropriate encrypted type.
 
-### Example Validation that goes along the Client-Side implementation
+### Example validation that goes along the client-Side implementation
 
 This example demonstrates a function that performs multiple encrypted operations, such as updating a user's encrypted balance and toggling an encrypted boolean flag:
 
@@ -111,7 +111,7 @@ This example demonstrates a function that performs multiple encrypted operations
 }
 ```
 
-### Example Validation in the `encyrptedERC20.sol` Smart Contract
+### Example validation in the `encyrptedERC20.sol` smart contract
 
 Here’s an example of a smart contract function that verifies an encrypted input before proceeding:
 
@@ -138,7 +138,7 @@ function transfer(
 
 ---
 
-## **Best Practices**
+## 🔧 Best Practices
 
 - **Input Packing**: Minimize the size and complexity of zero-knowledge proofs by packing all encrypted inputs into a single ciphertext.
 - **Frontend Encryption**: Always encrypt inputs using the FHE public key on the client side to ensure data confidentiality.
@@ -155,6 +155,7 @@ Now that we have new knowledge on how to add encrypted inputs, let's upgrade our
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 
 /// @title EncryptedCounter2
 /// @notice A contract that maintains an encrypted counter and is meant for demonstrating how to add encrypted types
@@ -163,9 +164,7 @@ import "fhevm/lib/TFHE.sol";
 contract EncryptedCounter2 {
   euint8 counter;
 
-  constructor() {
-    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-
+  constructor() is MockZamaFHEVMConfig {
     // Initialize counter with an encrypted zero value
     counter = TFHE.asEuint8(0);
     TFHE.allowThis(counter);

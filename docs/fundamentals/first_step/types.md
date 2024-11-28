@@ -82,7 +82,7 @@ The table below summarizes the available casting functions:
 
 When using encrypted types as state variables in smart contracts, avoid declaring them with the `immutable` or `constant` keywords. This is because the `TFHE.asEuintXX()` method relies on a precompiled contract, making the value resolution at compile time infeasible.
 
-### Best practices for declaration
+### 🔧 Best practices for declaration
 
 Instead of using `immutable` or `constant`, declare and initialize encrypted state variables like this:
 
@@ -98,7 +98,6 @@ euint64 private totalSupply = TFHE.asEuint64(0);
 euint64 private totalSupply;
 
 constructor() {
-  TFHE.setFHEVM(FHEVMConfig.defaultConfig());
   totalSupply = TFHE.asEuint64(0);
 }
 ```

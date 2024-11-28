@@ -81,6 +81,85 @@ euint64 b = TFHE.asEuint64(58);
 euint64 sum = a + b; // Calls TFHE.add under the hood
 ```
 
+## 🔧 Best Practices
+Here are some best practices to follow when using encrypted operations in your smart contracts:
+
+### Use the appropriate encrypted type size
+
+Choose the smallest encrypted type that can accommodate your data to optimize gas costs. For example, use `euint8` for small numbers (0-255) rather than `euint256`.
+
+❌ Avoid using oversized types:
+
+```solidity
+// Bad: Using euint256 for small numbers wastes gas
+euint64 age = TFHE.euint256(25);  // age will never exceed 255
+euint64 percentage = TFHE.euint256(75);  // percentage is 0-100
+```
+
+✅ Instead, use the smallest appropriate type:
+
+```solidity
+// Good: Using appropriate sized types
+euint8 age = TFHE.asEuint8(25);  // age fits in 8 bits
+euint8 percentage = TFHE.asEuint8(75);  // percentage fits in 8 bits
+```
+
+### Use scalar operands when possible to save gas
+
+Some TFHE operators exist in two versions : one where all operands are ciphertexts handles, and another where one of the operands is an unencrypted scalar. Whenever possible, use the scalar operand version, as this will save a lot of gas. See the page on [Gas](gas.md) to discover which operators support scalar operands and compare the gas saved between both versions: all-encrypted operands vs scalar.
+
+❌ For example, this snippet cost way more in gas:
+
+```solidity
+euint32 x;
+...
+x = TFHE.add(x,TFHE.asEuint(42));
+```
+
+✅ Than this one:
+
+```solidity
+euint32 x;
+// ...
+x = TFHE.add(x,42);
+```
+
+Despite both leading to the same encrypted result!
+
+### Beware of overflows of TFHE arithmetic operators
+
+TFHE arithmetic operators can overflow. Do not forget to take into account such a possibility when implementing fhEVM smart contracts.
+
+❌ For example, if you wanted to create a mint function for an encrypted ERC20 tokens with an encrypted `totalSupply` state variable, this code is vulnerable to overflows:
+
+```solidity
+function mint(einput encryptedAmount, bytes calldata inputProof) public {
+  euint32 mintedAmount = TFHE.asEuint32(encryptedAmount, inputProof);
+  totalSupply = TFHE.add(totalSupply, mintedAmount);
+  balances[msg.sender] = TFHE.add(balances[msg.sender], mintedAmount);
+  TFHE.allowThis(balances[msg.sender]);
+  TFHE.allow(balances[msg.sender], msg.sender);
+}
+```
+
+✅ But you can fix this issue by using `TFHE.select` to cancel the mint in case of an overflow:
+
+```solidity
+function mint(einput encryptedAmount, bytes calldata inputProof) public {
+  euint32 mintedAmount = TFHE.asEuint32(encryptedAmount, inputProof);
+  euint32 tempTotalSupply = TFHE.add(totalSupply, mintedAmount);
+  ebool isOverflow = TFHE.lt(tempTotalSupply, totalSupply);
+  totalSupply = TFHE.select(isOverflow, totalSupply, tempTotalSupply);
+  euint32 tempBalanceOf = TFHE.add(balances[msg.sender], mintedAmount);
+  balances[msg.sender] = TFHE.select(isOverflow, balances[msg.sender], tempBalanceOf);
+  TFHE.allowThis(balances[msg.sender]);
+  TFHE.allow(balances[msg.sender], msg.sender);
+}
+```
+
+Notice that we did not check separately the overflow on `balances[msg.sender]` but only on `totalSupply` variable, because `totalSupply` is the sum of the balances of all the users, so `balances[msg.sender]` could never overflow if `totalSupply` did not.
+
+
 ## Additional Resources
 
 - For detailed API specifications, visit the [fhEVM API Documentation](../../references/functions.md).

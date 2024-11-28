@@ -112,19 +112,16 @@ Here’s an enhanced **Encrypted Counter** example where each user maintains the
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
+import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 
 /// @title EncryptedCounter4
 /// @notice A contract that maintains encrypted counters for each user and is meant for demonstrating how re-encryption works
 /// @dev Uses TFHE library for fully homomorphic encryption operations
 /// @custom:security Each user can only access and modify their own counter
 /// @custom:experimental This contract is experimental and uses FHE technology
-contract EncryptedCounter4 {
+contract EncryptedCounter4 is MockZamaFHEVMConfig {
   // Mapping from user address to their encrypted counter value
   mapping(address => euint8) private counters;
-
-  constructor() {
-    TFHE.setFHEVM(FHEVMConfig.defaultConfig());
-  }
 
   function incrementBy(einput amount, bytes calldata inputProof) public {
     // Initialize counter if it doesn't exist
