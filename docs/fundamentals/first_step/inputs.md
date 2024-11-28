@@ -46,13 +46,13 @@ In this example, `param1`, `param2`, and `param3` are encrypted inputs, while `i
 To interact with such a function, developers can use the [fhevmjs](https://github.com/zama-ai/fhevmjs) library to create and manage encrypted inputs. Below is an example implementation:
 
 ```javascript
-const instance = await createInstance({
-  kmsContractAddress: "0x208De73316E44722e16f6dDFF40881A3e4F86104",
-  aclContractAddress: "0xc9990FEfE0c27D31D0C2aa36196b085c0c4d456c",
-  networkUrl: "https://devnet.zama.ai/",
-  gatewayUrl: "https://gateway.zama.ai/",
-});
+import { createInstances } from "../instance";
+import { getSigners, initSigners } from "../signers";
 
+await initSigners(2); // Initialize signers
+const signers = await getSigners();
+
+const instance = await createInstances(this.signers);
 // Create encrypted inputs
 const input = instance.createEncryptedInput(contractAddress, userAddress);
 const inputs = input.add64(64).addBool(true).add8(4).encrypt(); // Encrypt the parameters

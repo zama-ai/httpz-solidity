@@ -58,7 +58,6 @@ Collaborate with us to advance the FHE spaces and drive innovation together.
 - [Request a feature](https://github.com/zama-ai/fhevm/issues/new?assignees=&labels=enhancement&projects=&template=feature-request.md&title=)
 - [Report a bug](https://github.com/zama-ai/fhevm/issues/new?assignees=&labels=bug&projects=&template=bug_report_fhevm.md&title=)
 
-
 ---
 
 {% hint style="success" %}

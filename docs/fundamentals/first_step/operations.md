@@ -82,6 +82,7 @@ euint64 sum = a + b; // Calls TFHE.add under the hood
 ```
 
 ## 🔧 Best Practices
+
 Here are some best practices to follow when using encrypted operations in your smart contracts:
 
 ### Use the appropriate encrypted type size
@@ -106,7 +107,7 @@ euint8 percentage = TFHE.asEuint8(75);  // percentage fits in 8 bits
 
 ### Use scalar operands when possible to save gas
 
-Some TFHE operators exist in two versions : one where all operands are ciphertexts handles, and another where one of the operands is an unencrypted scalar. Whenever possible, use the scalar operand version, as this will save a lot of gas. See the page on [Gas](gas.md) to discover which operators support scalar operands and compare the gas saved between both versions: all-encrypted operands vs scalar.
+Some TFHE operators exist in two versions : one where all operands are ciphertexts handles, and another where one of the operands is an unencrypted scalar. Whenever possible, use the scalar operand version, as this will save a lot of gas.
 
 ❌ For example, this snippet cost way more in gas:
 
@@ -158,7 +159,6 @@ function mint(einput encryptedAmount, bytes calldata inputProof) public {
 ```
 
 Notice that we did not check separately the overflow on `balances[msg.sender]` but only on `totalSupply` variable, because `totalSupply` is the sum of the balances of all the users, so `balances[msg.sender]` could never overflow if `totalSupply` did not.
-
 
 ## Additional Resources
 

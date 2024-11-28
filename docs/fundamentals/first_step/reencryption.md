@@ -46,6 +46,8 @@ Here, `balanceOf` allows retrieval of the user’s encrypted balance stored on t
 Re-encryption is performed client-side using the `fhevmjs` library. Below is an example of how to implement this in a dApp:
 
 ```ts
+import { createInstances } from "../instance";
+import { getSigners, initSigners } from "../signers";
 import abi from "./abi.json";
 import { Contract, BrowserProvider } from "ethers";
 import { createInstance } from "fhevmjs";
@@ -56,14 +58,10 @@ const provider = new BrowserProvider(window.ethereum);
 const accounts = await provider.send("eth_requestAccounts", []);
 const USER_ADDRESS = accounts[0];
 
-// Create a fhevmjs instance using the Zama's network and the Zama's Gateway
-const instance = await createInstance({
-  kmsContractAddress: "0x208De73316E44722e16f6dDFF40881A3e4F86104",
-  aclContractAddress: "0xc9990FEfE0c27D31D0C2aa36196b085c0c4d456c",
-  networkUrl: "https://devnet.zama.ai/",
-  gatewayUrl: "https://gateway.zama.ai/",
-});
+await initSigners(2); // Initialize signers
+const signers = await getSigners();
 
+const instance = await createInstances(this.signers);
 // Generate the private and public key, used for the reencryption
 const { publicKey, privateKey } = instance.generateKeypair();
 

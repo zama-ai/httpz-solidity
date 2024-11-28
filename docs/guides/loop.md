@@ -33,7 +33,6 @@ for (uint32 i = 0; i < 10; i++) {
 
 In this snippet, we perform 10 iterations, adding 4 to `x` in each iteration as long as the iteration count is less than `maxValue`. If the iteration count exceeds `maxValue`, we add 0 instead for the remaining iterations because we can't break the loop.
 
-
 ## Best practises
 
 ### Obfuscate branching
@@ -69,7 +68,6 @@ function swapTokensForTokens(einput encryptedAmountAIn, einput encryptedAmountBI
   IEncryptedERC20(tokenB).transferFrom(msg.sender, address(this), encryptedAmountA);
 }
 ```
-
 
 Notice that to preserve confidentiality, we had to make two inputs transfers on both tokens from the user to the AMM contract, and similarly two output transfers from the AMM to the user, even if technically most of the times it will make sense that one of the user inputs `encryptedAmountAIn` or `encryptedAmountBIn` is actually an encrypted zero.
 

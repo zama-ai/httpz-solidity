@@ -68,7 +68,6 @@ contract TestAsyncDecrypt is MockZamaFHEVMConfig, MockZamaGatewayConfig, Gateway
    import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
    ```
 
-
 2. **`GatewayCaller` import**:  
    The `GatewayCaller` contract is imported to enable decryption requests.
 

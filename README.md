@@ -73,7 +73,7 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
   - [A Simple Example](#a-simple-example)
 - **[Resources](#resources)**
   - [White paper](#white-paper)
-[Demos](#demos-and-tutorials)
+    [Demos](#demos-and-tutorials)
   - [Tutorials](#tutorials)
   - [Documentation](#documentation)
   - [Blockchain Implementation](#blockchain-implementation)
@@ -144,7 +144,7 @@ _More examples are available [here](https://github.com/zama-ai/fhevm/tree/main/e
 
 ### Demos and Tutorials
 
-For a comprehensive list of demos and tutorials, visit our [tutorials page](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials). 
+For a comprehensive list of demos and tutorials, visit our [tutorials page](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials).
 
 ### Documentation
 
