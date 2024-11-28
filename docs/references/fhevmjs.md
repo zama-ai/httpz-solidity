@@ -12,6 +12,7 @@ import { initFhevm, createInstance } from "fhevmjs";
 
 initFhevm().then(() => {
   const instance = await createInstance({
+    aclAddress: '0x2Fb4341027eb1d2aD8B5D9708187df8633cAFA92',
     chainId: 8009,
     networkUrl: "https://devnet.zama.ai/",
     gatewayUrl: "https://gateway.zama.ai/",
@@ -34,6 +35,7 @@ This function returns an instance of fhevmjs, which accepts an object containing
 import { createInstance } from "fhevmjs";
 
 const instance = await createInstance({
+  aclAddress: '0x2Fb4341027eb1d2aD8B5D9708187df8633cAFA92',
   networkUrl: "https://devnet.zama.ai/",
   gatewayUrl: "https://gateway.zama.ai/",
 });
@@ -45,6 +47,7 @@ Using `window.ethereum` object:
 import { createInstance } from "fhevmjs";
 
 const instance = await createInstance({
+  aclAddress: '0x2Fb4341027eb1d2aD8B5D9708187df8633cAFA92',
   network: window.ethereum,
   gatewayUrl: "https://gateway.zama.ai/",
 });
