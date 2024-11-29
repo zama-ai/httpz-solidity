@@ -8,7 +8,7 @@ Follow the steps below to get started with building privacy-preserving applicati
 
 ## Network Information
 
-If you need access to a Sepolia node and aren’t sure how to proceed, consider using a node provider like [Alchemy](https://www.alchemy.com/), [Infura](https://www.infura.io/), or similar services. These providers offer easy setup and management, allowing you to create an API key to connect to the network seamlessly.
+If you need access to a Sepolia node and aren’t sure how to proceed, consider using a node provider like [Alchemy](https://www.alchemy.com/), Infura, or similar services. These providers offer easy setup and management, allowing you to create an API key to connect to the network seamlessly.
 
 ## Getting test ETH
 
@@ -159,4 +159,4 @@ Save this in your `.env` file:
 | KMS_VERIFIER_CONTRACT  | 0x904Af2B61068f686838bD6257E385C2cE7a09195                                                     |
 | GATEWAY_CONTRACT       | 0x7455c89669cdE1f7Cb6D026DFB87263422D821ca                                                     |
 | PUBLIC_KEY_ID          | 55729ddea48547ea837137d122e1c90043e94c41                                                       |
-| GATEWAY_URL            | <!-- markdown-link-check-disable-next-line -->https://gateway-sepolia.kms-dev-v1.bc.zama.team/ |
+| GATEWAY_URL            | `https://gateway-sepolia.kms-dev-v1.bc.zama.team/` |

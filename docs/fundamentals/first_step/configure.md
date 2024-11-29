@@ -122,5 +122,3 @@ require(TFHE.isInitialized(counter), "Counter not initialized!");
 ## Summary
 
 By leveraging prebuilt configuration contracts like `ZamaFHEVMConfig.sol` and `ZamaGatewayConfig.sol`, you can efficiently set up your smart contract for encrypted computations. These tools abstract the complexity of cryptographic initialization, allowing you to focus on building secure, confidential smart contracts.
-
-For a complete guide on contract development and integration, refer to our [Workflow for Writing Confidential Smart Contracts](../../fundamentals/first_step/index.md).
