@@ -11,18 +11,7 @@ describe('TestAsyncDecrypt', function () {
     await initSigners(2);
     this.signers = await getSigners();
     this.relayerAddress = '0x97F272ccfef4026A1F3f0e0E879d514627B84E69';
-
-    // very first request of decryption always fail at the moment due to a gateway bug
-    // TODO: remove following 8 lines when the gateway bug will be fixed
-    const contractFactory = await ethers.getContractFactory('TestAsyncDecrypt');
-    this.contract = await contractFactory.connect(this.signers.alice).deploy();
-    await this.contract.waitForDeployment();
-    this.contractAddress = await this.contract.getAddress();
     this.instances = await createInstances(this.signers);
-    const tx = await this.contract.connect(this.signers.carol).requestUint8({ gasLimit: 5_000_000 });
-    await tx.wait(); // this first request is here just to silence the current gateway bug at the moment
-    await waitNBlocks(1);
-
     await initGateway();
   });
 
@@ -337,7 +326,7 @@ describe('TestAsyncDecrypt', function () {
     const tx2 = await this.contract.connect(this.signers.carol).requestMixed(5, 15, { gasLimit: 5_000_000 });
     await tx2.wait();
     await awaitAllDecryptionResults();
-    let yB = await this.contract.yBool();
+    const yB = await this.contract.yBool();
     expect(yB).to.equal(true);
     let y = await this.contract.yUint4();
     expect(y).to.equal(4);
@@ -345,7 +334,7 @@ describe('TestAsyncDecrypt', function () {
     expect(y).to.equal(42);
     y = await this.contract.yUint16();
     expect(y).to.equal(16);
-    let yAdd = await this.contract.yAddress();
+    const yAdd = await this.contract.yAddress();
     expect(yAdd).to.equal('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
     y = await this.contract.yUint32();
     expect(y).to.equal(52); // 5+15+32

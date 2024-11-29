@@ -14,20 +14,20 @@ library ZamaFHEVMConfig {
     function getMockConfig() internal pure returns (FHEVMConfig.FHEVMConfigStruct memory) {
         return
             FHEVMConfig.FHEVMConfigStruct({
-                ACLAddress: 0x339EcE85B9E11a3A3AA557582784a15d7F82AAf2,
-                TFHEExecutorAddress: 0x596E6682c72946AF006B27C131793F2b62527A4b,
-                FHEPaymentAddress: 0x6d5A11aC509C707c00bc3A0a113ACcC26c532547,
-                KMSVerifierAddress: 0x208De73316E44722e16f6dDFF40881A3e4F86104
+                ACLAddress: 0xB4d8d77f7F9B465B60c190480c6160b69d695c9D,
+                TFHEExecutorAddress: 0xFdee168C46e1dFD082E78192b3C622cA78B58669,
+                FHEPaymentAddress: 0x2527DD76195fD3BFdd2c76D821e1f5d433d82C25,
+                KMSVerifierAddress: 0x89842EA0b44EF85391Bd1A9f3AC8B382CCF0d3F1
             });
     }
 
     function getSepoliaConfig() internal pure returns (FHEVMConfig.FHEVMConfigStruct memory) {
         return
             FHEVMConfig.FHEVMConfigStruct({
-                ACLAddress: 0x339EcE85B9E11a3A3AA557582784a15d7F82AAf2,
-                TFHEExecutorAddress: 0x596E6682c72946AF006B27C131793F2b62527A4b,
-                FHEPaymentAddress: 0x6d5A11aC509C707c00bc3A0a113ACcC26c532547,
-                KMSVerifierAddress: 0x208De73316E44722e16f6dDFF40881A3e4F86104
+                ACLAddress: 0x9479B455904dCccCf8Bc4f7dF8e9A1105cBa2A8e,
+                TFHEExecutorAddress: 0x199fB61DFdfE46f9F90C9773769c28D9623Bb90e,
+                FHEPaymentAddress: 0x25FE5d92Ae6f89AF37D177cF818bF27EDFe37F7c,
+                KMSVerifierAddress: 0x904Af2B61068f686838bD6257E385C2cE7a09195
             });
     }
 

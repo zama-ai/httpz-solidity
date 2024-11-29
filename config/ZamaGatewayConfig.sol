@@ -11,11 +11,11 @@ import {Gateway} from "../gateway/lib/Gateway.sol";
  */
 library ZamaGatewayConfig {
     function getMockConfig() internal pure returns (address) {
-        return 0x096b4679d45fB675d4e2c1E4565009Cec99A12B1;
+        return 0x2C19507EEAd017495e23a98DB1ff20c7eD599ee1;
     }
 
     function getSepoliaConfig() internal pure returns (address) {
-        return 0x096b4679d45fB675d4e2c1E4565009Cec99A12B1;
+        return 0x7455c89669cdE1f7Cb6D026DFB87263422D821ca;
     }
 
     function getEthereumConfig() internal pure returns (address) {
