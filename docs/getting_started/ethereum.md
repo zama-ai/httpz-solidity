@@ -14,8 +14,8 @@ If you need access to a Sepolia node and aren’t sure how to proceed, consider 
 
 You can get test ETH for Sepolia from these faucets:
 
-- [Alchemy Sepolia Faucet](https://www.alchemy.com/faucets/ethereum-sepolia)
-- [QuickNode Sepolia Faucet](https://faucet.quicknode.com/ethereum/sepolia)
+- Alchemy Sepolia Faucet - `https://www.alchemy.com/faucets/ethereum-sepolia`
+- QuickNode Sepolia Faucet - `https://faucet.quicknode.com/ethereum/sepolia`
 
 ## Configuring Sepolia on your wallet
 
