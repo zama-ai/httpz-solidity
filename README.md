@@ -68,7 +68,7 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
 
 ## Table of Contents
 
-- **[Getting Started](#getting_started)**
+- **[Getting Started](#getting-started)**
   - [Installation](#installation)
   - [A Simple Example](#a-simple-example)
 - **[Resources](#resources)**

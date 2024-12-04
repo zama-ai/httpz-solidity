@@ -99,11 +99,11 @@ There are two notable issues with this contract:
 
 1. **Counter value visibility**:\
    Since the counter is incremented by a fixed value, observers could deduce its value by analyzing blockchain events. To address this, see the documentation on:
-   - [encryption and secure inputs](fundamentals/inputs.md)
+   - [encryption and secure inputs](../fundamentals/inputs.md)
 2. **Access control for `counter`**:\
    The counter is encrypted, but no access is granted to decrypt or view its value. Without proper ACL permissions, the counter remains inaccessible to users. To resolve this, refer to:
-   - [decryption](fundamentals/decryption/decrypt.md)
-   - [re-encryption](fundamentals/decryption/reencryption.md)
+   - [decryption](../fundamentals/decryption/decrypt.md)
+   - [re-encryption](../fundamentals/decryption/reencryption.md)
 
 ### Testing
 
@@ -174,7 +174,7 @@ The test file demonstrates key concepts for testing fhEVM smart contracts:
 
 ### No constant nor immutable encrypted state variables
 
-Never use encrypted types for constant or immutable state variables, even if they should actually stay constants, or else any transaction involving those will fail. This is because ciphertexts should always be stored in the privileged storage of the contract (see paragraph 4.4 of [whitepaper](../fhevm-whitepaper.pdf)) while constant and immutable variables are just appended to the bytecode of the deployed contract at construction time.
+Never use encrypted types for constant or immutable state variables, even if they should actually stay constants, or else any transaction involving those will fail. This is because ciphertexts should always be stored in the privileged storage of the contract (see paragraph 4.4 of [whitepaper](../../fhevm-whitepaper.pdf)) while constant and immutable variables are just appended to the bytecode of the deployed contract at construction time.
 
 ❌ So, even if `a` and `b` should never change after construction, the following example :
 
