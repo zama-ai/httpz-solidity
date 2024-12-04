@@ -68,7 +68,7 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
 
 ## Table of Contents
 
-- **[Getting Started](#getting-started)**
+- **[Getting Started](#getting_started)**
   - [Installation](#installation)
   - [A Simple Example](#a-simple-example)
 - **[Resources](#resources)**
@@ -158,7 +158,7 @@ Full, comprehensive documentation is available here: [https://docs.zama.ai/fhevm
 To support fhEVM in an EVM-based blockchain, the **fhevm-go** library can be used as it implements all the needed FHE functionalities.
 It is available here: [fhevm-go](https://github.com/zama-ai/fhevm-go)
 
-To integrate fhevm-go into any EVM-based blockchain, you can follow the [Integration Guide](https://docs.zama.ai/fhevm-go/getting-started/integration).
+To integrate fhevm-go into any EVM-based blockchain, you can follow the [Integration Guide](https://docs.zama.ai/fhevm-go/getting_started/integration).
 
 ## Working with fhEVM
 
