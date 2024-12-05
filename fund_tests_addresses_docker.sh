@@ -4,7 +4,6 @@ fund_account() {
 	account_address=$2
 	echo "funding $account_name account with address $account_address"
 	docker exec -i zama-kms-gateway-geth-1 faucet $account_address
-	sleep 8
 }
 
 fund_account "FHEVM_DEPLOYER" "ea63e594de67c2b32545c4b8fec9676285602852"        // priv_key 0c66d8cde71d2faa29d0cb6e3a567d31279b6eace67b0a9d9ba869c119843a5e

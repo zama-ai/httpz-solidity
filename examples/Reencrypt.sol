@@ -96,4 +96,10 @@ contract Reencrypt {
         TFHE.allowThis(yBytes256);
         TFHE.allow(yBytes256, msg.sender);
     }
+
+    function euint16Input(einput input, bytes calldata inputProof) public {
+        xUint16 = TFHE.asEuint16(input, inputProof);
+        TFHE.allowThis(xUint16);
+        TFHE.allow(xUint16, msg.sender);
+    }
 }

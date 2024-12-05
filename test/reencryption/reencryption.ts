@@ -5,6 +5,10 @@ import { createInstances } from '../instance';
 import { getSigners, initSigners } from '../signers';
 import { bigIntToBytes256 } from '../utils';
 
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 describe('Reencryption', function () {
   before(async function () {
     await initSigners(2);
@@ -165,6 +169,7 @@ describe('Reencryption', function () {
 
   it('test reencrypt euint64', async function () {
     const handle = await this.contract.xUint64();
+    await sleep(10000);
     const { publicKey, privateKey } = this.instances.alice.generateKeypair();
     const eip712 = this.instances.alice.createEIP712(publicKey, this.contractAddress);
     const signature = await this.signers.alice.signTypedData(
@@ -311,6 +316,43 @@ describe('Reencryption', function () {
     expect(decryptedValue).to.equal(
       BigInt(
         '0xd179e0cc7e816dc944582ed4f5652f5951900098fc2e0a15a7ea4dc8cfa4e3b6c54beea5ee95e56b728762f659347ce1d4aa1b05fcc513e7819123de6e2870c7e83bb764508e22d7c3ab8a5aee6bdfb26355ef0d3f1977d651b83bf5f78634fa360aa14debdc3daa6a587b5c2fb1710ab4d6677e62a8577f2d9fecc190ad8b11c9f0a5ec3138b27da1f055437af8c90a9495dad230',
+      ),
+    );
+  });
+
+  it('test input euin64', async function () {
+    const input = this.instances.alice.createEncryptedInput(this.contractAddress, this.signers.alice.address);
+    input.add16(42n);
+
+    console.log("contract address = " + this.contractAddress);
+    console.log("signer = " + this.signers.alice.address);
+
+    const encryptedInput = await input.encrypt();
+    console.log(encryptedInput);
+    const tx = await this.contract.euint16Input(encryptedInput.handles[0], encryptedInput.inputProof);
+    await tx.wait();
+
+    const handle = await this.contract.xUint16();
+    await sleep(10000);
+
+    const { publicKey, privateKey } = this.instances.alice.generateKeypair();
+    const eip712 = this.instances.alice.createEIP712(publicKey, this.contractAddress);
+    const signature = await this.signers.alice.signTypedData(
+      eip712.domain,
+      { Reencrypt: eip712.types.Reencrypt },
+      eip712.message,
+    );
+    const decryptedValue = await this.instances.alice.reencrypt(
+      handle,
+      privateKey,
+      publicKey,
+      signature.replace('0x', ''),
+      this.contractAddress,
+      this.signers.alice.address,
+    );
+    expect(decryptedValue).to.equal(
+      BigInt(
+        '42',
       ),
     );
   });
