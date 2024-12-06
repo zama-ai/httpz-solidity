@@ -25,11 +25,11 @@ Here’s an example of how to request decryption in a contract:
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
-import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
+import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+import { SepoliaZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
 import "fhevm/gateway/GatewayCaller.sol";
 
-contract TestAsyncDecrypt is MockZamaFHEVMConfig, MockZamaGatewayConfig, GatewayCaller {
+contract TestAsyncDecrypt is SepoliaZamaFHEVMConfig, SepoliaZamaGatewayConfig, GatewayCaller {
   ebool xBool;
   bool public yBool;
 
@@ -55,8 +55,8 @@ contract TestAsyncDecrypt is MockZamaFHEVMConfig, MockZamaGatewayConfig, Gateway
 1.  **Configuration imports**: The configuration contracts are imported to set up the FHEVM environment and Gateway.
 
     ```solidity
-    import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-    import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
+    import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+    import { SepoliaZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
     ```
 
 2.  **`GatewayCaller` import**:\
@@ -75,15 +75,15 @@ Remember our [**Encrypted Counter**](../../getting_started/first_smart_contract.
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
-import { MockZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-import { MockZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
+import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+import { SepoliaZamaGatewayConfig } from "fhevm/config/ZamaGatewayConfig.sol";
 import "fhevm/gateway/GatewayCaller.sol";
 
 /// @title EncryptedCounter3
 /// @notice A contract that maintains an encrypted counter and is meant for demonstrating how decryption works
 /// @dev Uses TFHE library for fully homomorphic encryption operations and Gateway for decryption
 /// @custom:experimental This contract is experimental and uses FHE technology with decryption capabilities
-contract EncryptedCounter3 is MockZamaFHEVMConfig, MockZamaGatewayConfig, GatewayCaller {
+contract EncryptedCounter3 is SepoliaZamaFHEVMConfig, SepoliaZamaGatewayConfig, GatewayCaller {
     /// @dev Decrypted state variable
     euint8 counter;
     uint8 public decryptedCounter;
