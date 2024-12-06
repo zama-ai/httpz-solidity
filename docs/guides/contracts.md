@@ -32,10 +32,10 @@ When testing your contracts locally, you can use the `SepoliaZamaFHEVMConfig` wh
 pragma solidity ^0.8.24;
 
 import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-import { EncryptedERC20 } from "fhevm-contracts/contracts/token/ERC20/EncryptedERC20.sol";
+import { ConfidentialERC20 } from "fhevm-contracts/contracts/token/ERC20/ConfidentialERC20.sol";
 
-contract MyERC20 is SepoliaZamaFHEVMConfig, EncryptedERC20 {
-  constructor() EncryptedERC20("MyToken", "MYTOKEN") {
+contract MyERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20 {
+  constructor() ConfidentialERC20("MyToken", "MYTOKEN") {
     _unsafeMint(1000000, msg.sender);
   }
 }
@@ -50,10 +50,10 @@ When deploying to Sepolia, you can use the `SepoliaZamaFHEVMConfig` which provid
 pragma solidity ^0.8.24;
 
 import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-import { EncryptedERC20 } from "fhevm-contracts/contracts/token/ERC20/EncryptedERC20.sol";
+import { ConfidentialERC20 } from "fhevm-contracts/contracts/token/ERC20/ConfidentialERC20.sol";
 
-contract MyERC20 is SepoliaZamaFHEVMConfig, EncryptedERC20 {
-  constructor() EncryptedERC20("MyToken", "MYTOKEN") {
+contract MyERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20 {
+  constructor() ConfidentialERC20("MyToken", "MYTOKEN") {
     _unsafeMint(1000000, msg.sender);
   }
 }
@@ -66,13 +66,13 @@ When inheriting from configuration contracts, the order of inheritance is critic
 ✅ **Correct Order**:
 
 ```
-contract MyERC20 is SepoliaZamaFHEVMConfig, EncryptedERC20 { ... }
+contract MyERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20 { ... }
 ```
 
 ❌ **Wrong order**:
 
 ```
-contract MyERC20 is EncryptedERC20, SepoliaZamaFHEVMConfig { ... }
+contract MyERC20 is ConfidentialERC20, SepoliaZamaFHEVMConfig { ... }
 ```
 
 ## Available contracts

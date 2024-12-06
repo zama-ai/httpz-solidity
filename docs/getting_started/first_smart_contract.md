@@ -102,7 +102,7 @@ There are two notable issues with this contract:
 With any contracts that you write you will need to write tests as well. You can start by using something like this as a template:
 
 ```ts
-import { createInstances } from "../instance";
+import { createInstance } from "../instance";
 import { getSigners, initSigners } from "../signers";
 import { ethers } from "hardhat";
 
@@ -117,7 +117,7 @@ describe("EncryptedCounter1", function () {
     this.counterContract = await CounterFactory.connect(this.signers.alice).deploy();
     await this.counterContract.waitForDeployment();
     this.contractAddress = await this.counterContract.getAddress();
-    this.instances = await createInstance(); // Set up instances for testing
+    this.instances = await createInstance();
   });
 
   it("should increment the counter", async function () {
