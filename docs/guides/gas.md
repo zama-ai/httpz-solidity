@@ -1,4 +1,4 @@
-# **Gas Estimation in fhEVM**
+# Gas estimation in fhEVM
 
 This guide explains how to estimate gas costs for Fully Homomorphic Encryption (FHE) operations in your smart contracts on Zama's fhEVM. Understanding gas consumption is critical for designing efficient confidential smart contracts.
 
@@ -255,7 +255,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 | `ifThenElse`                | 43,000-300,000  |
 | `rand`                      | 100,000-400,000 |
 
-### Fixing Failed Transactions in MetaMask
+## Fixing Failed Transactions in MetaMask
 
 To resolve a failed transaction due to gas limits:
 
