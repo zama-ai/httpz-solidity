@@ -209,7 +209,7 @@ Leverage these templates to accelerate your development process and bring your i
   <a href="#about" > ↑ Back to top </a>
 </p>
 
-### Blockchain Implementation
+## Blockchain Implementation
 
 To support fhEVM in an EVM-based blockchain, the **fhevm-go** library can be used as it implements all the needed FHE functionalities.
 It is available here: [fhevm-go](https://github.com/zama-ai/fhevm-go)
