@@ -163,7 +163,7 @@ describe("EncryptedCounter3", function () {
     const tx = await this.counterContract.incrementBy(encryptedAmount.handles[0], encryptedAmount.inputProof);
     await tx.wait();
 
-    const tx4 = await this.counterContract.connect(this.signers.carol).requestDecryptCounter({ gasLimit: 5_000_000 });
+    const tx4 = await this.counterContract.connect(this.signers.carol).requestDecryptCounter();
     await tx4.wait();
 
     // Wait for decryption to complete

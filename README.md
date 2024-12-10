@@ -142,18 +142,68 @@ _More examples are available [here](https://docs.zama.ai/fhevm/tutorials/see-all
 
 ## Resources
 
-### White paper
+Here’s an improved and visually appealing version with enhanced styling and clarity:
 
-- [Confidential EVM Smart Contracts using Fully Homomorphic Encryption](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper-v2.pdf)
-  <br></br>
+---
 
-### Demos and Tutorials
+# **Resources for Zama's fhEVM**
 
-For a comprehensive list of demos and tutorials, visit our [tutorials page](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials).
+Explore the essential resources, tools, and templates to maximize your development experience with Zama's Fully Homomorphic Ethereum Virtual Machine (**fhEVM**).
 
-### Documentation
+---
 
-Full, comprehensive documentation is available here: [https://docs.zama.ai/fhevm](https://docs.zama.ai/fhevm).
+## **White Paper**
+
+Gain insights into the technology powering fhEVM with our in-depth white paper:  
+👉 [**Confidential EVM Smart Contracts using Fully Homomorphic Encryption**](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper-v2.pdf)
+
+---
+
+## **Demos and Tutorials**
+
+Access a curated collection of demos and step-by-step tutorials to guide your development journey:  
+🔗 [**Visit the Tutorials Page**](https://docs.zama.ai/fhevm/tutorials/see-all-tutorials)
+
+---
+
+## **Documentation**
+
+Master `fhEVM` and build smarter contracts using these resources:
+
+- 📘 [**Comprehensive fhEVM Documentation**](https://docs.zama.ai/fhevm)  
+  Dive deep into Zama's detailed guide for utilizing the full potential of fhEVM.
+
+- 🤖 [**ZAMA Solidity Developer (Modified ChatGPT Model)**](https://chatgpt.com/g/g-67518aee3c708191b9f08d077a7d6fa1-zama-solidity-developer)  
+  Accelerate your smart contract development with AI-powered assistance.
+
+## **Development templates**
+
+Start building faster with pre-configured templates tailored for various frameworks:
+
+### **Smart Contracts**
+
+- 💻 [**fhEVM Contracts**](https://github.com/zama-ai/fhevm-contracts)  
+  A library of FHE-enabled smart contract examples, ready for customization and extension.
+
+### **Backend development**
+
+- 🔧 [**Hardhat Template**](https://github.com/zama-ai/fhevm-hardhat-template)  
+  A robust Hardhat template for developing, testing, and deploying FHE smart contracts.
+
+### **Frontend frameworks**
+
+- 🌐 [**React.js Template**](https://github.com/zama-ai/fhevm-react-template)  
+  Simplify your FHE dApp development with a clean and optimized React.js template.
+- ⚡ [**Next.js Template**](https://github.com/zama-ai/fhevm-next-template)  
+  Build server-rendered, scalable dApps with FHE support using this Next.js template.
+- 🖼️ [**Vue.js Template**](https://github.com/zama-ai/fhevm-vue-template)  
+  Create modular, responsive dApps with FHE capabilities using Vue.js.
+
+---
+
+### 🚀 **Kickstart Your Project Today!**
+
+Leverage these templates to accelerate your development process and bring your ideas to life faster.
 
 <p align="right">
   <a href="#about" > ↑ Back to top </a>
