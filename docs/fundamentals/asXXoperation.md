@@ -1,4 +1,4 @@
-# asEbool, asUintXX and asEbytesXX operations
+# asEbool, asEuintXX, asEaddress and asEbytesXX operations
 
 This documentation covers the `asEbool`, `asEuintXX`, and `asEbytesXX` operations provided by the TFHE library for working with encrypted data in the fhEVM. These operations are essential for converting between plaintext and encrypted types, as well as handling encrypted inputs.
 
@@ -48,7 +48,7 @@ The `TFHE.padToBytesXX` functions facilitate this trivial encryption process for
 2. **Encrypt the Padded Data**:
    Use `TFHE.asEbytesXX` to encrypt the padded byte array into the corresponding encrypted type.
 3. **Grant Access**:
-   Use `TFHE.allowThis` and `TFHE.allow` to define access control for the encrypted data.
+   Use `TFHE.allowThis` and `TFHE.allow`optionally, if you want to persist allowance for those variables for later use.
 
 ### Example: Trivial Encryption with `ebytesXX`
 
@@ -144,13 +144,14 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 
 ## Overall operation summary
 
-| Casting Type             | Function                | Input Type        | Output Type |
-| ------------------------ | ----------------------- | ----------------- | ----------- |
-| Trivial input            | `TFHE.asEuintXX(x)`     | `uintX`           | `euintX`    |
-|                          | `TFHE.asEbool(x)`       | `bool`            | `ebool`     |
-|                          | `TFHE.asEbytesXX(x)`    | `bytesXX`         | `ebytesXX`  |
-| Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool` | `euintYY`   |
-|                          | `TFHE.asEbool(x)`       | `euintXX`         | `ebool`     |
-| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, proof   | `euintX`    |
-|                          | `TFHE.asEbool(x, y)`    | `einput`,proof    | `ebool`     |
-|                          | `TFHE.asEbytesXX(x, y)` | `einput`,proof    | `ebytesXX`  |
+| Casting Type             | Function                | Input Type              | Output Type |
+| ------------------------ | ----------------------- | ----------------------- | ----------- |
+| Trivial input            | `TFHE.asEuintXX(x)`     | `uintX`                 | `euintX`    |
+|                          | `TFHE.asEbool(x)`       | `bool`                  | `ebool`     |
+|                          | `TFHE.asEbytesXX(x)`    | `bytesXX`               | `ebytesXX`  |
+| Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool`       | `euintYY`   |
+|                          | `TFHE.asEbool(x)`       | `euintXX`               | `ebool`     |
+| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, `bytes` proof | `euintX`    |
+|                          | `TFHE.asEbool(x, y)`    | `einput`,`bytes` proof  | `ebool`     |
+|                          | `TFHE.asEbytesXX(x, y)` | `einput`,`bytes` proof  | `ebytesXX`  |
+|                          | `TFHE.asEaddress(x, y)` | `einput`, `bytes` proof | `eaddress`  |
