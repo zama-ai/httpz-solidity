@@ -222,8 +222,6 @@ Files that are generated now (can be seen inside `codegen/main.ts`)
 ```
 lib/Impl.sol
 lib/TFHE.sol
-mocks/Impl.sol
-mocks/TFHE.sol
 contracts/tests/TFHETestSuiteX.sol
 test/tfheOperations/tfheOperations.ts
 ```
