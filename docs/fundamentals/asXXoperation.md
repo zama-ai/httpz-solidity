@@ -10,7 +10,7 @@ The operations can be categorized into three main use cases:
 
 ## 1. Trivial input
 
-Trivial input simply put is a plain text in a format of a cyphertext.
+Trivial input simply put is a plain text in a format of a ciphertext.
 
 ### Overview
 
@@ -151,6 +151,6 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 |                          | `TFHE.asEbytesXX(x)`    | `bytesXX`         | `ebytesXX`  |
 | Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool` | `euintYY`   |
 |                          | `TFHE.asEbool(x)`       | `euintXX`         | `ebool`     |
-| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`,`bytes`  | `euintX`    |
-|                          | `TFHE.asEbool(x, y)`    | `einput`,`bytes`  | `ebool`     |
-|                          | `TFHE.asEbytesXX(x, y)` | `einput`,`bytes`  | `ebytesXX`  |
+| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, proof   | `euintX`    |
+|                          | `TFHE.asEbool(x, y)`    | `einput`,proof    | `ebool`     |
+|                          | `TFHE.asEbytesXX(x, y)` | `einput`,proof    | `ebytesXX`  |
