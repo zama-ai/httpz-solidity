@@ -153,7 +153,7 @@ Access a curated collection of demos and step-by-step tutorials to guide your de
 
 ### **Documentation**
 
-Master `fhEVM` and build smarter contracts using these resources:
+Master `fhEVM` and build smart contracts using these resources:
 
 - 📘 [**Comprehensive fhEVM Documentation**](https://docs.zama.ai/fhevm)  
   Dive deep into Zama's detailed guide for utilizing the full potential of fhEVM.
