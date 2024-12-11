@@ -1,6 +1,9 @@
 # Debugging with `debug.decrypt[XX]`
 
-This guide explains how to use the `debug.decrypt[XX]` functions for debugging encrypted data in mocked environments during development with fhEVM. These functions allow developers to decrypt encrypted values locally for testing purposes. However, they should not be used in production as they rely on private keys.
+This guide explains how to use the `debug.decrypt[XX]` functions for debugging encrypted data in mocked environments during development with fhEVM. 
+
+> [!WARNING]  
+> The `debug.decrypt[XX]` functions should not be used in production as they rely on private keys.
 
 ## Overview
 
@@ -8,12 +11,11 @@ The `debug.decrypt[XX]` functions allow you to decrypt encrypted handles into pl
 
 ### Key points
 
-- **Environment**: These functions work **only in mocked environments** (e.g., `hardhat` network).
-- **Production limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized on-chain request.
-- **Encrypted types**: Supports various encrypted types, including integers, booleans, and `ebytesXX`.
+- **Environment**: The `debug.decrypt[XX]` functions work **only in mocked environments** (e.g., `hardhat` network).
+- **Production limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized onchain request.
+- **Encrypted types**: The `debug.decrypt[XX]` functions supports various encrypted types, including integers, booleans, and `ebytesXX`.
 - **Bypass ACL authorization**: The `debug.decrypt[XX]` functions allow decryption without ACL authorization, useful for verifying encrypted operations during development and testing.
 
----
 
 ## Supported functions
 
@@ -57,9 +59,8 @@ Decrypts encrypted addresses.
 | ---------------- | -------- | -------------- |
 | `decryptAddress` | `string` | `eaddress`     |
 
----
 
-## Function Usage
+## Function usage
 
 ### Example: decrypting encrypted values
 
@@ -72,6 +73,7 @@ const plaintextValue: bigint = await debug.decrypt64(handle64);
 console.log("Decrypted Balance:", plaintextValue);
 ```
 
+> [!NOTE]  
 > To utilize the debug functions, import the [utils.ts](https://github.com/zama-ai/fhevm-hardhat-template/blob/main/test/utils.ts) file.
 
 For a more complete example, refer to the [ConfidentialERC20 test file](https://github.com/zama-ai/fhevm-hardhat-template/blob/f9505a67db31c988f49b6f4210df47ca3ce97841/test/confidentialERC20/ConfidentialERC20.ts#L181-L205).
@@ -85,7 +87,6 @@ const decryptedBytes: string = await debug.decryptEbytes128(ebytes128Handle);
 console.log("Decrypted Bytes:", decryptedBytes);
 ```
 
----
 
 ## **How it works**
 
@@ -104,7 +105,8 @@ function verifyType(handle: bigint, expectedType: number) {
 
 ### Environment checks
 
-The functions only work in the `hardhat` network. Attempting to use them in a production environment will result in an error.
+> [!CAUTION]
+> The functions only work in the `hardhat` network. Attempting to use them in a production environment will result in an error.
 
 ```typescript
 if (network.name !== "hardhat") {
@@ -112,12 +114,8 @@ if (network.name !== "hardhat") {
 }
 ```
 
----
 
-## **Best Practices**
+## **Best practices**
 
-1. **Use Only for Debugging**:
-   These functions require access to private keys and are meant exclusively for local testing and debugging.
-
-2. **Production Decryption**:
-   For production, always use the asynchronous Gateway-based decryption.
+- **Use only for debugging**: These functions require access to private keys and are meant exclusively for local testing and debugging.
+- **Production decryption**: For production, always use the asynchronous Gateway-based decryption.

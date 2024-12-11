@@ -26,13 +26,13 @@ FHE operations in fhEVM are computationally intensive, resulting in higher gas c
 
 To monitor gas usage during development, use the following tools:
 
-1. **`getFHEGasFromTxReceipt`**:
+- **`getFHEGasFromTxReceipt`**:
 
    - Extracts FHEGas consumption from a transaction receipt.
    - Works only in mocked fhEVM environments, but gives the exact same value as in non-mocked environments.
    - Import as: `import { getFHEGasFromTxReceipt } from "../coprocessorUtils";`
 
-2. **`.gasUsed` from ethers.js transaction receipt**:
+- **`.gasUsed` from ethers.js transaction receipt**:
    - Standard ethers.js transaction receipt property that returns the native gas used.
    - In mocked mode, this value underestimates real native gas usage by ~20%.
    - Works in both mocked and real fhEVM environments, as it's a standard Ethereum transaction property.
@@ -78,7 +78,7 @@ The current devnet has a FHEGas limit of **10,000,000** per block. Here's what y
 
 ## FHEGas costs for common operations
 
-### Boolean Operations (`ebool`)
+### Boolean operations (`ebool`)
 
 | Function Name    | FHEGas Cost |
 | ---------------- | ----------- |

@@ -45,8 +45,8 @@ resolve: {
 
 **Possible solutions:**
 
-1. If you encounter issues with typing, you can use this [tsconfig.json](https://github.com/zama-ai/fhevmjs-react-template/blob/main/tsconfig.json) using TypeScript 5.
-2. If you encounter any other issue, you can force import of the browser package.
+- If you encounter issues with typing, you can use this [tsconfig.json](https://github.com/zama-ai/fhevmjs-react-template/blob/main/tsconfig.json) using TypeScript 5.
+- If you encounter any other issue, you can force import of the browser package.
 
 ## Use bundled version
 
