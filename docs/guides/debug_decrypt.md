@@ -1,6 +1,6 @@
 # Debugging with `debug.decrypt[XX]`
 
-This guide explains how to use the `debug.decrypt[XX]` functions for debugging encrypted data in mocked environments during development with fhEVM. 
+This guide explains how to use the `debug.decrypt[XX]` functions for debugging encrypted data in mocked environments during development with fhEVM.
 
 > [!WARNING]  
 > The `debug.decrypt[XX]` functions should not be used in production as they rely on private keys.
@@ -15,7 +15,6 @@ The `debug.decrypt[XX]` functions allow you to decrypt encrypted handles into pl
 - **Production limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized onchain request.
 - **Encrypted types**: The `debug.decrypt[XX]` functions supports various encrypted types, including integers, booleans, and `ebytesXX`.
 - **Bypass ACL authorization**: The `debug.decrypt[XX]` functions allow decryption without ACL authorization, useful for verifying encrypted operations during development and testing.
-
 
 ## Supported functions
 
@@ -59,7 +58,6 @@ Decrypts encrypted addresses.
 | ---------------- | -------- | -------------- |
 | `decryptAddress` | `string` | `eaddress`     |
 
-
 ## Function usage
 
 ### Example: decrypting encrypted values
@@ -87,7 +85,6 @@ const decryptedBytes: string = await debug.decryptEbytes128(ebytes128Handle);
 console.log("Decrypted Bytes:", decryptedBytes);
 ```
 
-
 ## **How it works**
 
 ### Verifying types
@@ -113,7 +110,6 @@ if (network.name !== "hardhat") {
   throw Error("This function can only be called in mocked mode");
 }
 ```
-
 
 ## **Best practices**
 

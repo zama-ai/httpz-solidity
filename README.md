@@ -88,8 +88,6 @@ _Learn more use cases in the [list of examples](https://docs.zama.ai/fhevm/tutor
 
 ### Installation
 
-For now, fhEVM is implemented on evmos.
-
 ```bash
 # Using npm
 npm install fhevm
@@ -100,9 +98,6 @@ yarn add fhevm
 # Using pnpm
 pnpm add fhevm
 ```
-
-_Find more details on implementation instructions in [this repository](https://github.com/zama-ai/fhevm-evmos)._
-<br></br>
 
 ### A Simple Example
 
