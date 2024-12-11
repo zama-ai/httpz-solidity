@@ -168,7 +168,7 @@ Start building faster with pre-configured templates tailored for various framewo
 #### **Smart Contracts**
 
 - 🔧 [**Hardhat Template**](https://github.com/zama-ai/fhevm-hardhat-template)  
-  Smart contracts testing and development <- primary entry point for developers wanting to develop smart contracts on fhEVM
+  Smart contracts testing and development <- ***primary entry point for developers wanting to develop smart contracts on fhEVM***
 - 💻 [**fhEVM Contracts**](https://github.com/zama-ai/fhevm-contracts)  
   Library of standardized fhEVM contracts.
 
