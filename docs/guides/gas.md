@@ -270,7 +270,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 | `trivialEncrypt` (basic)    | 100-800         |
 | `trivialEncrypt` (extended) | 1,600-6,400     |
 | `randBounded`               | 100,000         |
-| `ifThenElse`                | 43,000-300,000  |
+| `select`                    | 43,000-300,000  |
 | `rand`                      | 100,000-400,000 |
 
 ## Fixing Failed Transactions in MetaMask

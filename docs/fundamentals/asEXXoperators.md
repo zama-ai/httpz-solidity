@@ -1,6 +1,6 @@
 # asEbool, asEuintXX, asEaddress and asEbytesXX operations
 
-This documentation covers the `asEbool`, `asEuintXX`, and `asEbytesXX` operations provided by the TFHE library for working with encrypted data in the fhEVM. These operations are essential for converting between plaintext and encrypted types, as well as handling encrypted inputs.
+This documentation covers the `asEbool`, `asEuintXX`, `asEaddress` and `asEbytesXX` operations provided by the TFHE library for working with encrypted data in the fhEVM. These operations are essential for converting between plaintext and encrypted types, as well as handling encrypted inputs.
 
 The operations can be categorized into three main use cases:
 
@@ -21,6 +21,7 @@ This type of casting involves converting plaintext (unencrypted) values into the
 - `bool` → `ebool`
 - `uint` → `euintXX`
 - `bytes` → `ebytesXX`
+- `address` → `eaddress`
 
 > **Note**: When doing trivial encryption, the data is made compatible with FHE operations but remains publicly visible on-chain unless explicitly encrypted.
 
@@ -149,6 +150,7 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 | Trivial encryption       | `TFHE.asEuintXX(x)`     | `uintX`                 | `euintX`    |
 |                          | `TFHE.asEbool(x)`       | `bool`                  | `ebool`     |
 |                          | `TFHE.asEbytesXX(x)`    | `bytesXX`               | `ebytesXX`  |
+|                          | `TFHE.asEaddress(x)`    | `address`               | `eaddress`  |
 | Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool`       | `euintYY`   |
 |                          | `TFHE.asEbool(x)`       | `euintXX`               | `ebool`     |
 | Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, `bytes` proof | `euintX`    |

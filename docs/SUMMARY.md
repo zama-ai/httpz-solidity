@@ -22,7 +22,7 @@
 - [Configuration](fundamentals/configure.md)
 - [Supported types](fundamentals/types.md)
 - [Operations on encrypted types](fundamentals/operations.md)
-- [asEbool, asEuintXX, asEaddress and asEbytesXX operations](fundamentals/asXXoperation.md)
+- [asEbool, asEuintXX, asEaddress and asEbytesXX operations](fundamentals/asEXXoperators.md)
 - [Access Control List](fundamentals/acl/README.md)
   - [ACL examples](fundamentals/acl/acl_examples.md)
 - [Encrypted Inputs](fundamentals/inputs.md)
