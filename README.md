@@ -241,21 +241,19 @@ To cite fhEVM or the whitepaper in academic papers, please use the following ent
 
 ```text
 @Misc{fhEVM,
-title={{Private smart contracts on the EVM using homomorphic encryption}},
+title={{Confidential EVM Smart Contracts using Fully Homomorphic Encryption}},
 author={Zama},
-year={2023},
+year={2024},
 note={\url{https://github.com/zama-ai/fhevm}},
 }
 ```
 
 ```text
 @techreport{fhEVM,
-author = "Morten Dahl, Clément Danjou, Daniel Demmler, Tore Frederiksen, Petar Ivanov,
-Marc Joye, Dragos Rotaru, Nigel Smart, Louis Tremblay Thibault
-",
+author = "Zama",
 title = "Confidential EVM Smart Contracts using Fully Homomorphic Encryption",
 institution = "Zama",
-year = "2023"
+year = "2024"
 }
 ```
 
