@@ -151,6 +151,6 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 |                          | `TFHE.asEbytesXX(x)`    | `bytesXX`         | `ebytesXX`  |
 | Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool` | `euintYY`   |
 |                          | `TFHE.asEbool(x)`       | `euintXX`         | `ebool`     |
-| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, proof   | `euintX`    |
+| Encrypted input          | `TFHE.asEuintXX(x, y)`  | `einput`, `bytes` proof   | `euintX`    |
 |                          | `TFHE.asEbool(x, y)`    | `einput`,proof    | `ebool`     |
 |                          | `TFHE.asEbytesXX(x, y)` | `einput`,proof    | `ebytesXX`  |
