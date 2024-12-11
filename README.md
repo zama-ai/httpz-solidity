@@ -118,7 +118,7 @@ contract Counter is SepoliaZamaFHEVMConfig {
   }
 
   function add(einput valueInput, bytes calldata inputProof) public {
-    euint32 value = TFHE.asEuint8(valueInput, inputProof);
+    euint8 value = TFHE.asEuint8(valueInput, inputProof);
     counter = TFHE.add(counter, value);
     TFHE.allowThis(counter);
   }
@@ -153,7 +153,7 @@ Access a curated collection of demos and step-by-step tutorials to guide your de
 
 ### **Documentation**
 
-Master `fhEVM` and build smarter contracts using these resources:
+Master `fhEVM` and build smart contracts using these resources:
 
 - 📘 [**Comprehensive fhEVM Documentation**](https://docs.zama.ai/fhevm)  
   Dive deep into Zama's detailed guide for utilizing the full potential of fhEVM.
@@ -168,7 +168,7 @@ Start building faster with pre-configured templates tailored for various framewo
 #### **Smart Contracts**
 
 - 🔧 [**Hardhat Template**](https://github.com/zama-ai/fhevm-hardhat-template)  
-  Smart contracts testing and development <- primary entry point for developers wanting to develop smart contracts on fhEVM
+  Smart contracts testing and development <- **_primary entry point for developers wanting to develop smart contracts on fhEVM_**
 - 💻 [**fhEVM Contracts**](https://github.com/zama-ai/fhevm-contracts)  
   Library of standardized fhEVM contracts.
 
@@ -192,9 +192,6 @@ Leverage these templates to accelerate your development process and bring your i
 </p>
 
 ## Blockchain Implementation
-
-To support fhEVM in an EVM-based blockchain, the **fhevm-go** library can be used as it implements all the needed FHE functionalities.
-It is available here: [fhevm-go](https://github.com/zama-ai/fhevm-go)
 
 To integrate fhevm-go into any EVM-based blockchain, you can follow the [Integration Guide](https://docs.zama.ai/fhevm-go/getting_started/integration).
 

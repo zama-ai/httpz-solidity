@@ -22,7 +22,7 @@ This type of casting involves converting plaintext (unencrypted) values into the
 - `uint` → `euintXX`
 - `bytes` → `ebytesXX`
 
-> **Note**: When doing trivial encrypt, the data is made compatible with FHE operations but remains publicly visible on-chain unless explicitly encrypted.
+> **Note**: When doing trivial encryption, the data is made compatible with FHE operations but remains publicly visible on-chain unless explicitly encrypted.
 
 #### **Example**
 
