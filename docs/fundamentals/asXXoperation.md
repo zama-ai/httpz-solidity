@@ -146,7 +146,7 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 
 | Casting Type             | Function                | Input Type        | Output Type |
 | ------------------------ | ----------------------- | ----------------- | ----------- |
-| Trivial input            | `TFHE.asEuintXX(x)`     | `uintX`           | `euintX`    |
+| Trivial encrypt            | `TFHE.asEuintXX(x)`     | `uintX`           | `euintX`    |
 |                          | `TFHE.asEbool(x)`       | `bool`            | `ebool`     |
 |                          | `TFHE.asEbytesXX(x)`    | `bytesXX`         | `ebytesXX`  |
 | Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool` | `euintYY`   |
