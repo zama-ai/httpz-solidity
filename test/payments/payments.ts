@@ -7,7 +7,7 @@ import { getSigners, initSigners } from '../signers';
 
 describe('TestFHEPayment', function () {
   before(async function () {
-    await initSigners();
+    await initSigners(2);
     this.signers = await getSigners();
     this.fhePayment = await initializeFHEPayment();
   });

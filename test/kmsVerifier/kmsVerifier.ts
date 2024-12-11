@@ -10,7 +10,7 @@ import { bigIntToBytes256 } from '../utils';
 
 describe('KMSVerifier', function () {
   before(async function () {
-    await initSigners();
+    await initSigners(2);
     this.signers = await getSigners();
     this.instances = await createInstances(this.signers);
     this.kmsFactory = await ethers.getContractFactory('fhevmTemp/contracts/KMSVerifier.sol:KMSVerifier');
