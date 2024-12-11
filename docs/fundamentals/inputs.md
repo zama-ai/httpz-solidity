@@ -162,7 +162,7 @@ import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 /// @dev Uses TFHE library for fully homomorphic encryption operations
 /// @custom:experimental This contract is experimental and uses FHE technology
 contract EncryptedCounter2 is SepoliaZamaFHEVMConfig {
-  euint8 counter;
+  euint8 internal counter;
 
   constructor() {
     // Initialize counter with an encrypted zero value

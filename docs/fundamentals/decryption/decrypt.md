@@ -85,7 +85,7 @@ import "fhevm/gateway/GatewayCaller.sol";
 /// @custom:experimental This contract is experimental and uses FHE technology with decryption capabilities
 contract EncryptedCounter3 is SepoliaZamaFHEVMConfig, SepoliaZamaGatewayConfig, GatewayCaller {
     /// @dev Decrypted state variable
-    euint8 counter;
+    euint8 internal counter;
     uint8 public decryptedCounter;
 
     constructor() {
