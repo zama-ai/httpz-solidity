@@ -18,7 +18,7 @@ FHE operations in fhEVM are computationally intensive, resulting in higher gas c
    - If too many FHE operations are requested in the same block, the transaction will revert once the FHEGas block limit is reached.
    - FHEGas is consistent across both mocked and real fhEVM environments.
 
-> **Note**: FHEGas values provided are approximate and may vary based on network conditions, implementation details, and contract complexity.
+> **Note**: Gas values provided are approximate and may vary based on network conditions, implementation details, and contract complexity.
 
 ---
 
@@ -67,7 +67,7 @@ console.log("Native Gas Consumed:", transaction.gasUsed);
 The current devnet has a FHEGas limit of **10,000,000** per block. Here's what you need to know:
 
 - If you send a transaction that exceeds this limit or if the FHEGas block limit
-  is exceeded, depending on other previous tx in same block:
+  is exceeded, depending on other previous transaction in same block:
   - The transaction will revert
   - Any gas fees paid will still be charged
   - You should either:

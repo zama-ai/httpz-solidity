@@ -75,35 +75,6 @@ The table below summarizes the available casting functions:
 Casting between encrypted types is efficient and often necessary when handling data with differing precision requirements.
 {% endhint %}
 
-## Declaring encrypted state variables
-
-When using encrypted types as state variables in smart contracts, avoid declaring them with the `immutable` or `constant` keywords. This is because the `TFHE.asEuintXX()` method relies on a precompiled contract, making the value resolution at compile time infeasible.
-
-### Best practices for declaration
-
-Instead of using `immutable` or `constant`, declare and initialize encrypted state variables like this:
-
-#### Inline initialization
-
-```solidity
-euint64 private totalSupply = TFHE.asEuint64(0);
-```
-
-#### Initialization in constructor
-
-```solidity
-euint64 private totalSupply;
-
-constructor() {
-  totalSupply = TFHE.asEuint64(0);
-}
-```
-
-{% hint style="info" %}
-**Why?**\
-The `TFHE.asEuintXX()` function is executed at runtime, making `immutable` or `constant` declarations incompatible.
-{% endhint %}
-
 ## **Summary**
 
 The encrypted types in the `TFHE` library are designed to offer security and flexibility when working with confidential data in smart contracts. Key points to remember include:
@@ -111,6 +82,5 @@ The encrypted types in the `TFHE` library are designed to offer security and fle
 - Encrypted integers operate as wrappers over FHE ciphertexts.
 - Arithmetic operations are unchecked to preserve confidentiality.
 - Type casting is straightforward, with extensive support for converting between encrypted types and unencrypted inputs.
-- Encrypted state variables must be initialized at runtime rather than using `immutable` or `constant`.
 
 By following these guidelines and leveraging the flexibility of the `TFHE` library, developers can seamlessly integrate encrypted types into their smart contract workflows.
