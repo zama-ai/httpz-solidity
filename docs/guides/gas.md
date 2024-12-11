@@ -55,6 +55,8 @@ const receipt = await tx.wait();
 expect(receipt?.status).to.eq(1);
 
 if (network.name === "hardhat") {
+  // The getFHEGasFromTxReceipt function only works in mocked mode (hardhat network)
+  // but returns the exact same FHEGas value that would be consumed on the real network
   const FHEGasConsumed = getFHEGasFromTxReceipt(receipt);
   console.log("FHEGas Consumed:", FHEGasConsumed);
 }

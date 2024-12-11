@@ -6,7 +6,7 @@ This guide explains how to use the `debug.decrypt[XX]` functions for debugging e
 
 The `debug.decrypt[XX]` functions allow you to decrypt encrypted handles into plaintext values. This feature is useful for debugging encrypted operations such as transfers, balance checks, and other computations involving FHE-encrypted data.
 
-### Key Points:
+### Key points
 
 - **Environment**: These functions work **only in mocked environments** (e.g., `hardhat` network).
 - **Production limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized on-chain request.
