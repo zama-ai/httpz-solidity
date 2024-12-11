@@ -118,7 +118,7 @@ contract Counter is SepoliaZamaFHEVMConfig {
   }
 
   function add(einput valueInput, bytes calldata inputProof) public {
-    euint32 value = TFHE.asEuint8(valueInput, inputProof);
+    euint8 value = TFHE.asEuint8(valueInput, inputProof);
     counter = TFHE.add(counter, value);
     TFHE.allowThis(counter);
   }
