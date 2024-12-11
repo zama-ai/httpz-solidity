@@ -125,7 +125,7 @@ ebool valueBool = TFHE.asEbool(value32);   // Cast to ebool
 
 Encrypted input casting is the process of interpreting a handle (ciphertext reference) and its proof as a specific encrypted type. This ensures the validity of the input before it is used in computations.
 
-Encrypted inputs is in depth explained in the following section: [encrypetd inputs](./inputs.md)
+Encrypted inputs is in depth explained in the following section: [encrypted inputs](./inputs.md)
 
 #### Example
 
