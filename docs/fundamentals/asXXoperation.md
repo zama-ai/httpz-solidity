@@ -48,7 +48,7 @@ The `TFHE.padToBytesXX` functions facilitate this trivial encryption process for
 2. **Encrypt the Padded Data**:
    Use `TFHE.asEbytesXX` to encrypt the padded byte array into the corresponding encrypted type.
 3. **Grant Access**:
-   Use `TFHE.allowThis` and `TFHE.allow` to define access control for the encrypted data.
+   Use `TFHE.allowThis` and `TFHE.allow`optionally, if you want to persist allowance for those variables for later use.
 
 ### Example: Trivial Encryption with `ebytesXX`
 
