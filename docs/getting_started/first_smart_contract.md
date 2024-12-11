@@ -40,8 +40,8 @@ import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 /// @custom:notice This contract has limited real-world utility and serves primarily as a starting point
 /// for understanding how to implement basic FHE operations in Solidity
 contract EncryptedCounter1 is SepoliaZamaFHEVMConfig {
-  euint8 counter;
-  euint8 CONST_ONE;
+  euint8 internal counter;
+  euint8 internal immutable CONST_ONE;
 
   constructor() {
     // Initialize counter with an encrypted zero value

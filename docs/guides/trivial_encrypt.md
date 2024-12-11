@@ -1,16 +1,20 @@
 # **Trivial encryption of `ebytesXX` types**
 
-This guide explains how to perform trivial encryption of `ebytesXX` types in fhEVM smart contracts using the new `padToBytesXX` functions. These functions ensure that byte arrays are correctly padded to match the required sizes for `ebytes64`, `ebytes128`, and `ebytes256` types.
+This guide explains how to perform trivial encryption of `ebytesXX` types in fhEVM smart contracts using the new `padToBytesXX` functions. These functions ensure that byte arrays are correctly padded to match the required sizes for `ebytes64`, `ebytes128`, and `ebytes256` types. Continuing from the [types page and casting section](../fundamentals/types.md), this guide covers trivial encryption for `ebytesXX` types.
 
 ---
 
 ## **Overview**
 
-The `TFHE.padToBytesXX` functions are designed to make encryption of byte arrays seamless and ensure compatibility with `ebytesXX` types. These functions:
+Trivial encryption is a process that converts plaintext values into encrypted types (ciphertexts) that are compatible with TFHE operators, without actually hiding the data. The resulting ciphertext remains publicly visible on the blockchain - this is useful when you need to perform operations between public and private values using TFHE operators.
+
+The `TFHE.padToBytesXX` functions facilitate this trivial encryption process for byte arrays, ensuring compatibility with `ebytesXX` types. These functions:
 
 - Pad the provided byte array to the appropriate length (`64`, `128`, or `256` bytes).
 - Prevent runtime errors caused by improperly sized input data.
-- Work seamlessly with `TFHE.asEbytesXX` for encryption.
+- Work seamlessly with `TFHE.asEbytesXX` for trivial encryption.
+
+> **Important**: Trivial encryption does NOT provide any privacy guarantees. The input data remains fully visible on the blockchain. Only use trivial encryption when working with public values that need to interact with actual encrypted data.
 
 ### **Workflow**
 
@@ -106,4 +110,4 @@ Converts the padded byte array into an encrypted `ebytesXX` type.
    Use `TFHE.allowThis` and `TFHE.allow` to specify which addresses or contracts can access the encrypted data.
 
 3. **Test Thoroughly**:
-   Verify the padding and encryption in both mocked and real fhEVM environments to ensure correct behavior.
+   Verify the padding and encryption in both mocked to ensure correct behavior.

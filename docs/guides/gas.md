@@ -9,13 +9,16 @@ FHE operations in fhEVM are computationally intensive, resulting in higher gas c
 ### Types of gas in fhEVM
 
 1. **Native Gas**:
-   - Represents gas used for standard Ethereum operations.
+   - Standard gas used for operations on the underlying EVM chain.
    - On fhEVM, native gas consumption is approximately 20% higher than in mocked environments.
-2. **FHE Gas**:
+2. **FHEGas**:
    - Represents gas consumed by FHE-specific computations.
-   - FHE gas is consistent across both mocked and real fhEVM environments.
+   - A new synthetic kind of gas consumed by FHE-specific computations.
+   - FHEGas is tracked in each block by the FHEPayment contract to prevent DDOS attacks.
+   - If too many FHE operations are requested in the same block, the transaction will revert once the FHEGas block limit is reached.
+   - FHEGas is consistent across both mocked and real fhEVM environments.
 
-> **Note**: Gas values provided are approximate and may vary based on network conditions, implementation details, and contract complexity.
+> **Note**: FHEGas values provided are approximate and may vary based on network conditions, implementation details, and contract complexity.
 
 ---
 
@@ -25,47 +28,61 @@ To monitor gas usage during development, use the following tools:
 
 1. **`getFHEGasFromTxReceipt`**:
 
-   - Extracts FHE gas consumption from a transaction receipt.
-   - Works in only in mocked fhEVM environments.
+   - Extracts FHEGas consumption from a transaction receipt.
+   - Works only in mocked fhEVM environments, but gives the exact same value as in non-mocked environments.
+   - Import as: `import { getFHEGasFromTxReceipt } from "../coprocessorUtils";`
 
-2. **`.gasUsed`**:
-   - Returns the native gas used during a transaction.
+2. **`.gasUsed` from ethers.js transaction receipt**:
+   - Standard ethers.js transaction receipt property that returns the native gas used.
    - In mocked mode, this value underestimates real native gas usage by ~20%.
-   - Works in both mocked and real fhEVM environments.
+   - Works in both mocked and real fhEVM environments, as it's a standard Ethereum transaction property.
 
 ### Example: gas measurement
 
-The following code demonstrates how to measure both FHE gas and native gas during a transaction:
+The following code demonstrates how to measure both FHEGas and native gas during a transaction:
 
 ```typescript
-const transaction = await tx.wait();
-expect(transaction?.status).to.eq(1);
+import { getFHEGasFromTxReceipt } from "../coprocessorUtils";
+
+// ...
+
+const tx = await this.erc20["transfer(address,bytes32,bytes)"](
+  this.signers.bob.address,
+  encryptedTransferAmount.handles[0],
+  encryptedTransferAmount.inputProof,
+);
+const receipt = await tx.wait();
+expect(receipt?.status).to.eq(1);
 
 if (network.name === "hardhat") {
-  const FHEGasConsumed = getFHEGasFromTxReceipt(transaction);
-  console.log("FHE Gas Consumed:", FHEGasConsumed);
+  const FHEGasConsumed = getFHEGasFromTxReceipt(receipt);
+  console.log("FHEGas Consumed:", FHEGasConsumed);
 }
 
 console.log("Native Gas Consumed:", transaction.gasUsed);
 ```
 
-## Gas limit
+## FHEGas limit
 
-The current devnet has a gas limit of **10,000,000**. Here's what you need to know:
+The current devnet has a FHEGas limit of **10,000,000** per block. Here's what you need to know:
 
-- If you send a transaction that exceeds this limit:
-  - The transaction will fail to execute
-  - Your wallet will be unable to emit new transactions
-  - You'll need to send a new transaction with the same nonce but correct gas limit
+- If you send a transaction that exceeds this limit or if the FHEGas block limit
+  is exceeded, depending on other previous tx in same block:
+  - The transaction will revert
+  - Any gas fees paid will still be charged
+  - You should either:
+    - Reduce the number of FHE operations in your transaction
+    - Wait for the next block when the FHEGas limit resets
+    - Split your operations across multiple transactions
 
-## Gas costs for common operations
+## FHEGas costs for common operations
 
 ### Boolean Operations (`ebool`)
 
-| Function Name    | Gas Cost |
-| ---------------- | -------- |
-| `and`/`or`/`xor` | 26,000   |
-| `not`            | 30,000   |
+| Function Name    | FHEGas Cost |
+| ---------------- | ----------- |
+| `and`/`or`/`xor` | 26,000      |
+| `not`            | 30,000      |
 
 ---
 
@@ -75,7 +92,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **4-bit Encrypted Integers (`euint4`)**
 
-| function name          | Gas     |
+| function name          | FHEGas  |
 | ---------------------- | ------- |
 | `add`/`sub`            | 65,000  |
 | `add`/`sub` (scalar)   | 65,000  |
@@ -98,7 +115,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **8-bit Encrypted integers (`euint8`)**
 
-| Function name          | Gas     |
+| Function name          | FHEGas  |
 | ---------------------- | ------- |
 | `add`/`sub`            | 94,000  |
 | `add`/`sub` (scalar)   | 94,000  |
@@ -122,7 +139,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **16-bit Encrypted integers (`euint16`)**
 
-| Function name          | Gas     |
+| Function name          | FHEGas  |
 | ---------------------- | ------- |
 | `add`/`sub`            | 133,000 |
 | `add`/`sub` (scalar)   | 133,000 |
@@ -146,7 +163,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **32-bit Encrypted Integers (`euint32`)**
 
-| Function name          | Gas fee |
+| Function name          | FHEGas  |
 | ---------------------- | ------- |
 | `add`/`sub`            | 162,000 |
 | `add`/`sub` (scalar)   | 162,000 |
@@ -170,7 +187,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **64-bit Encrypted integers (`euint64`)**
 
-| Function name          | Gas fee   |
+| Function name          | FHEGas    |
 | ---------------------- | --------- |
 | `add`/`sub`            | 188,000   |
 | `add`/`sub` (scalar)   | 188,000   |
@@ -194,7 +211,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **128-bit Encrypted integers (`euint128`)**
 
-| Function name          | Gas fee   |
+| Function name          | FHEGas    |
 | ---------------------- | --------- |
 | `add`/`sub`            | 218,000   |
 | `add`/`sub` (scalar)   | 218,000   |
@@ -217,7 +234,7 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 #### **256-bit Encrypted integers (`euint256`)**
 
-| function name          | Gas fee   |
+| function name          | FHEGas    |
 | ---------------------- | --------- |
 | `add`/`sub`            | 253,000   |
 | `add`/`sub` (scalar)   | 253,000   |
@@ -240,13 +257,13 @@ Gas costs increase with the bit-width of the encrypted integer type. Below are t
 
 ### eAddress
 
-| Function name | Gas fee |
-| ------------- | ------- |
-| `eq`/`ne`     | 90,000  |
+| Function name | FHEGas |
+| ------------- | ------ |
+| `eq`/`ne`     | 90,000 |
 
 ## Additional Operations
 
-| Function name               | Gas fee         |
+| Function name               | FHEGas          |
 | --------------------------- | --------------- |
 | `cast`                      | 200             |
 | `trivialEncrypt` (basic)    | 100-800         |

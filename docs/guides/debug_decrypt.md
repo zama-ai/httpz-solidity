@@ -1,18 +1,17 @@
-# Debugging with `debug.decryptXX`
+# Debugging with `debug.decrypt[XX]`
 
-This guide explains how to use the `debug.decryptXX` functions for debugging encrypted data in mocked environments during development with fhEVM. These functions allow developers to decrypt encrypted values locally for testing purposes. However, they should not be used in production as they rely on private keys.
-
----
+This guide explains how to use the `debug.decrypt[XX]` functions for debugging encrypted data in mocked environments during development with fhEVM. These functions allow developers to decrypt encrypted values locally for testing purposes. However, they should not be used in production as they rely on private keys.
 
 ## Overview
 
-The `debug.decryptXX` functions allow you to decrypt encrypted handles into plaintext values. This feature is useful for debugging encrypted operations such as transfers, balance checks, and other computations involving FHE-encrypted data.
+The `debug.decrypt[XX]` functions allow you to decrypt encrypted handles into plaintext values. This feature is useful for debugging encrypted operations such as transfers, balance checks, and other computations involving FHE-encrypted data.
 
 ### Key Points:
 
 - **Environment**: These functions work **only in mocked environments** (e.g., `hardhat` network).
-- **Production Limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized on-chain request.
-- **Encrypted Types**: Supports various encrypted types, including integers, booleans, and `ebytesXX`.
+- **Production limitation**: In production, decryption is performed asynchronously via the Gateway and requires an authorized on-chain request.
+- **Encrypted types**: Supports various encrypted types, including integers, booleans, and `ebytesXX`.
+- **Bypass ACL authorization**: The `debug.decrypt[XX]` functions allow decryption without ACL authorization, useful for verifying encrypted operations during development and testing.
 
 ---
 
@@ -65,13 +64,15 @@ Decrypts encrypted addresses.
 ### Example: decrypting encrypted values
 
 ```typescript
-import { debug } from "./debug";
+import { debug } from "../utils";
 
 // Decrypt a 64-bit encrypted integer
 const handle64: bigint = await this.erc20.balanceOf(this.signers.alice);
 const plaintextValue: bigint = await debug.decrypt64(handle64);
 console.log("Decrypted Balance:", plaintextValue);
 ```
+
+> To utilize the debug functions, import the [utils.ts](https://github.com/zama-ai/fhevm-hardhat-template/blob/main/test/utils.ts) file.
 
 For a more complete example, refer to the [ConfidentialERC20 test file](https://github.com/zama-ai/fhevm-hardhat-template/blob/f9505a67db31c988f49b6f4210df47ca3ce97841/test/confidentialERC20/ConfidentialERC20.ts#L181-L205).
 
@@ -120,6 +121,3 @@ if (network.name !== "hardhat") {
 
 2. **Production Decryption**:
    For production, always use the asynchronous Gateway-based decryption.
-
-3. **Validate Inputs**:
-   Ensure the provided handle is valid and corresponds to the correct encrypted type.
