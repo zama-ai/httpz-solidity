@@ -71,7 +71,7 @@ The current devnet has a FHEGas limit of **10,000,000** per block. Here's what y
 - If you send a transaction that exceeds this limit or if the FHEGas block limit is exceeded, depending on other previous transaction in same block:
   - The transaction will revert
   - Any native gas fees (but not FHEGas) will still be charged
-  - You should either:
+  - You should do one of the following:
     - Reduce the number of FHE operations in your transaction
     - Wait for the next block when the FHEGas limit resets
     - Split your operations across multiple transactions
