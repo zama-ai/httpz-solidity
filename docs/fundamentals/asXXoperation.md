@@ -8,13 +8,13 @@ The operations can be categorized into three main use cases:
 2. **Type casting**: Converting between different encrypted types
 3. **Input handling**: Processing encrypted inputs with proofs
 
-## 1. Trivial input
+## 1. Trivial encryption
 
-Trivial input simply put is a plain text in a format of a ciphertext.
+Trivial encryption simply put is a plain text in a format of a ciphertext.
 
 ### Overview
 
-Trivial input is the process of converting plaintext values into encrypted types (ciphertexts) compatible with TFHE operators. Although the data is in ciphertext format, it remains publicly visible on-chain, making it useful for operations between public and private values.
+Trivial encryption is the process of converting plaintext values into encrypted types (ciphertexts) compatible with TFHE operators. Although the data is in ciphertext format, it remains publicly visible on-chain, making it useful for operations between public and private values.
 
 This type of casting involves converting plaintext (unencrypted) values into their encrypted equivalents, such as:
 
@@ -146,7 +146,7 @@ For more information, see the [Encrypetd inputs documentation](./inputs.md)
 
 | Casting Type             | Function                | Input Type              | Output Type |
 | ------------------------ | ----------------------- | ----------------------- | ----------- |
-| Trivial input            | `TFHE.asEuintXX(x)`     | `uintX`                 | `euintX`    |
+| Trivial encryption       | `TFHE.asEuintXX(x)`     | `uintX`                 | `euintX`    |
 |                          | `TFHE.asEbool(x)`       | `bool`                  | `ebool`     |
 |                          | `TFHE.asEbytesXX(x)`    | `bytesXX`               | `ebytesXX`  |
 | Conversion between types | `TFHE.asEuintXX(x)`     | `euintXX`/`ebool`       | `euintYY`   |
