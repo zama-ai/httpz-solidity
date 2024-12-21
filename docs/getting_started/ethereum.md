@@ -1,5 +1,8 @@
 # Quick start
 
+{% hint style="warning" %} Please note that our testnet support will be limited during the holiday season, from 23th December to 5th January. During this time, the HackathonNet Sepolia network is not be actively maintained.
+{% endhint %}
+
 This guide walks you through developing secure and efficient confidential smart contracts using fhEVM. Whether you're new to Fully Homomorphic Encryption (FHE) or an experienced blockchain developer, we'll cover everything you need to know - from setting up your development environment to deploying your first encrypted contract.
 
 ## Network information
