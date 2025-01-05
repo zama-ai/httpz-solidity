@@ -55,42 +55,42 @@ library TFHE {
         Impl.setFHEVM(fhevmConfig);
     }
 
-    // Return true if the enrypted bool is initialized and false otherwise.
+    // Return true if the encrypted bool is initialized and false otherwise.
     function isInitialized(ebool v) internal pure returns (bool) {
         return ebool.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint4 v) internal pure returns (bool) {
         return euint4.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint8 v) internal pure returns (bool) {
         return euint8.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint16 v) internal pure returns (bool) {
         return euint16.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint32 v) internal pure returns (bool) {
         return euint32.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint64 v) internal pure returns (bool) {
         return euint64.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint128 v) internal pure returns (bool) {
         return euint128.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted integer is initialized and false otherwise.
+    // Return true if the encrypted integer is initialized and false otherwise.
     function isInitialized(euint256 v) internal pure returns (bool) {
         return euint256.unwrap(v) != 0;
     }
@@ -10520,22 +10520,22 @@ library TFHE {
         return ebytes256.wrap(Impl.trivialEncrypt(value, Common.ebytes256_t));
     }
 
-    // Return true if the enrypted address is initialized and false otherwise.
+    // Return true if the encrypted address is initialized and false otherwise.
     function isInitialized(eaddress v) internal pure returns (bool) {
         return eaddress.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes64 v) internal pure returns (bool) {
         return ebytes64.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes128 v) internal pure returns (bool) {
         return ebytes128.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes256 v) internal pure returns (bool) {
         return ebytes256.unwrap(v) != 0;
     }
