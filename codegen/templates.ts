@@ -297,14 +297,14 @@ error InputLengthAbove256Bytes(uint256 inputLength);
 
   if (mocked) {
     res.push(`
-    // Return true if the enrypted bool is initialized and false otherwise.
+    // Return true if the encrypted bool is initialized and false otherwise.
     function isInitialized(ebool /*v*/) internal pure returns (bool) {
         return true;
     }
   `);
     supportedBits.forEach((b) => {
       res.push(`
-      // Return true if the enrypted integer is initialized and false otherwise.
+      // Return true if the encrypted integer is initialized and false otherwise.
       function isInitialized(euint${b} /*v*/) internal pure returns (bool) {
           return true;
       }
@@ -312,14 +312,14 @@ error InputLengthAbove256Bytes(uint256 inputLength);
     });
   } else {
     res.push(`
-    // Return true if the enrypted bool is initialized and false otherwise.
+    // Return true if the encrypted bool is initialized and false otherwise.
     function isInitialized(ebool v) internal pure returns (bool) {
         return ebool.unwrap(v) != 0;
     }
   `);
     supportedBits.forEach((b) => {
       res.push(`
-      // Return true if the enrypted integer is initialized and false otherwise.
+      // Return true if the encrypted integer is initialized and false otherwise.
       function isInitialized(euint${b} v) internal pure returns (bool) {
           return euint${b}.unwrap(v) != 0;
       }
@@ -1119,22 +1119,22 @@ function tfheCustomMethods(): string {
         return ebytes256.wrap(Impl.trivialEncrypt(value, Common.ebytes256_t));
     }
 
-    // Return true if the enrypted address is initialized and false otherwise.
+    // Return true if the encrypted address is initialized and false otherwise.
     function isInitialized(eaddress v) internal pure returns (bool) {
         return eaddress.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes64 v) internal pure returns (bool) {
         return ebytes64.unwrap(v) != 0;
     }
 
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes128 v) internal pure returns (bool) {
         return ebytes128.unwrap(v) != 0;
     }
     
-    // Return true if the enrypted value is initialized and false otherwise.
+    // Return true if the encrypted value is initialized and false otherwise.
     function isInitialized(ebytes256 v) internal pure returns (bool) {
         return ebytes256.unwrap(v) != 0;
     }
