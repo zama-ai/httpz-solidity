@@ -17,8 +17,6 @@ layout:
 
 # Welcome to fhEVM
 
-{% hint style="warning" %} Please note that our testnet support will be limited during the holiday season, from 23th December to 5th January. During this time, the HackathonNet Sepolia network is not be actively maintained.
-{% endhint %}
 
 ## Get started
 
