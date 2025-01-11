@@ -54,17 +54,22 @@ resolve: {
 
 **Cause:** The library may not bundle correctly with certain frameworks, leading to errors during the build or runtime process.
 
+<<<<<<< HEAD
 **Possible solutions:** Use the prebundled version available in `fhevmjs/bundle`. Embed the library with a `<script>` tag and initialize it as shown below:
+=======
+**Possible solutions:** Use the [prebundled version available](./webapp.md) with `fhevmjs/bundle`. Embed the library with a `<script>` tag and initialize it as shown below:
+
+> > > > > > > 34dbe133566d273b54d87e58b5986c05c44f1d41
 
 ```javascript
 const start = async () => {
   await window.fhevm.initFhevm(); // load wasm needed
   const instance = window.fhevm
     .createInstance({
-      kmsContractAddress: "0x208De73316E44722e16f6dDFF40881A3e4F86104",
-      aclContractAddress: "0xc9990FEfE0c27D31D0C2aa36196b085c0c4d456c",
+      kmsContractAddress: "0x9D6891A6240D6130c54ae243d8005063D05fE14b",
+      aclContractAddress: "0xFee8407e2f5e3Ee68ad77cAE98c434e637f516e5",
       network: window.ethereum,
-      gatewayUrl: "https://gateway.zama.ai/",
+      gatewayUrl: "https://gateway.sepolia.zama.ai/",
     })
     .then((instance) => {
       console.log(instance);
