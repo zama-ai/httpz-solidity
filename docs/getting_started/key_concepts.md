@@ -15,76 +15,35 @@ The design of fhEVM is guided by the following principles:
 3. **Developer accessibility**: Build confidential smart contracts using familiar Solidity tooling, without requiring cryptographic expertise.
 4. **Composability**: Confidential smart contracts are fully interoperable with each other and public contracts.
 
-## Key features
+## Use cases
 
-### Encrypted data types
+fhEVM enables a wide range of privacy-preserving applications across different domains:
 
-fhEVM introduces encrypted data types compatible with Solidity:
+1. **Decentralized Finance (DeFi)**
 
-- **Booleans**: `ebool`
-- **Unsigned Integers**: `euint4`, `euint8`, `euint16`, `euint32`, `euint64`, `euint128`, `euint256`
-- **Addresses**: `eaddress`
-- **Bytes**: `ebytes64`, `ebytes128`, `ebytes256`
-- **Input**: `einput` for handling encrypted input data
+   - Private token balances and transfers
+   - Confidential lending and borrowing
+   - Dark pools and private order books
+   - Example: [Confidential ERC20 tutorial](../tutorials/confidentialERC20.md)
 
-Encrypted data is represented as ciphertext handles, ensuring secure computation and interaction.
+2. **Gaming & NFTs**
 
-For more information see [use of encrypted types](../fundamentals/types.md).
+   - Hidden game states and player moves
+   - Private NFT ownership and metadata
+   - Sealed bid auctions
+   - Example: [Rock Paper Scissors tutorial](https://github.com/zama-ai/fhevm-tutorial-rock-paper-scissors)
 
-### Casting types
+3. **Identity & Access Control**
 
-fhEVM provides functions to cast between encrypted types:
+   - Zero-knowledge authentication
+   - Private membership verification
+   - Confidential access management
+   - Example: [Private voting tutorial](https://github.com/zama-ai/fhevm-tutorial-private-voting)
 
-- **Casting between encrypted types**: `TFHE.asEbool` converts encrypted integers to encrypted booleans
-- **Casting to encrypted types**: `TFHE.asEuintX` converts plaintext values to encrypted types
-- **Casting to encrypted addresses**: `TFHE.asEaddress` converts plaintext addresses to encrypted addresses
-- **Casting to encrypted bytes**: `TFHE.asEbytesX` converts plaintext bytes to encrypted bytes
+4. **Business Applications**
+   - Supply chain privacy
+   - Confidential business logic
+   - Private data marketplaces
+   - Example: [Sealed bid auction tutorial](https://github.com/zama-ai/fhevm-tutorial-sealed-bid-auction)
 
-For more information see [use of encrypted types](../fundamentals/types.md).
-
-### Confidential computation
-
-fhEVM enables symbolic execution of encrypted operations, supporting:
-
-- **Arithmetic:** `TFHE.add`, `TFHE.sub`, `TFHE.mul`, `TFHE.min`, `TFHE.max`, `TFHE.neg`, `TFHE.div`, `TFHE.rem`
-  - Note: `div` and `rem` operations are supported only with plaintext divisors
-- **Bitwise:** `TFHE.and`, `TFHE.or`, `TFHE.xor`, `TFHE.not`, `TFHE.shl`, `TFHE.shr`, `TFHE.rotl`, `TFHE.rotr`
-- **Comparison:** `TFHE.eq`, `TFHE.ne`, `TFHE.lt`, `TFHE.le`, `TFHE.gt`, `TFHE.ge`
-- **Advanced:** `TFHE.select` for branching on encrypted conditions, `TFHE.randEuintX` for on-chain randomness.
-
-For more information on operations, see [Operations on encrypted types](../fundamentals/operations.md).&#x20;
-
-For more information on conditional branching, see [Conditional logic in FHE](../guides/conditions.md).&#x20;
-
-For more information on random number generation, see [Generate Random Encrypted Numbers](../guides/random.md).
-
-### Access control mechanism
-
-fhEVM enforces access control with a blockchain-based Access Control List (ACL):
-
-- **Persistent access**: `TFHE.allow`, `TFHE.allowThis` grants permanent permissions for ciphertexts.
-- **Transient access**: `TFHE.allowTransient` provides temporary access for specific transactions.
-- **Validation**: `TFHE.isSenderAllowed` ensures that only authorized entities can interact with ciphertexts.
-
-For more information see [ACL](../fundamentals/acl/).
-
-## Architectural overview
-
-The fhEVM architecture provides the foundation for confidential smart contracts on EVM-compatible blockchains. At its core is FHE, a cryptographic technique enabling computations directly on encrypted data, ensuring privacy at every stage.&#x20;
-
-This system relies on three key types:&#x20;
-
-- The **public key:** used for encrypting data.
-- The **private key:** used for decryption and securely managed by the Key Management System or KMS
-- The **evaluation key:** enabling encrypted computations performed by the coprocessor.
-
-The fhEVM leverages Zama's TFHE library, integrating seamlessly with blockchain environments to address transparency, composability, and scalability challenges. Its hybrid architecture combines:
-
-- **On-chain smart contracts** for encrypted state management and access controls.
-- **Off-chain coprocessors** for resource-intensive FHE computations.
-- **The Gateway** to coordinate between blockchain, KMS, and coprocessors.
-- **The KMS** for secure cryptographic key management and proof validation.
-
-This architecture enables developers to write private, composable smart contracts using symbolic execution and zero-knowledge proofs, ensuring data confidentiality and computational integrity.
-
-For a detailed exploration of the fhEVM architecture, including components, workflows, and deployment models, see [Architecture Overview](../fundamentals/architecture_overview.md).
+These applications demonstrate how fhEVM enables previously impossible use cases by combining blockchain transparency with data privacy.

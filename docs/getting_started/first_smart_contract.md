@@ -24,7 +24,7 @@ Let’s build a simple **Encrypted Counter** smart contract to demonstrate the c
 
 ### Writing the contract
 
-Create a new file called `EncryptedCounter.sol` in your `contracts/` folder and add the following code:
+Create a new file called `ConfidentialCounter.sol` in your `contracts/` folder and add the following code:
 
 ```solidity
 // SPDX-License-Identifier: MIT

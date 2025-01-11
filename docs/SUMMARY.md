@@ -7,12 +7,15 @@
 
 - [Overview](getting_started/key_concepts.md)
 - [Quick start](getting_started/ethereum.md)
-- [First smart contract](getting_started/first_smart_contract.md)
-- [Writing smart contract]()
+  - [Using Remix](getting_started/quick_start/remix.md)
+  - [Connect your wallet](getting_started/quick_start/connect_wallet.md)
+  - [Game example](getting_started/quick_start/game_example.md)
+  - [First smart contract](getting_started/quick_start/first_smart_contract.md)
+  - [Resources](getting_started/quick_start/resources.md)
+- [Writing smart contract](getting_started/write_contract/README.md)
   - [Using Hardhat](getting_started/write_contract/hardhat.md)
-  - [Using Remix](getting_started/write_contract/remix.md)
   - [Using Foundry](getting_started/write_contract/foundry.md)
-- [Writing frontend]()
+- [Writing frontend](getting_started/write_frontend/README.md)
   - [Using React.js](https://github.com/zama-ai/fhevm-react-template)
   - [Using Next.js](https://github.com/zama-ai/fhevm-next-template)
   - [Using Vue.js](https://github.com/zama-ai/fhevm-vue-template)
@@ -25,11 +28,11 @@
 
 ## Smart contract
 
+- [Key features](fundamentals/key_concepts.md)
 - [Configuration](fundamentals/configure.md)
 - [FhEVM contracts](guides/contracts.md)
 - [Supported types](fundamentals/types.md)
 - [Operations on encrypted types](fundamentals/operations.md)
-- [AsEbool, asEuintXX, asEaddress and asEbytesXX operations](fundamentals/asEXXoperators.md)
 - [Access Control List](fundamentals/acl/README.md)
   - [ACL examples](fundamentals/acl/acl_examples.md)
 - [Encrypted Inputs](fundamentals/inputs.md)
@@ -39,6 +42,7 @@
   - [Re-encryption](fundamentals/decryption/reencryption.md)
 - [If sentances](guides/loop.md)
 - [Branching in FHE](guides/conditions.md)
+- [AsEbool, asEuintXX, asEaddress and asEbytesXX operations](fundamentals/asEXXoperators.md)
 - [Generate random numbers](guides/random.md)
 - [Error handling](guides/error_handling.md)
 - [Gas estimation](guides/gas.md)
@@ -53,6 +57,7 @@
 
 ## Explanations
 
+- [Architectural overview](fundamentals/architecture_overview.md)
 - [FHE on blockchain](fundamentals/architecture_overview/fhe-on-blockchain.md)
 - [fhEVM components](fundamentals/architecture_overview/fhevm-components.md)
 - [Encryption, decryption, re-encryption, and computation](fundamentals/d_re_ecrypt_compute.md)
