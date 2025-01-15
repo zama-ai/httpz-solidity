@@ -17,4 +17,4 @@ The fhEVM leverages Zama's TFHE library, integrating seamlessly with blockchain 
 
 This architecture enables developers to write private, composable smart contracts using symbolic execution and zero-knowledge proofs, ensuring data confidentiality and computational integrity.
 
-For a detailed exploration of the fhEVM architecture, including components, workflows, and deployment models, see [Architecture Overview](../fundamentals/architecture_overview.md).
+For a detailed exploration of the fhEVM architecture, including components, workflows, and deployment models, see [Architecture Overview](architecture_overview.md).

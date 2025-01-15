@@ -31,9 +31,9 @@ Most Ethereum wallets have built-in support for testnets like Sepolia. You can a
 
 Before diving into development, we recommend understanding the overall architecture of fhEVM:
 
-- [**Architecture overview**](../fundamentals/architecture_overview.md): Learn how fhEVM enables confidential smart contracts
-- [**Encryption & computation**](../fundamentals/d_re_ecrypt_compute.md): Understand how data is encrypted, decrypted and computed
-- [**Access control**](../fundamentals/acl/): Learn about managing access to encrypted data
+- [**Architecture overview**](../smart_contracts/architecture_overview.md): Learn how fhEVM enables confidential smart contracts
+- [**Encryption & computation**](../smart_contracts/d_re_ecrypt_compute.md): Understand how data is encrypted, decrypted and computed
+- [**Access control**](../smart_contracts/acl): Learn about managing access to encrypted data
 
 This knowledge will help you make better design decisions when building your confidential smart contracts.
 
@@ -52,7 +52,7 @@ Choose and inherit the correct configuration based on the environment:
 - **Testnets (e.g., Sepolia)**: For deploying to public test networks.
 - **Mainnet**: When deploying to production.
 
-Ensure configuration contracts (e.g., `SepoliaZamaFHEVMConfig`, `SepoliaZamaFHEVMConfig`) are inherited correctly to initialize encryption parameters, cryptographic keys, and Gateway addresses. See [configuration](../fundamentals/configure.md) for more details.
+Ensure configuration contracts (e.g., `SepoliaZamaFHEVMConfig`, `SepoliaZamaFHEVMConfig`) are inherited correctly to initialize encryption parameters, cryptographic keys, and Gateway addresses. See [configuration](../smart_contracts/configure.md) for more details.
 
 ### 4. Begin with unencrypted logic
 
@@ -61,7 +61,7 @@ Develop your contract as you would for a traditional EVM chain:
 - Use cleartext variables and basic logic to simplify debugging and reasoning about the contract’s behavior.
 - Focus on implementing core functionality without adding encryption initially.
 
-For a step-by-step guide on developing your first confidential smart contract, see our [First smart contract](../getting_started/first_smart_contract.md). This guide covers:
+For a step-by-step guide on developing your first confidential smart contract, see our [First smart contract](../fundamentals/first_smart_contract.md). This guide covers:
 
 - Creating a basic encrypted counter contract
 - Understanding the configuration process
@@ -69,8 +69,8 @@ For a step-by-step guide on developing your first confidential smart contract, s
 
 Key resources for working with encrypted types:
 
-- [Supported encrypted types](../fundamentals/types.md) - Learn about euint8, euint16, euint32, euint64, ebool and eaddress
-- [Encrypted operations](../fundamentals/operations.md) - Understand arithmetic, comparison, and logical operations on encrypted data
+- [Supported encrypted types](../smart_contracts/types.md) - Learn about euint8, euint16, euint32, euint64, ebool and eaddress
+- [Encrypted operations](../smart_contracts/operations.md) - Understand arithmetic, comparison, and logical operations on encrypted data
 
 ### 5. Add encryption
 
@@ -81,9 +81,9 @@ Once the logic is stable, integrate the `TFHE` Solidity library to enable encryp
 
 Learn how to implement core encryption operations:
 
-- [Encrypting inputs](../fundamentals/inputs.md) - Create and validate encrypted inputs
-- [Decrypting values](../fundamentals/decryption/decrypt.md) - Securely decrypt data for authorized users
-- [Reencryption](../fundamentals/decryption/reencryption.md) - Share encrypted data between parties
+- [Encrypting inputs](../smart_contracts/inputs.md) - Create and validate encrypted inputs
+- [Decrypting values](../smart_contracts/decryption/decrypt.md) - Securely decrypt data for authorized users
+- [Reencryption](../smart_contracts/decryption/reencryption.md) - Share encrypted data between parties
 
 ### 6. Follow best practices
 
@@ -102,7 +102,7 @@ Use the [`fhevm-contracts repository`](https://github.com/zama-ai/fhevm-contract
 - **Why templates?**: They demonstrate common patterns and best practices for encrypted operations, such as governance, token standards, and utility contracts.
 - **How to use**: Extend or customize these templates to suit your application’s needs.
 
-For more details, explore the [fhevm-contracts documentation](../guides/contracts.md).
+For more details, explore the [fhevm-contracts documentation](../smart_contracts/contracts.md).
 
 ## Contract examples
 
@@ -110,10 +110,10 @@ Throughout the documentation you will encounter many Counter contract examples. 
 
 The primary example, `Counter.sol`, is enhanced in stages to demonstrate a variety of features and best practices for encrypted computations.
 
-- [Counter1.sol](../getting_started/first_smart_contract.md#your-first-smart-contract) - Introduction to basic encrypted state variables and simple operations.
-- [Counter2.sol](../fundamentals/inputs.md#upgrade-of-our-counter-contract) - Incorporating encrypted inputs into the contract for enhanced functionality.
-- [Counter3.sol](../fundamentals/decryption/decrypt.md#applying-decryption-to-the-counter-example) - Introduction to decryption and how contracts can interact with the Gateway.
-- [Counter4.sol](../fundamentals/decryption/reencryption.md#applying-re-encryption-to-the-counter-example) - Introduction to re-encryption, enabling secure sharing of encrypted data.
+- [Counter1.sol](../fundamentals/first_smart_contract.md#your-first-smart-contract) - Introduction to basic encrypted state variables and simple operations.
+- [Counter2.sol](../smart_contracts/inputs.md#upgrade-of-our-counter-contract) - Incorporating encrypted inputs into the contract for enhanced functionality.
+- [Counter3.sol](../smart_contracts/decryption/decrypt.md#applying-decryption-to-the-counter-example) - Introduction to decryption and how contracts can interact with the Gateway.
+- [Counter4.sol](../smart_contracts/decryption/reencryption.md#applying-re-encryption-to-the-counter-example) - Introduction to re-encryption, enabling secure sharing of encrypted data.
 
 Each iteration of the counter will build upon previous concepts while introducing new functionality, helping you understand how to develop robust confidential smart contracts.
 

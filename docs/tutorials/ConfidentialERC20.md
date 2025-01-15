@@ -8,7 +8,7 @@ Before starting this tutorial, make sure you have:
 
 1. Set up your development environment following the [Quick Start Guide](../getting_started/ethereum.md)
 2. Basic understanding of [ERC20 tokens](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/)
-3. Familiarity with [encrypted types and operations](../fundamentals/types.md)
+3. Familiarity with [encrypted types and operations](../smart_contracts/types.md)
 
 ## Understanding Confidential ERC20
 

@@ -91,11 +91,11 @@ There are two notable issues with this contract:
 
 1. **Counter value visibility**:\
    Since the counter is incremented by a fixed value, observers could deduce its value by analyzing blockchain events. To address this, see the documentation on:
-   - [encryption and secure inputs](../fundamentals/inputs.md)
+   - [encryption and secure inputs](inputs.md
 2. **Access control for `counter`**:\
    The counter is encrypted, but no access is granted to decrypt or view its value. Without proper ACL permissions, the counter remains inaccessible to users. To resolve this, refer to:
-   - [decryption](../fundamentals/decryption/decrypt.md)
-   - [re-encryption](../fundamentals/decryption/reencryption.md)
+   - [decryption](decryption/decrypt.md
+   - [re-encryption](decryption/reencryption.md
 
 ### Testing
 

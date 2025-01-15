@@ -10,7 +10,7 @@ Smart contracts using fhEVM require proper configuration and initialization:
 - **Gateway configuration**: Configure secure gateway access for cryptographic operations
 - **Initialization checks**: Validate encrypted variables are properly initialized before use
 
-For more information see [Configuration](../fundamentals/configure.md).
+For more information see [Configuration](configure.md).
 
 ### Encrypted data types
 
@@ -24,7 +24,7 @@ fhEVM introduces encrypted data types compatible with Solidity:
 
 Encrypted data is represented as ciphertext handles, ensuring secure computation and interaction.
 
-For more information see [use of encrypted types](../fundamentals/types.md).
+For more information see [use of encrypted types](types.md).
 
 ### Casting types
 
@@ -35,7 +35,7 @@ fhEVM provides functions to cast between encrypted types:
 - **Casting to encrypted addresses**: `TFHE.asEaddress` converts plaintext addresses to encrypted addresses
 - **Casting to encrypted bytes**: `TFHE.asEbytesX` converts plaintext bytes to encrypted bytes
 
-For more information see [use of encrypted types](../fundamentals/types.md).
+For more information see [use of encrypted types](types.md).
 
 ### Confidential computation
 
@@ -47,11 +47,11 @@ fhEVM enables symbolic execution of encrypted operations, supporting:
 - **Comparison:** `TFHE.eq`, `TFHE.ne`, `TFHE.lt`, `TFHE.le`, `TFHE.gt`, `TFHE.ge`
 - **Advanced:** `TFHE.select` for branching on encrypted conditions, `TFHE.randEuintX` for on-chain randomness.
 
-For more information on operations, see [Operations on encrypted types](../fundamentals/operations.md).&#x20;
+For more information on operations, see [Operations on encrypted types](operations.md).&#x20;
 
-For more information on conditional branching, see [Conditional logic in FHE](../guides/conditions.md).&#x20;
+For more information on conditional branching, see [Conditional logic in FHE](conditions.md).&#x20;
 
-For more information on random number generation, see [Generate Random Encrypted Numbers](../guides/random.md).
+For more information on random number generation, see [Generate Random Encrypted Numbers](random.md).
 
 ### Access control mechanism
 
@@ -61,4 +61,4 @@ fhEVM enforces access control with a blockchain-based Access Control List (ACL):
 - **Transient access**: `TFHE.allowTransient` provides temporary access for specific transactions.
 - **Validation**: `TFHE.isSenderAllowed` ensures that only authorized entities can interact with ciphertexts.
 
-For more information see [ACL](../fundamentals/acl/).
+For more information see [ACL](acl).

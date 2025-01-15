@@ -68,7 +68,7 @@ contract TestAsyncDecrypt is SepoliaZamaFHEVMConfig, SepoliaZamaGatewayConfig, G
 
 ### Applying decryption to the counter example
 
-Remember our [**Encrypted Counter**](../../getting_started/first_smart_contract.md) contract from before? Here’s an improved version of it, upgraded to support decryption:
+Remember our [**Encrypted Counter**](../first_smart_contract.md) contract from before? Here’s an improved version of it, upgraded to support decryption:
 
 ```solidity
 // SPDX-License-Identifier: MIT

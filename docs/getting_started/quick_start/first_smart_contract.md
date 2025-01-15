@@ -12,73 +12,116 @@ layout:
     visible: false
 ---
 
-# Create a smart contract
+# Deploying ConfidentialERC20
 
-This document introduces the fundamentals of writing confidential smart contracts using the fhEVM. You'll learn how to create contracts that can perform computations on encrypted data while maintaining data privacy.
+This guide walks you through creating your first smart contract using the **Fully Homomorphic Encryption Virtual Machine (fhEVM)**. We'll create a confidential token powered by **Zama's FHE library**.
 
-In this guide, we'll walk through creating a basic smart contract that demonstrates core fhEVM concepts and encrypted operations.
+For this example, we'll create a new file for our smart contract, name it `MyConfidentialERC20.sol`, and gradually build its functionality.
 
-## Your first smart contract
+## Basic structure
 
-Let’s build a simple **Encrypted Counter** smart contract to demonstrate the configuration process and the use of encrypted state variables.
-
-### Writing the contract
-
-Create a new file called `ConfidentialCounter.sol` in your `contracts/` folder and add the following code:
+Every smart contract written for fhEVM has a consistent foundational structure. Begin by setting up the base configuration and importing required libraries:
 
 ```solidity
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 pragma solidity ^0.8.24;
 
 import "fhevm/lib/TFHE.sol";
-import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
+import "fhevm/config/ZamaFHEVMConfig.sol";
 
-// declare the configuration
-contract ConfidentialCounter1 is SepoliaZamaFHEVMConfig {
-  euint8 internal counter;
+contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig {}
+```
 
-  function increment() public {
-    // Perform encrypted addition to increment the counter
-    counter = TFHE.add(counter, 1);
-    // Allow this enables our contract to the encrypted variable
-    TFHE.allowThis(counter);
-  }
+### Explanation of the Structure
+
+#### 1. **`TFHE.sol`**
+
+This library provides access to Zama's **Fully Homomorphic Encryption** (FHE) tools. It allows developers to work with encrypted types (e.g., `euint64`, `ebool`) and perform secure, encrypted operations like addition, comparison, and logical conditions.
+
+#### 2. **`SepoliaZamaFHEVMConfig`**
+
+This configuration file connects your smart contract to the Sepolia testnet’s **fhEVM coprocessor**, enabling real encrypted computations and decryption operations. It simplifies deployment by pre-setting necessary contract addresses for fhEVM components.
+
+### Compiling Your Contract
+
+Remix should automatically import all required libraries. To verify:
+
+1. Go to the **Solidity Compiler** tab in Remix.
+2. Select your contract file and click **Compile**.
+
+If it compiles successfully, you're ready to proceed!
+
+## Adding Functionality
+
+Next, let’s enhance the contract to implement an encrypted ERC20-like token with minting capabilities:
+
+```solidity
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+pragma solidity ^0.8.24;
+
+import "fhevm/lib/TFHE.sol";
+import "fhevm/config/ZamaFHEVMConfig.sol";
+import "fhevm-contracts/contracts/token/ERC20/extensions/ConfidentialERC20Mintable.sol";
+
+/// @notice This contract implements an encrypted ERC20-like token with confidential balances using Zama's FHE library.
+/// @dev It supports typical ERC20 functionality such as transferring tokens, minting, and setting allowances,
+/// @dev but uses encrypted data types.
+contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20Mintable {
+  /// @notice Constructor to initialize the token's name and symbol, and set up the owner
+  /// @param name_ The name of the token
+  /// @param symbol_ The symbol of the token
+  constructor(string memory name_, string memory symbol_) ConfidentialERC20Mintable(name_, symbol_, msg.sender) {}
 }
 ```
 
-#### How it works
+### What is `ConfidentialERC20Mintable`?
 
-1.  **Configuring fhEVM**:\
-    The contract inherits from `SepoliaZamaFHEVMConfig` which provides the necessary configuration for local development and testing. This configuration includes the addresses of the TFHE library and Gateway contracts.
+The `ConfidentialERC20Mintable` contract is part of the **`fhevm-contracts`** library. It builds upon the ERC20 standard by adding encrypted balances and minting capabilities.
 
-    When deploying to different networks, you can use the appropriate configuration:
+#### Key Features:
 
-    ```solidity
-    // For Sepolia testnet
-    import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
-    contract MyContract is SepoliaZamaFHEVMConfig { ... }
-    ```
+- **Confidential Balances**: User balances are encrypted, preserving privacy on-chain.
+- **Minting**: The contract owner can mint new tokens securely.
 
-    The configuration handles setting up:
+#### Example Functions:
 
-    - TFHE library address for encrypted operations
-    - Network-specific parameters
+- **Mint**: `mint(address to, uint64 amount)` allows the owner to create new tokens.
+- **Transfer**: Securely transfers tokens between addresses while maintaining confidentiality.
 
-2.  **Initializing encrypted variables**:
-    - The `counter` variable is set to an encrypted `0` using `TFHE.asEuint8(0)`.
-    - Permissions are granted to the contract itself for the `counter` ciphertext using `TFHE.allowThis(counter)`.
-    - A constant `CONST_ONE` is initialized as an encrypted value to represent the number `1`.
-3.  **Encrypted operations**:\
-    The `increment()` function adds the encrypted constant `CONST_ONE` to the `counter` using `TFHE.add`.
+#### Installing `fhevm-contracts`
 
-### Next steps:
+Although Remix automatically imports dependencies, you can install the `fhevm-contracts` library manually for local development:
 
-There are two notable issues with this contract:
+```bash
+# Using npm
+npm install fhevm-contracts
 
-1. **Counter value visibility**:\
-   Since the counter is incremented by a fixed value, observers could deduce its value by analyzing blockchain events. To address this, see the documentation on:
-   - [encryption and secure inputs](../fundamentals/inputs.md)
-2. **Access control for `counter`**:\
-   The counter is encrypted, but no access is granted to decrypt or view its value. Without proper ACL permissions, the counter remains inaccessible to users. To resolve this, refer to:
-   - [decryption](../fundamentals/decryption/decrypt.md)
-   - [re-encryption](../fundamentals/decryption/reencryption.md)
+# Using Yarn
+yarn add fhevm-contracts
+
+# Using pnpm
+pnpm add fhevm-contracts
+```
+
+Although Remix does this automatically.
+
+Some of the examples related to ConfidentialERC20 are:
+
+- [ConfidentialERC20](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/ConfidentialERC20.sol): Standard confidential ERC20 with encryption.
+- [ConfidentialERC20Wrapped](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/ConfidentialERC20Wrapped.sol): Wrapped ERC20 with encryption.
+- [ConfidentialWETH](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/ConfidentialWETH.sol): Confidential wrapped WETH with encryption.
+- [ConfidentialERC20Mintable](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/extensions/ConfidentialERC20Mintable.sol): ERC20 with minting capabilities.
+- [ConfidentialERC20WithErrors](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/extensions/ConfidentialERC20WithErrors.sol): ERC20 with integrated error handling.
+- [ConfidentialERC20WithErrorsMintable](https://github.com/zama-ai/fhevm-contracts/blob/main/contracts/token/ERC20/extensions/ConfidentialERC20WithErrorsMintable.sol): ERC20 with both minting and error handling.
+
+For this example we took `ConfidentialERC20Mintable`, which allows you to use all of the main functionalities of ERC20 + mint the tokens. Let's learn more about ConfidentialERC20 in the next page.
+
+#### Compile and deploy the code
+
+-> go to the Solidity compiler click compile
+-> Go to Deploy and run transactions, choose injected provider - Metamask
+-> Right of the deploy button you will arrow, expand it and populate the NAME* and SYMBOL*
+-> Click transact
+-> Your wallet should pop up make sure you have sufficient Sepolia to deploy and interact with your smart contract
