@@ -26,7 +26,7 @@
 
 ## 🌍 README Translations
 
-[Română](i18n/readme/README_RO.md)
+[Română](README_RO.md)
 
 ## About
 
