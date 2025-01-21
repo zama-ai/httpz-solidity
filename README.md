@@ -277,7 +277,7 @@ This software is distributed under the **BSD-3-Clause-Clear** license. Read [thi
 
 > Zama’s libraries are free to use under the BSD 3-Clause Clear license only for development, research, prototyping, and experimentation purposes. However, for any commercial use of Zama's open source code, companies must purchase Zama’s commercial patent license.
 >
-> Everything we do is open source and we are very transparent on what it means for our users, you can read more about how we monetize our open source products at Zama in [this blog post](https://www.zama.ai/post/open-source).
+> Everything we do is open source and we are very transparent on what it means for our users.
 
 **What do I need to do if I want to use Zama’s technology for commercial purposes?**
 
