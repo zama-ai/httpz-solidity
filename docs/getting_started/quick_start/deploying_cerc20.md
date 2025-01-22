@@ -11,9 +11,11 @@ In this tutorial, you'll learn how to deploy a confidential token contract using
 
    ![File Creation](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/506d526f-7e88-4aae-aaa5-92176b03ccf8/stack_animation.webp)
 
-## 2. **Basic contract Structure**
+## 2. **Basic contract structure**
 
 The foundational structure includes importing Zama's libraries and connecting to Sepolia's FHEVM configuration.
+
+Copy the following code to Remix:
 
 ```solidity
 // SPDX-License-Identifier: BSD-3-Clause-Clear
@@ -51,6 +53,8 @@ Links the contract to Sepolia's FHEVM coprocessor for real-time encrypted operat
 ## 4. **Enhancing functionality**
 
 We’ll now add minting capabilities to create an encrypted ERC-20 token.
+
+Copy the following code to Remix:
 
 ```solidity
 // SPDX-License-Identifier: BSD-3-Clause-Clear
