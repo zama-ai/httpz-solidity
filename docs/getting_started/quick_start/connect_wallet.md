@@ -7,9 +7,7 @@ Learn how to connect your wallet and the **Zama plugin** in Remix IDE to interac
 Before starting, ensure you have the following:
 
 - ✅ **MetaMask** or another Ethereum-compatible wallet installed.
-- ✅ **Zama Plugin** installed in Remix IDE ([See Setting Up Remix](remix.md)).
-- ✅ **Sepolia Testnet** added to your wallet.
-- ✅ **Sepolia ETH** in your wallet to cover transaction fees (use a faucet if needed).
+- ✅ **Zama Plugin** installed in Remix IDE ([See Setting Up Remix](remix.md))
 
 ## Connecting your wallet to Remix
 
@@ -57,7 +55,8 @@ If Sepolia isn’t pre-configured in your wallet, add it manually:
 
 ## Verifying Sepolia ETH balance
 
-1. Open **MetaMask** and ensure you have Sepolia ETH available.  
+1. Open **MetaMask** and ensure you have Sepolia ETH available.
+
    ![Check Sepolia ETH](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/2cae3f4e-370a-4be0-a071-24b01745bcfc/stack_animation.webp)
 
 2. If you don’t have enough ETH, use a Sepolia faucet to request free test ETH:
