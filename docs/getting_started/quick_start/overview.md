@@ -1,8 +1,8 @@
-# Quick Start: Build Your First FHE Smart Contract
+# Quick start tutorial: Build your first FHE smart contract
 
 Welcome to the world of **Fully Homomorphic Encryption (FHE)** and privacy-preserving smart contracts! This tutorial will guide you step-by-step through deploying your first **confidential smart contract** using Zama’s groundbreaking FHE technology.
 
-### What you'll zchieve
+### What you'll achieve
 
 In just **~20 minutes**, you’ll:
 
