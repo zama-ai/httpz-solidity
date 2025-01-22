@@ -31,6 +31,8 @@ After deploying your first **fhEVM** contract using **Remix**, follow these step
 
 ## 5. Check your balance
 
+Here your balance is encrypted you will have to preform re-encryption.
+
 1. Use the **balanceOf** function to check your account balance.
 2. Perform **re-encryption** to decrypt the ciphertext and view the balance in plaintext.
 
@@ -38,12 +40,14 @@ After deploying your first **fhEVM** contract using **Remix**, follow these step
 
 ## 6. Transfer tokens
 
+When transfering the tokens
+
 1. Use the **transfer** function to send tokens to another account.
 2. Specify the recipient’s address and the amount (e.g., `1000`).
 
    ![Transfer Tokens](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/4f6320c3-0649-4402-ac47-68f9e8800bf1/stack_animation.webp)
 
-## 7. Provide encrypted input proof
+**Provide encrypted input proof**
 
 1. Under **inputProof**, check the **Input** box.
 2. Set the following parameters:
@@ -53,7 +57,7 @@ After deploying your first **fhEVM** contract using **Remix**, follow these step
 
    ![Provide Input Proof](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/de6141a7-4e85-4bb0-a5fd-9cc0e44807c1/stack_animation.webp)
 
-## 8. Verify Updated Balance
+## 7. Verify Updated Balance
 
 1. Use the **balanceOf** function again to check your updated balance.
 2. Perform **re-encryption** to confirm the changes (e.g., `9000` tokens remaining).

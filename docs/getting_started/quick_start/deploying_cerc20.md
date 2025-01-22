@@ -72,6 +72,26 @@ contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20Mintabl
 
 ![Mintable Token Implementation](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/1aba4b08-182d-40df-b2da-dfa9a51ffd29/ascreenshot.jpeg)
 
+## What is `ConfidentialERC20Mintable`?
+
+The **`ConfidentialERC20Mintable`** contract, part of the **`fhevm-contracts`** library, extends the ConfidentialERC20 by adding **minting capabilities**.
+
+### **Key Features**
+
+- **All ConfidentialERC20 functions**: Since the `ConfidentialERC20Mintable` is extending the `ConfidentialERC20` contract, it has all the functionalities that the `ConfidentialERC20` contract has.
+- **Minting**: The contract owner can securely create new tokens and distribute them.
+
+### What are `fhevm-contracts`?
+
+The `fhevm-contracts` library is a collection of **privacy-preserving smart contracts** built specifically for the **fhEVM** (Fully Homomorphic Encryption Virtual Machine). It provides:
+
+- **Ready-to-use confidential contracts**: Pre-built implementations of common token standards with FHE capabilities
+- **Base contracts**: Foundational building blocks for creating custom confidential smart contracts
+- **Extensions**: Additional features and utilities that can be added to base contracts
+- **Testing utilities**: Tools to help test FHE-enabled smart contracts
+
+The library serves as both a reference implementation and a toolkit for developers building privacy-focused applications on the fhEVM. It demonstrates best practices for implementing confidential operations while maintaining compatibility with existing Ethereum standards.
+
 ## 5. **Deployment**
 
 ### **Setup deployment**

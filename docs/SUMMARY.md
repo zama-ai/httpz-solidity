@@ -11,16 +11,15 @@
   - [2. Connect your wallet to Remix](getting_started/quick_start/connect_wallet.md)
   - [3. Deploying ConfidentialERC20](getting_started/quick_start/deploying_cerc20.md)
   - [4. Interacting with the contract](getting_started/quick_start/interact.md)
-  - [5. (optional) Understanding ConfidentialERC20](getting_started/quick_start/understandingERC20.md)
 
 ## Tutorials
 
+- [Tutorial: Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
 - [Tutorial: Learn fhEVM fundamentals using Hardhat](tutorials/learn_fundamentals/overview.md)
-  - [1. Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
-  - [2. Configure the contract](tutorials/learn_fundamentals/configure.md)
-  - [3. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
-  - [4. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
-  - [5. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
+  - [1. Configure the contract](tutorials/learn_fundamentals/configure.md)
+  - [2. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
+  - [3. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
+  - [4. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
 - [See all tutorials](tutorials/see-all-tutorials.md)
 
 ## Smart contract

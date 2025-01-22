@@ -4,6 +4,8 @@ Welcome to the world of **Fully Homomorphic Encryption (FHE)** and privacy-prese
 
 ## What you'll build
 
+You will build a confidentialerc20mintable <- improve this
+
 ### Encrypted balances
 
 ConfidentialERC20 revolutionizes the way balances are stored by encrypting them using FHE.
@@ -24,15 +26,6 @@ ConfidentialERC20 supports all the standard ERC20 functions, adapted for encrypt
 
 To dive deeper into the workings of ConfidentialERC20, check out the [Zama blog post](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption).
 
-## What is `ConfidentialERC20Mintable`?
-
-The **`ConfidentialERC20Mintable`** contract, part of the **`fhevm-contracts`** library, extends the ConfidentialERC20 by adding **minting capabilities**.
-
-### **Key Features**
-
-- **All ConfidentialERC20 functions**: Since the `ConfidentialERC20Mintable` is extending the `ConfidentialERC20` contract, it has all the functionalities that the `ConfidentialERC20` contract has.
-- **Minting**: The contract owner can securely create new tokens and distribute them.
-
 ## What you'll achieve
 
 In just **~20 minutes**, you’ll:
@@ -41,7 +34,6 @@ In just **~20 minutes**, you’ll:
 2. [**Connect Your Wallet**](getting_started/quick_start/connect_wallet.md) – Prepare for deployment by linking your crypto wallet.
 3. [**Deploy ConfidentialERC20**](getting_started/quick_start/first_smart_contract.md) – Launch your first FHE-enabled token on the blockchain.
 4. [**Interact with Your Contract**](getting_started/quick_start/deploy.md) – Use your deployed contract to mint, transfer, and manage confidential tokens.
-5. _(Optional)_ [**Understand ConfidentialERC20**](getting_started/quick_start/understandingERC20.md) – Dive deeper into the contract's privacy-focused functionality.
 
 ### Why FHE smart contracts?
 
