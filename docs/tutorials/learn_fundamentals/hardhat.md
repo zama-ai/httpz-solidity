@@ -2,8 +2,6 @@
 
 This guide will help you set up a development environment for building privacy-preserving smart contracts using the Fully Homomorphic Encryption Virtual Machine (FHEVM) with Hardhat.
 
-<iframe src="https://scribehow.com/embed/Get_started_with_Hardhat__1fcheHVgTIuGETSdEBRmkw?skipIntro=true&removeLogo=true" width="100%" height="640" allowfullscreen frameborder="0"></iframe>
-
 ## Prerequisites
 
 - Node.js (v20 or later)

@@ -5,7 +5,7 @@
 
 ## Getting Started
 
-- [Overview](getting_started/key_concepts.md)
+- [Overview](getting_started/overview.md)
 - [Quick start](getting_started/quick_start/overview.md)
   - [1. Setting up Remix](getting_started/quick_start/remix.md)
   - [2. Connect your wallet to Remix](getting_started/quick_start/connect_wallet.md)
