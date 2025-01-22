@@ -6,31 +6,31 @@
 ## Getting Started
 
 - [Overview](getting_started/key_concepts.md)
-- [Quick start](getting_started/ethereum.md)
+- [Quick start](getting_started/quick_start/overview.md)
   - [1. Setting up Remix](getting_started/quick_start/remix.md)
-  - [2. Connect to your wallet](getting_started/quick_start/connect_wallet.md)
-  - [3. Deploying ConfidentialERC20](getting_started/quick_start/first_smart_contract.md)
-  - [4. Interacting with the contract](getting_started/quick_start/deploy.md)
-  - [5. (optional) Creating a frontend](getting_started/quick_start/frontend.md)
-  - [6. (optional) Understanding ConfidentialERC20](getting_started/quick_start/understandingERC20.md)
+  - [2. Connect your wallet to Remix](getting_started/quick_start/connect_wallet.md)
+  - [3. Deploying ConfidentialERC20](getting_started/quick_start/deploying_cerc20.md)
+  - [4. Interacting with the contract](getting_started/quick_start/interact.md)
+  - [5. (optional) Understanding ConfidentialERC20](getting_started/quick_start/understandingERC20.md)
 
 ## Tutorials
 
-- [Build with ConfidentialERC20 tutorial](tutorials/confidentialERC20.md)
+- [Tutorial: Learn fhEVM fundamentals using Hardhat](tutorials/learn_fundamentals/overview.md)
+  - [1. Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
+  - [2. Configure the contract](tutorials/learn_fundamentals/configure.md)
+  - [3. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
+  - [4. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
+  - [5. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
 - [See all tutorials](tutorials/see-all-tutorials.md)
 
 ## Smart contract
 
-- [Writing smart contract](getting_started/write_contract/README.md)
-  - [Using Hardhat](getting_started/write_contract/hardhat.md)
-  - [Using Foundry](getting_started/write_contract/foundry.md)
 - [Key features](smart_contracts/key_concepts.md)
 - [Configuration](smart_contracts/configure.md)
 - [FhEVM contracts](smart_contracts/contracts.md)
-- [First smart contract](smart_contracts/first_smart_contract.md)
 - [Supported types](smart_contracts/types.md)
 - [Operations on encrypted types](smart_contracts/operations.md)
-- [Access Control List](smart_contracts/acl/README.md)
+- [Access Controxl List](smart_contracts/acl/README.md)
   - [ACL examples](smart_contracts/acl/acl_examples.md)
 - [Encrypted Inputs](smart_contracts/inputs.md)
 - [Decryption](smart_contracts/decryption/README.md)
@@ -44,15 +44,16 @@
 - [Error handling](smart_contracts/error_handling.md)
 - [Gas estimation](smart_contracts/gas.md)
 - [Debug decrypt](smart_contracts/debug_decrypt.md)
+- [Using Foundry](smart_contracts/write_contract/foundry.md)
 
 ## Frontend
 
+- [Setup](frontend/setup.md)
+- [Build a web application](frontend/webapp.md)
 - [Using React.js](https://github.com/zama-ai/fhevm-react-template)
 - [Using Next.js](https://github.com/zama-ai/fhevm-next-template)
 - [Using Vue.js](https://github.com/zama-ai/fhevm-vue-template)
-- [Using Typescript](getting_started/write_frontend/typescript.md)
-- [Build a web application](frontend/webapp.md)
-- [Build with Node](frontend/node.md)
+- [Using Node or Typescript](frontend/node.md)
 - [Using the CLI](frontend/cli.md)
 - [Common webpack errors](frontend/webpack.md)
 

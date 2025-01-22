@@ -12,6 +12,16 @@ layout:
     visible: false
 ---
 
+# 1. Configure the contract
+
+Choose and inherit the correct configuration based on the environment:
+
+- **Mock network**: For local testing and development.
+- **Testnets (e.g., Sepolia)**: For deploying to public test networks.
+- **Mainnet**: When deploying to production.
+
+Ensure configuration contracts (e.g., `SepoliaZamaFHEVMConfig`, `SepoliaZamaFHEVMConfig`) are inherited correctly to initialize encryption parameters, cryptographic keys, and Gateway addresses. See [configuration](../smart_contracts/configure.md) for more details.
+
 # Create a smart contract
 
 This document introduces the fundamentals of writing confidential smart contracts using the fhEVM. You'll learn how to create contracts that can perform computations on encrypted data while maintaining data privacy.
@@ -163,11 +173,3 @@ The test file demonstrates key concepts for testing fhEVM smart contracts:
 - Use descriptive test names that explain the expected behavior
 - Handle asynchronous operations properly with async/await
 - Set up proper encryption instances for testing encrypted values
-
-## **Next steps**
-
-Congratulations! You’ve configured and written your first confidential smart contract. Here are some ideas to expand your knowledge:
-
-- **Explore advanced configurations**: Customize the `FHEVMConfig` to suit specific encryption requirements.
-- **Add functionalities**: Extend the contract by adding decrement functionality or resetting the counter.
-- **Integrate frontend**: Learn how to decrypt and display encrypted data in a dApp using the `fhevmjs` library.

@@ -24,26 +24,25 @@ fhEVM enables a wide range of privacy-preserving applications across different d
    - Private token balances and transfers
    - Confidential lending and borrowing
    - Dark pools and private order books
-   - Example: [Confidential ERC20 tutorial](../tutorials/confidentialERC20.md)
+   - Example: [Confidential ERC20 tutorial](../getting_started/quick_start/overview.md)
 
 2. **Gaming & NFTs**
 
    - Hidden game states and player moves
    - Private NFT ownership and metadata
    - Sealed bid auctions
-   - Example: [Rock Paper Scissors tutorial](https://github.com/zama-ai/fhevm-tutorial-rock-paper-scissors)
+   - Example: [FHE Wordle](https://github.com/zama-ai/dapps/tree/main/hardhat/contracts/fheWordle)
 
 3. **Identity & Access Control**
 
    - Zero-knowledge authentication
    - Private membership verification
    - Confidential access management
-   - Example: [Private voting tutorial](https://github.com/zama-ai/fhevm-tutorial-private-voting)
+   - Example: [Decentralized identity](https://github.com/zama-ai/dapps/tree/main/hardhat/contracts/decIdentity)
 
 4. **Business Applications**
    - Supply chain privacy
    - Confidential business logic
    - Private data marketplaces
-   - Example: [Sealed bid auction tutorial](https://github.com/zama-ai/fhevm-tutorial-sealed-bid-auction)
 
 These applications demonstrate how fhEVM enables previously impossible use cases by combining blockchain transparency with data privacy.
