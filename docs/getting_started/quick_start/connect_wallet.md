@@ -62,7 +62,3 @@ If Sepolia isn’t pre-configured in your wallet, add it manually:
 2. If you don’t have enough ETH, use a Sepolia faucet to request free test ETH:
    - [Alchemy Faucet](https://www.alchemy.com/faucets/ethereum-sepolia)
    - [QuickNode Faucet](https://faucet.quicknode.com/ethereum/sepolia)
-
----
-
-With your wallet connected and Sepolia configured, you're ready to deploy and interact with confidential smart contracts! 🎉

@@ -54,7 +54,7 @@ Optimize your contracts with these guidelines:
 - Prefer scalar operands for better performance
 - Handle overflows using `TFHE.select`
 - Implement proper access control with `TFHE.allow`
-- Follow secure reencryption patterns
+- Follow secure encryption patterns
 
 ### 6. Explore resources
 

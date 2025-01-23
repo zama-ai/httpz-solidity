@@ -67,7 +67,7 @@
 
 - [Smart contracts - fhEVM API](references/functions.md)
 - [Frontend - fhevmjs lib](references/fhevmjs.md)
-- [Repositories](getting_started/repositories.md)
+- [Repositories](references/repositories.md)
 
 ## Developer
 

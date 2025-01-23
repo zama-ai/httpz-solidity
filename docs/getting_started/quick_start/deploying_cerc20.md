@@ -40,19 +40,29 @@ Provides Zama’s encrypted data types like `euint64` and secure operations such
 
 #### **`SepoliaZamaFHEVMConfig`**
 
-Links the contract to Sepolia's FHEVM coprocessor for real-time encrypted operations.
+Links and configures the contract to Sepolia's FHEVM coprocessor for real-time encrypted operations.
 
 ## 3. **Compiling the contract**
 
-1. Go to **Solidity Compiler** in Remix.
-2. Select `MyConfidentialERC20.sol`.
+1. Select `MyConfidentialERC20.sol`.
+2. Go to **Solidity Compiler** in Remix.
 3. Click **Compile** and ensure there are no errors.
 
    ![Compile Contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/a4776697-ea82-4094-8e36-95f377b271d3/stack_animation.webp)
 
 ## 4. **Enhancing functionality**
 
-We’ll now add minting capabilities to create an encrypted ERC-20 token.
+Next, we'll enhance our contract by importing the `fhevm-contracts` library. This library provides the `ConfidentialERC20Mintable` contract, which we'll use as a base to create our own confidential token with minting capabilities.
+
+### What is `ConfidentialERC20Mintable`?
+
+The `ConfidentialERC20Mintable` contract extends `ConfidentialERC20` with minting capabilities, providing:
+
+- Private token transfers and encrypted balances
+- Minting functionality for authorized addresses
+- Full ERC20 compatibility
+
+It inherits all base `ConfidentialERC20` features while adding secure token creation and distribution capabilities.
 
 Copy the following code to Remix:
 
@@ -71,15 +81,6 @@ contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20Mintabl
 ```
 
 ![Mintable Token Implementation](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/1aba4b08-182d-40df-b2da-dfa9a51ffd29/ascreenshot.jpeg)
-
-## What is `ConfidentialERC20Mintable`?
-
-The **`ConfidentialERC20Mintable`** contract, part of the **`fhevm-contracts`** library, extends the ConfidentialERC20 by adding **minting capabilities**.
-
-### **Key Features**
-
-- **All ConfidentialERC20 functions**: Since the `ConfidentialERC20Mintable` is extending the `ConfidentialERC20` contract, it has all the functionalities that the `ConfidentialERC20` contract has.
-- **Minting**: The contract owner can securely create new tokens and distribute them.
 
 ### What are `fhevm-contracts`?
 
@@ -124,4 +125,4 @@ The library serves as both a reference implementation and a toolkit for develope
 
 ---
 
-By following these steps, you’ve successfully created and deployed an encrypted ERC-20 token using Zama's fhEVM! 🎉
+By following these steps, you’ve successfully created and deployed an confidential ERC-20 token using Zama's fhEVM! 🎉

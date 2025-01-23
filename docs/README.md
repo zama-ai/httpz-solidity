@@ -38,7 +38,7 @@ Access to additional resources and join the Zama community.
 Refer to the API and access additional resources for in-depth explanations while working with fhEVM.
 
 - [API function specifications](references/functions.md)
-- [Repositories](getting_started/repositories.md)
+- [Repositories](references/repositories.md)
 
 ### Supports
 

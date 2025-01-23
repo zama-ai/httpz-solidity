@@ -4,11 +4,11 @@ Welcome to the world of **Fully Homomorphic Encryption (FHE)** and privacy-prese
 
 ## What you'll build
 
-You will build a confidentialerc20mintable <- improve this
+You will build a `ConfidentialERC20Mintable` token - a privacy-preserving ERC20 implementation that uses FHE to keep balances and transactions confidential. This token contract allows minting new tokens and includes all standard confidential ERC20 functionality while maintaining complete privacy of user data.
 
 ### Encrypted balances
 
-ConfidentialERC20 revolutionizes the way balances are stored by encrypting them using FHE.
+The `ConfidentialERC20Mintable` token extends the standard `ConfidentialERC20` contract by adding secure minting capabilities. The base `ConfidentialERC20` contract revolutionizes token privacy by leveraging Fully Homomorphic Encryption (FHE) to store all balances in an encrypted format. This means that while transactions and balances are recorded on the public blockchain, their actual values remain completely confidential and can only be accessed by authorized parties.
 
 - **Enhanced Privacy**: Balances are stored as encrypted values (`euint64`), ensuring no one can view account balances by inspecting the blockchain.
 - **Exclusive Access**: Only the account owner can decrypt and view their own balance.
@@ -22,7 +22,7 @@ ConfidentialERC20 supports all the standard ERC20 functions, adapted for encrypt
 - `approve`: Approves encrypted amounts for spending.
 - `transferFrom`: Transfers tokens on behalf of another address.
 - `balanceOf`: Returns the encrypted balance of an account.
-- `totalSupply`: Returns the encrypted total token supply.
+- `totalSupply`: Returns the total token supply.
 
 To dive deeper into the workings of ConfidentialERC20, check out the [Zama blog post](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption).
 
@@ -34,10 +34,6 @@ In just **~20 minutes**, you’ll:
 2. [**Connect Your Wallet**](./connect_wallet.md) – Prepare for deployment by linking your crypto wallet.
 3. [**Deploy ConfidentialERC20**](./deploying_cerc20.md) – Launch your first FHE-enabled token on the blockchain.
 4. [**Interact with Your Contract**](./interact.md) – Use your deployed contract to mint, transfer, and manage confidential tokens.
-
-### Why FHE smart contracts?
-
-**FHE** enables computations on encrypted data without exposing sensitive information. With Zama’s **fhEVM**, developers can create privacy-first decentralized applications while preserving the integrity and confidentiality of data.
 
 ---
 

@@ -6,7 +6,7 @@ After deploying your first **fhEVM** contract using **Remix**, follow these step
 
 1. Copy the deployed contract address from Remix.
 2. Open the **Zama Plugin** in Remix.
-3. Paste the contract address into the **"At Address"** field under the **Deploy** section and click **At Address**.
+3. Paste the contract address into the **"At address"** field under the **Deploy** section and click **At address**.
 
    ![Paste Contract Address](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/3adc23b0-4914-40fd-97b7-2f251b905e8b/stack_animation.webp)
 

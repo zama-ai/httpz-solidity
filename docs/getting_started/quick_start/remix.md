@@ -41,4 +41,4 @@ Once finished the installation details should look something like this:
 
 ## Deploy and Use Contracts
 
-After configuring the plugin, you can compile, deploy, and interact with contracts directly via the Zama plugin interface.
+After configuring the plugin, you can interact with `fhEVM` encrypted contracts directly via the Zama plugin interface.
