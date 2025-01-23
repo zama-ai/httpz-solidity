@@ -15,7 +15,7 @@
 ## Tutorials
 
 - [Tutorial: Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
-- [Tutorial: Learn fhEVM fundamentals using Hardhat](tutorials/learn_fundamentals/overview.md)
+- [Tutorial: Learn fhEVM fundamentals with Counter contract](tutorials/learn_fundamentals/overview.md)
   - [1. Configure the contract](tutorials/learn_fundamentals/configure.md)
   - [2. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
   - [3. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)

@@ -4,63 +4,62 @@ Throughout this tutorial you will build upon a basic Counter example. These exam
 
 The primary example, `ConfidentialCounter.sol`, is enhanced in stages to demonstrate a variety of features and best practices for encrypted computations.
 
-- [1. Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
-- [2. Configure the contract](tutorials/learn_fundamentals/configure.md)
-- [3. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
-- [4. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
-- [5. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
+- [1. Configure the contract](tutorials/learn_fundamentals/configure.md)
+- [2. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
+- [3. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
+- [4. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
 
 Each iteration of the counter will build upon previous concepts while introducing new functionality, helping you understand how to develop robust confidential smart contracts.
 
 ## Step-by-step workflow
 
-### 1. (Optional) Learn the overall architecture
+### 1. Understand the fundamentals
 
-Before diving into development, we recommend understanding the overall architecture of fhEVM:
+Before starting development, familiarize yourself with these key concepts:
 
-- [**Architecture overview**](../../smart_contracts/architecture_overview.md): Learn how fhEVM enables confidential smart contracts
-- [**Encryption & computation**](../../smart_contracts/d_re_ecrypt_compute.md): Understand how data is encrypted, decrypted and computed
-- [**Access control**](../../smart_contracts/acl): Learn about managing access to encrypted data
+- [**Architecture Overview**](../../smart_contracts/architecture_overview.md) - Learn how fhEVM enables confidential smart contracts
+- [**Encryption & Computation**](../../smart_contracts/d_re_ecrypt_compute.md) - Master the basics of encrypted data handling
+- [**Access Control**](../../smart_contracts/acl) - Understand secure data access management
 
-This knowledge will help you make better design decisions when building your confidential smart contracts.
+### 2. Set up your development environment
 
-### 2. Choose your development environment
+Choose your preferred development tool:
 
-- [`fhevm-hardhat-template` repository](https://github.com/zama-ai/fhevm-hardhat-template)
-- [remix](../../getting_started/quick_start/remix.md)
+- [**Hardhat Template**](https://github.com/zama-ai/fhevm-hardhat-template) - Recommended for full development workflow
+- [**Remix**](../../getting_started/quick_start/remix.md) - Great for quick prototyping and learning
 
-### 3. Configure the contract
+### 3. Configure your contract
 
-Choose and inherit the correct configuration based on the environment:
+Select the appropriate configuration based on your deployment target:
 
-- **Mock network**: For local testing and development - does not need it's own configuration
-- **Testnets (e.g., Sepolia)**: For deploying to public test networks (e.g., `SepoliaZamaFHEVMConfig`, `SepoliaZamaFHEVMConfig`)
-- **Mainnet**: When deploying to production (coming soon)
+| Environment      | Configuration            |
+| ---------------- | ------------------------ |
+| Local Testing    | No special config needed |
+| Sepolia Testnet  | `SepoliaZamaFHEVMConfig` |
+| Ethereum Mainnet | Coming soon              |
 
-### 4. Add encryption
+### 4. Implement core features
 
-Learn how to implement core encryption operations:
+Master these essential encrypted operations:
 
-- [Encrypting inputs](../../smart_contracts/inputs.md) - Create and validate encrypted inputs
-- [Decrypting values](../../smart_contracts/decryption/decrypt.md) - Securely decrypt data for authorized users
-- [Reencryption](../../smart_contracts/decryption/reencryption.md) - Share encrypted data between parties
+1. [**Encrypted Inputs**](../../smart_contracts/inputs.md) - Handle encrypted data
+2. [**Decryption**](../../smart_contracts/decryption/decrypt.md) - Reveal data securely
+3. [**Reencryption**](../../smart_contracts/decryption/reencryption.md) - Share encrypted data
 
-### 5. Follow best practices
+### 5. Follow Best Practices
 
-Throughout the documentation, you'll find sections titled **best practices**. Quick overview:
+Optimize your contracts with these guidelines:
 
-- **Optimized data types:** Use appropriately sized encrypted types (`euint8`, `euint16`, etc.) to minimize gas costs.
-- **Scalar operands:** Whenever possible, use scalar operands in operations to reduce computation and gas usage.
-- **Overflow handling:** Manage arithmetic overflows in encrypted operations using conditional logic (`TFHE.select`).
-- **Secure access control:** Use `TFHE.allow` and `TFHE.isSenderAllowed` to implement robust ACL (Access Control List) mechanisms for encrypted values.
-- **Reencryption patterns:** Follow the recommended approaches for reencryption to share or repurpose encrypted data securely.
+- Use appropriate encrypted types (`euint8`, `euint16`, etc.) to minimize gas
+- Prefer scalar operands for better performance
+- Handle overflows using `TFHE.select`
+- Implement proper access control with `TFHE.allow`
+- Follow secure reencryption patterns
 
-### 7. Leverage extendable contract templates
+### 6. Explore resources
 
-Use the [`fhevm-contracts repository`](https://github.com/zama-ai/fhevm-contracts) for pre-built examples:
+Take advantage of these resources:
 
-- **Why templates?**: They demonstrate common patterns and best practices for encrypted operations, such as governance, token standards, and utility contracts.
-
-For more details, explore the [fhevm-contracts documentation](../../smart_contracts/contracts.md).
-
-### 8.
+- [**fhevm-contracts**](https://github.com/zama-ai/fhevm-contracts) - Pre-built contract templates that are extensible
+- [**dapps repository**](https://github.com/zama-ai/dapps) - Complete dApp examples
+- [**All Tutorials**](../see-all-tutorials.md) - Additional learning materials

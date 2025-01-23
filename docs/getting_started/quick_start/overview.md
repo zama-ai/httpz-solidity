@@ -30,10 +30,10 @@ To dive deeper into the workings of ConfidentialERC20, check out the [Zama blog 
 
 In just **~20 minutes**, you’ll:
 
-1. [**Set up Remix**](getting_started/quick_start/remix.md) – Configure your development environment to support FHE contracts.
-2. [**Connect Your Wallet**](getting_started/quick_start/connect_wallet.md) – Prepare for deployment by linking your crypto wallet.
-3. [**Deploy ConfidentialERC20**](getting_started/quick_start/first_smart_contract.md) – Launch your first FHE-enabled token on the blockchain.
-4. [**Interact with Your Contract**](getting_started/quick_start/deploy.md) – Use your deployed contract to mint, transfer, and manage confidential tokens.
+1. [**Set up Remix**](./remix.md) – Configure your development environment to support FHE contracts.
+2. [**Connect Your Wallet**](./connect_wallet.md) – Prepare for deployment by linking your crypto wallet.
+3. [**Deploy ConfidentialERC20**](./deploying_cerc20.md) – Launch your first FHE-enabled token on the blockchain.
+4. [**Interact with Your Contract**](./interact.md) – Use your deployed contract to mint, transfer, and manage confidential tokens.
 
 ### Why FHE smart contracts?
 

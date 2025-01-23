@@ -1,6 +1,6 @@
 # Decrypt for everyone
 
-Remember our [**Encrypted Counter**](../first_smart_contract.md) contract from before? Here’s an improved version of it, upgraded to support decryption:
+Here’s an improved version of our Counter contract, upgraded to support decryption:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -19,14 +19,6 @@ contract EncryptedCounter3 is SepoliaZamaFHEVMConfig, SepoliaZamaGatewayConfig, 
   /// @dev Decrypted state variable
   euint8 internal counter;
   uint8 public decryptedCounter;
-
-  constructor() {
-    Gateway.setGateway(Gateway.defaultGatewayAddress());
-
-    // Initialize counter with an encrypted zero value
-    counter = TFHE.asEuint8(0);
-    TFHE.allowThis(counter);
-  }
 
   function incrementBy(einput amount, bytes calldata inputProof) public {
     // Convert input to euint8 and add to counter

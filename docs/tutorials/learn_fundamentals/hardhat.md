@@ -1,41 +1,50 @@
-# 1. Setting up Hardhat
+# Step 1: Setting Up Hardhat
 
-This guide will help you set up a development environment for building privacy-preserving smart contracts using the Fully Homomorphic Encryption Virtual Machine (FHEVM) with Hardhat.
+This guide walks you through setting up a development environment for creating **privacy-preserving smart contracts** using the Fully Homomorphic Encryption Virtual Machine (**FHEVM**) with Hardhat.
+
+---
 
 ## Prerequisites
 
-- Node.js (v20 or later)
-- npm, yarn, or pnpm package manager
-- Git
+Before you begin, ensure you have the following installed on your system:
+
+- **Node.js** (v20 or later)
+- A package manager: `npm`, `yarn`, or `pnpm`
+- **Git**
+
+---
 
 ## Getting Started
 
-Learn how to write, test and deploy fhEVM specific smart contracts with Hardhat.
+Learn how to configure your Hardhat project for developing and deploying fhEVM-specific smart contracts.
 
-1\. Go to <https://github.com/zama-ai/fhevm-hardhat-template>
+### 1. Clone the Hardhat Template
 
-2\. Create a new repository from this template.
+1. Go to the [FHEVM Hardhat Template Repository](https://github.com/zama-ai/fhevm-hardhat-template).
+2. Create a new repository by clicking "Use this template."
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-17/49d22a7e-bba5-4dee-b7f9-60d675970fa3/stack_animation.webp)
+   ![Create Template](https://colony-recorder.s3.amazonaws.com/files/2025-01-17/49d22a7e-bba5-4dee-b7f9-60d675970fa3/stack_animation.webp)
 
-3\. [[git clone]] the repository you have created.
-
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-17/bbee17d3-aa84-45ce-92b7-4f9c44239711/stack_animation.webp)
-
-1. Clone the template repository:
+3. Clone the repository you created:
 
    ```bash
-   git clone https://github.com/zama-ai/fhevm-hardhat-template
-   cd fhevm-hardhat-template
+   git clone <your-new-repo-url>
+   cd <your-new-repo>
    ```
 
-2. Set up your environment:
+   ![Clone Repository](https://colony-recorder.s3.amazonaws.com/files/2025-01-17/bbee17d3-aa84-45ce-92b7-4f9c44239711/stack_animation.webp)
+
+---
+
+### 2. Configure Your Environment
+
+1. Copy the environment configuration template:
 
    ```bash
    cp .env.example .env
    ```
 
-3. Install dependencies using your preferred package manager:
+2. Install project dependencies:
 
    ```bash
    # Using npm
@@ -48,14 +57,16 @@ Learn how to write, test and deploy fhEVM specific smart contracts with Hardhat.
    pnpm install
    ```
 
-![](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-17/6504ddf1-f841-48b6-a84e-ddc6946c1ae2/File.jpeg?tl_px=0,41&br_px=3024,1964&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=59,408)
+---
 
 ## Development Workflow
 
-- Place your smart contracts in the `contracts/` directory
-- Place your tests under the `tests/` directory
+- Write your **smart contracts** in the `contracts/` directory.
+- Write your **tests** in the `tests/` directory.
 
-![](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-20/03790808-a211-4b7d-a87f-1734305177b5/ascreenshot.jpeg?tl_px=0,18&br_px=1719,979&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=157,277)
+  ![File Structure](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-20/03790808-a211-4b7d-a87f-1734305177b5/ascreenshot.jpeg)
+
+---
 
 ### Testing
 
@@ -65,30 +76,63 @@ Run the test suite using:
 pnpm test
 ```
 
-![](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-17/2128ed01-f2c9-4a85-9fd7-4af37686e2af/ascreenshot.jpeg?tl_px=0,41&br_px=3024,1964&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=629,553)
+---
 
-7\. When ready to **deploy** type `cast wallet new-mnemonic` to generate a new mnemonic seed and copy it to the `.env` file.
+## Deployment
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/93145686-0ef2-4636-a7ac-9bb25c8a43a6/stack_animation.webp)
+### 1. Prepare for Deployment
 
-8\. Add a `SEPOLIA_RPC_URL` from sites like Alchemy or Infura
+1. Generate a mnemonic seed for accounts:
 
-![](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-20/05128377-e779-44bc-b177-a2159e766cd8/ascreenshot.jpeg?tl_px=416,0&br_px=2136,961&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=909,169)
+   ```bash
+   cast wallet new-mnemonic
+   ```
 
-9\. Type `npx hardhat get-accounts --num-accounts 5` to see which accounts have been generated.
+   Copy the mnemonic and paste it into the `.env` file under `MNEMONIC`.
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/51576e45-72c9-492b-9c7e-0fb3c8393da4/stack_animation.webp)
+   ![Generate Mnemonic](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/93145686-0ef2-4636-a7ac-9bb25c8a43a6/stack_animation.webp)
 
-10\. Import the first 2 accounts (alice and bob) and fund them
+2. Add a **Sepolia RPC URL** from a node provider (e.g., Alchemy or Infura).
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/8009d260-6693-40f2-8117-0412fa7f6c39/stack_animation.webp)
+   Update your `.env` file with the RPC URL:
 
-11\. Deploy the contracts by running `pnpm deploy-sepolia`
+   - **SEPOLIA_RPC_URL**: `<Your Node Provider URL>`
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/2dd9fa0a-190a-46c2-b3be-12394bb4de1c/stack_animation.webp)
+   ![Add RPC URL](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-20/05128377-e779-44bc-b177-a2159e766cd8/ascreenshot.jpeg)
 
-12\. Find the deployed contract on <https://sepolia.etherscan.io/>
+---
 
-![](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/7c45e315-a133-4592-b856-3ebb85fb23a6/stack_animation.webp)
+### 2. Deploy the Contracts
 
-#### [Made with Scribe](https://scribehow.com/shared/Get_started_with_Hardhat__1fcheHVgTIuGETSdEBRmkw)
+1. Verify generated accounts:
+
+   ```bash
+   npx hardhat get-accounts --num-accounts 5
+   ```
+
+   ![Generated Accounts](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/51576e45-72c9-492b-9c7e-0fb3c8393da4/stack_animation.webp)
+
+2. Import the first two accounts (e.g., Alice and Bob) into your wallet and fund them with Sepolia ETH.
+
+   ![Fund Accounts](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/8009d260-6693-40f2-8117-0412fa7f6c39/stack_animation.webp)
+
+3. Deploy the contracts to Sepolia:
+
+   ```bash
+   pnpm deploy-sepolia
+   ```
+
+   ![Deploy Contracts](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/2dd9fa0a-190a-46c2-b3be-12394bb4de1c/stack_animation.webp)
+
+---
+
+### 3. Verify Deployment
+
+1. After deploying, locate the deployed contract on Sepolia Etherscan:  
+   <https://sepolia.etherscan.io/>
+
+   ![View Deployed Contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-20/7c45e315-a133-4592-b856-3ebb85fb23a6/stack_animation.webp)
+
+---
+
+With this setup, you’re ready to develop, test, and deploy privacy-preserving smart contracts using fhEVM and Hardhat. Happy coding! 🚀

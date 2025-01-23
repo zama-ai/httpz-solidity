@@ -51,20 +51,10 @@ import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 /// for understanding how to implement basic FHE operations in Solidity
 contract EncryptedCounter1 is SepoliaZamaFHEVMConfig {
   euint8 internal counter;
-  euint8 internal immutable CONST_ONE;
-
-  constructor() {
-    // Initialize counter with an encrypted zero value
-    counter = TFHE.asEuint8(0);
-    TFHE.allowThis(counter);
-    // Save on gas by computing the constant here
-    CONST_ONE = TFHE.asEuint8(1);
-    TFHE.allowThis(CONST_ONE);
-  }
 
   function increment() public {
     // Perform encrypted addition to increment the counter
-    counter = TFHE.add(counter, CONST_ONE);
+    counter = TFHE.add(counter, 1);
     TFHE.allowThis(counter);
   }
 }

@@ -16,12 +16,6 @@ import { SepoliaZamaFHEVMConfig } from "fhevm/config/ZamaFHEVMConfig.sol";
 contract EncryptedCounter2 is SepoliaZamaFHEVMConfig {
   euint8 internal counter;
 
-  constructor() {
-    // Initialize counter with an encrypted zero value
-    counter = TFHE.asEuint8(0);
-    TFHE.allowThis(counter);
-  }
-
   function incrementBy(einput amount, bytes calldata inputProof) public {
     // Convert input to euint8 and add to counter
     euint8 incrementAmount = TFHE.asEuint8(amount, inputProof);
