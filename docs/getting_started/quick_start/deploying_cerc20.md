@@ -1,21 +1,26 @@
 # Step 3: Deploying **ConfidentialERC20**
 
-In this tutorial, you'll learn how to deploy a confidential token contract using Zama's **Fully Homomorphic Encryption Virtual Machine (fhEVM)**. We'll create `MyConfidentialERC20.sol` to demonstrate encrypted operations.
+In this tutorial, you'll learn how to deploy a confidential token contract using Zama's **fhEVM**. We'll create `MyConfidentialERC20.sol` to demonstrate the essential features.
 
-## 1. **Set up the contract file**
+## Prerequisites
+Ensure the following before deploying the smart contract:
+- The **Zama Plugin** installed is installed in the Remix IDE(see [Step 1](/docs/getting_started/quick_start/remix.md)).
+- Your **wallet** is connected to the **Sepolia testnet**(see [Step 2](/docs/getting_started/quick_start/connect_wallet.md)).
 
+## Set up the contract file
+First, let's create a file for our confidential ERC20 contract:
 1. Open the **Remix IDE**.
 2. Navigate to the **contracts** folder.
-3. Create a new file using the "New File" icon or by right-clicking.
+3. Click the **Create new file** icon.
 4. Name the file `MyConfidentialERC20.sol` and press Enter.
 
-   ![File Creation](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/506d526f-7e88-4aae-aaa5-92176b03ccf8/stack_animation.webp)
+![File creation](https://colony-recorder.s3.amazonaws.com/files/2025-01-29/0c213215-e42d-4c67-af99-01692d04752f/stack_animation.webp)
 
-## 2. **Basic contract structure**
+## Basic contract structure
 
-The foundational structure includes importing Zama's libraries and connecting to Sepolia's FHEVM configuration.
+The foundational structure includes importing Zama's libraries and connecting to Sepolia's fhEVM configuration.
 
-Copy the following code to Remix:
+Copy the following code in the `MyConfidentialERC20.sol` that you just created:
 
 ```solidity
 // SPDX-License-Identifier: BSD-3-Clause-Clear
@@ -27,36 +32,34 @@ import "fhevm/config/ZamaFHEVMConfig.sol";
 
 contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig {}
 ```
-
-Upon saving, **Remix** automatically imports the libraries.
+It should appear as follows:
 
 ![Auto-import in Remix](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/98f850d2-b303-4ba7-89e8-9db3fba9773c/ascreenshot.jpeg)
 
-### **Key components**
+Remix automatically saves any changes as you type. Upon saving, it imports the following libraries:
 
-#### **`TFHE.sol`**
+- **`TFHE.sol`**: The core Solidity library of Zama's fhEVM. It enables encrypted data type like `euint64`, secures encrypted operations, such as addition and comparison and allows access control.
+- **`SepoliaZamaFHEVMConfig`**: A configuration contract that automatically sets up the required configurations for real-time encrypted operations on the Sepolia testnet.
 
-Provides Zama’s encrypted data types like `euint64` and secure operations such as addition and comparison.
 
-#### **`SepoliaZamaFHEVMConfig`**
 
-Links and configures the contract to Sepolia's FHEVM coprocessor for real-time encrypted operations.
 
-## 3. **Compiling the contract**
+## Enhancing functionality
 
-1. Select `MyConfidentialERC20.sol`.
-2. Go to **Solidity Compiler** in Remix.
-3. Click **Compile** and ensure there are no errors.
+Next, we'll enhance our contract by importing the `fhevm-contracts` library. 
 
-   ![Compile Contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/a4776697-ea82-4094-8e36-95f377b271d3/stack_animation.webp)
+{% hint style="info" %} 
+The **fhevm-contracts** is a Solidity library designed for developers to easily develop confidential smart contracts using fhEVM. It provides:
 
-## 4. **Enhancing functionality**
+- **Ready-to-use confidential contracts**: Pre-built implementations of common token standards with FHE capabilities
+- **Base contracts**: Foundational building blocks for creating custom confidential smart contracts
+- **Extensions**: Additional features and utilities that can be added to base contracts
+- **Testing utilities**: Tools to help test FHE-enabled smart contracts
 
-Next, we'll enhance our contract by importing the `fhevm-contracts` library. This library provides the `ConfidentialERC20Mintable` contract, which we'll use as a base to create our own confidential token with minting capabilities.
+See more details in [the fhEVM-contracts documentation](/docs/smart_contracts/contracts.md).
+{% endhint %}
 
-### What is `ConfidentialERC20Mintable`?
-
-The `ConfidentialERC20Mintable` contract extends `ConfidentialERC20` with minting capabilities, providing:
+The `fhevm-contracts` library includes the `ConfidentialERC20Mintable` contract, which is an extention of `ConfidentialERC20` with minting capabilities, providing:
 
 - Private token transfers and encrypted balances
 - Minting functionality for authorized addresses
@@ -64,7 +67,7 @@ The `ConfidentialERC20Mintable` contract extends `ConfidentialERC20` with mintin
 
 It inherits all base `ConfidentialERC20` features while adding secure token creation and distribution capabilities.
 
-Copy the following code to Remix:
+To use `ConfidentialERC20Mintable` contract, simply update your `MyConfidentialERC20.sol` with the following code:
 
 ```solidity
 // SPDX-License-Identifier: BSD-3-Clause-Clear
@@ -79,50 +82,48 @@ contract MyConfidentialERC20 is SepoliaZamaFHEVMConfig, ConfidentialERC20Mintabl
   constructor(string memory name_, string memory symbol_) ConfidentialERC20Mintable(name_, symbol_, msg.sender) {}
 }
 ```
+It should appear as follows:
 
-![Mintable Token Implementation](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/1aba4b08-182d-40df-b2da-dfa9a51ffd29/ascreenshot.jpeg)
+![Mintable token implementation](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-28/8e41246a-5041-4b29-914f-5e5442b45877/ascreenshot.jpeg?tl_px=0,0&br_px=2752,1538&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=0.7&wat_gravity=northwest&wat_url=https://colony-recorder.s3.us-west-1.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=356,140)
 
-### What are `fhevm-contracts`?
+## Compiling the contract
+Now the contract is ready, the next step is to compile it:
+1. Select `MyConfidentialERC20.sol`.
+2. Go to **Solidity compiler** in Remix.
+3. Click **Compile**.
 
-The `fhevm-contracts` library is a collection of **privacy-preserving smart contracts** built specifically for the **fhEVM** (Fully Homomorphic Encryption Virtual Machine). It provides:
+If successful, you will see a green checkmark on the Solidity Compiler, indicating "Compilation successful"
 
-- **Ready-to-use confidential contracts**: Pre-built implementations of common token standards with FHE capabilities
-- **Base contracts**: Foundational building blocks for creating custom confidential smart contracts
-- **Extensions**: Additional features and utilities that can be added to base contracts
-- **Testing utilities**: Tools to help test FHE-enabled smart contracts
+![Compile contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-28/acb729d3-655c-4360-88ef-2fde8f71b4ba/stack_animation.webp)
 
-The library serves as both a reference implementation and a toolkit for developers building privacy-focused applications on the fhEVM. It demonstrates best practices for implementing confidential operations while maintaining compatibility with existing Ethereum standards.
 
-## 5. **Deployment**
+## Deployment
+Before deploying the contract, you need to set up the environment first:
 
-### **Setup deployment**
+1. Navigate to **Deploy & run transactions** in Remix.
+2. Under **Environment**: Select "Injected Provider - MetaMask".
+3. In **Account**: Choose the address of your MetaMask wallet connected to the Sepolia testnet.
 
-1. Navigate to **Deploy & Run Transactions** in Remix.
-2. Select "Injected Provider - MetaMask" under **Environment**.
-3. Connect your MetaMask wallet to the Sepolia testnet.
+![Setup deployment](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/6bbcfe82-5db4-4a6a-b58e-c21c7e0a5034/stack_animation.webp)
 
-   ![Setup MetaMask](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/6bbcfe82-5db4-4a6a-b58e-c21c7e0a5034/stack_animation.webp)
-
-### **Deploy the contract**
+Now the contract is ready to be deployed:
 
 1. Expand the **Deploy** section.
 2. Fill the constructor parameters:
    - **Name**: Your token’s name (e.g., "My Private Token").
    - **Symbol**: Token symbol (e.g., "MPT").
-3. Click **Deploy** and confirm the transaction in MetaMask.
+3. Click **Transact** and confirm the transaction in MetaMask.
 
-   ![Deploy Contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/ad5f896e-a394-449e-bd6f-be37fff251a6/stack_animation.webp)
+![Deploy contract](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/ad5f896e-a394-449e-bd6f-be37fff251a6/stack_animation.webp)
 
-### **Post-deployment**
+Once successfully deployed, your contract will appear under **Deployed Contracts**. 
 
-- Your contract address will appear under **Deployed Contracts**. Use this interface to interact with the functions.
+![Deploy contract](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/3685296f-0a0a-46bd-9c2f-4cb9320e47d3/ascreenshot.jpeg?tl_px=0,752&br_px=1719,1714&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=66,466)
 
-  ![Deploy Contract](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/3685296f-0a0a-46bd-9c2f-4cb9320e47d3/ascreenshot.jpeg?tl_px=0,752&br_px=1719,1714&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=66,466)
+You can also view your contract on Etherscan by clicking the contract address.
 
-- View your contract on Etherscan by clicking the contract address.
-
-  ![Deploy Contract](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/bb6ad6b9-f166-4fc1-9358-15363592ad46/ascreenshot.jpeg?tl_px=64,752&br_px=1784,1714&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=524,392)
+![View contract](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/bb6ad6b9-f166-4fc1-9358-15363592ad46/ascreenshot.jpeg?tl_px=64,752&br_px=1784,1714&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=524,392)
 
 ---
 
-By following these steps, you’ve successfully created and deployed an confidential ERC-20 token using Zama's fhEVM! 🎉
+By following these steps, you’ve successfully created and deployed an confidential ERC-20 token using Zama's fhEVM!🎉 Let's see how the transaction works in the next chapter.

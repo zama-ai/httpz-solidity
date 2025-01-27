@@ -1,44 +1,48 @@
 # Step 1: Setting Up Remix
 
-This guide will help you set up the **Zama plugin** in the official [Remix IDE](https://remix.ethereum.org), enabling seamless development and management of smart contracts using the **fhEVM**.
+This guide helps you set up the **Zama Plugin** in the official Remix IDE, enabling seamless development and management of smart contracts using the **fhEVM**.
 
-## Connecting to the Zama Local Plugin in Remix
+## Prerequisites
+
+Before starting, make sure you have the following:
+- A web **browser** (such as Chrome, Firefox).
+- Basic familiarity with **Ethereum smart contracts**.
+- A crypto **wallet** (we recommend using **MetaMask** for this tutorial).
+
+## Connecting to the Zama Plugin in Remix
+**Zama Plugin** allows you to interact with confidential contracts directly within Remix. To set it up:
 
 1. Open the **Remix IDE** by navigating to [https://remix.ethereum.org](https://remix.ethereum.org).
 2. In the left sidebar, click on the **Plugin Manager**.
-
-   ![Open Plugin Manager](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/45c70d9e-46ce-43e7-870e-8e1ae1dfc599/ascreenshot.jpeg?tl_px=0,752&br_px=1719,1714&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=-24,488)
-
 3. In the Plugin Manager, select **Connect to a Local Plugin**.
 
-   ![Connect to Local Plugin](https://ajeuwbhvhr.cloudimg.io/colony-recorder.s3.amazonaws.com/files/2025-01-16/5f28c293-b226-48ec-9d7c-f1831e076b76/ascreenshot.jpeg?tl_px=0,0&br_px=1719,961&force_format=jpeg&q=100&width=1120.0&wat=1&wat_opacity=1&wat_gravity=northwest&wat_url=https://colony-recorder.s3.amazonaws.com/images/watermarks/FB923C_standard.png&wat_pad=224,113)
+![Connect to Zama Plugin](https://colony-recorder.s3.amazonaws.com/files/2025-01-28/0c7520ae-e771-41c5-a5c3-b72d10e236ec/stack_animation.webp)
 
 ## Installing the Zama Plugin
 
-4. Complete the plugin setup as follows:
+Use the following configurations:
 
-   - In the **Plugin Name (required)** field, enter: `Zama`.
-   - In the **URL** field, enter: `https://remix.zama.ai/`.
-   - Keep both **Iframe** and **Side Panel** options selected, and then validate.
+   - **Plugin Name** (required) : Enter `Zama`.
+   - **URL**(required): Enter `https://remix.zama.ai/`.
+   - **Type of connection**(required): Select `Iframe`
+   - **Location in remix** (required):Select `Side Panel`
+   - Click `OK`.
 
-   ![Install Zama Plugin](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/b8df3384-d3b1-4845-8205-a23206081051/stack_animation.webp)
+![Install Zama Plugin](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/b8df3384-d3b1-4845-8205-a23206081051/stack_animation.webp)
 
-Once finished the installation details should look something like this:
-
-<figure style="text-align: center"><img src="../../.gitbook/assets/remixide.png" alt="How to install Remix IDE plugin" width="400"><figcaption></figcaption></figure>
 
 ## Configuring the Zama Plugin
+**Zama Plugin** provides the **Zama Coprocessor - Sepolia configuration** that ensures Remix and the wallet are properly set up to interact with fhEVM smart contracts.
 
-5. Once installed, the Zama plugin icon will appear in the sidebar. Click on it to open the plugin.
-<figure style="text-align: center"><img src="../../.gitbook/assets/useGateway.png" alt="How to install Remix IDE plugin" width="400"><figcaption></figcaption></figure>
+To complete the configuration:
+1. Click the **Zama Plugin** icon in the sidebar to open it.
+2. In the configuration screen, select **Zama Coprocessor - Sepolia**.
+3. Click **Use this configuration** to finalize the setup.
 
-6. In the configuration screen:
+Once successful, you should see the green text in the terminal indicating that the configuration is ready.
 
-   - Select **Zama Coprocessor - Sepolia**.
-   - Click **Use This Configuration** to finalize the setup.
+![Configuring Zama Plugin](https://colony-recorder.s3.amazonaws.com/files/2025-01-28/3b532cb8-8dba-44ab-a082-bedaa2465348/stack_animation.webp)
+ 
 
-   ![Deploy and Use Contracts](https://colony-recorder.s3.amazonaws.com/files/2025-01-16/d90fe25a-dc6d-49c1-9c32-2f871f29f054/stack_animation.webp)
-
-## Deploy and Use Contracts
-
-After configuring the plugin, you can interact with `fhEVM` encrypted contracts directly via the Zama plugin interface.
+---
+Now that you've configured the plugin, you are able to deploy and interact with **fhEVM** encrypted contracts directly directly via Remix interface. Next, let's dive into the contract deployment.

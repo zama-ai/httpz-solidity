@@ -1,50 +1,47 @@
-# Quick start tutorial: Build your first FHE smart contract
+# Quick Start
 
-Welcome to the world of **Fully Homomorphic Encryption (FHE)** and privacy-preserving smart contracts! This tutorial will guide you step-by-step through deploying your first **confidential smart contract** using Zama’s groundbreaking FHE technology.
+This tutorial guides you to start quickly with Zama’s **Fully Homomorphic Encryption (FHE)** technology for building confidential smart contracts.
+
+## What you'll learn
+
+In around 20 minutes, you will build and deploy your first confidential ERC20 contract, mint tokens and perform transactions on it.
+
+This tutorial will cover:
+
+1. **Set up Remix** development environment using the Zama Plugin.
+2. **Connect your wallet** for deployment and interaction.
+3. **Write and deploy** `ConfidentialERC20Mintable` contract on the Sepolia testnet
+4. **Interact with your contract** to mint, transfer, and manage confidential tokens.
 
 ## What you'll build
 
-You will build a `ConfidentialERC20Mintable` token - a privacy-preserving ERC20 implementation that uses FHE to keep balances and transactions confidential. This token contract allows minting new tokens and includes all standard confidential ERC20 functionality while maintaining complete privacy of user data.
+The contract that you will build with this tutorial is called `ConfidentialERC20Mintable` — a privacy-preserving ERC20 implementation that leverages **FHE** to keep balances and transactions confidential. To understand this contract, let’s first introduce the foundational concepts.
 
-### Encrypted balances
+{% hint style="info" %} Feel free to skip this part if you already have a basic knowledge of confidential ERC20 tokens.{% endhint %}
 
-The `ConfidentialERC20Mintable` token extends the standard `ConfidentialERC20` contract by adding secure minting capabilities. The base `ConfidentialERC20` contract revolutionizes token privacy by leveraging Fully Homomorphic Encryption (FHE) to store all balances in an encrypted format. This means that while transactions and balances are recorded on the public blockchain, their actual values remain completely confidential and can only be accessed by authorized parties.
+**ERC20**
 
-- **Enhanced Privacy**: Balances are stored as encrypted values (`euint64`), ensuring no one can view account balances by inspecting the blockchain.
-- **Exclusive Access**: Only the account owner can decrypt and view their own balance.
-- **Encrypted Transactions**: Transaction amounts are also encrypted, maintaining confidentiality.
+ERC20 is a widely used token standard on Ethereum that defines a set of rules for creating and managing fungible tokens.
 
-### Standard ERC20 functions with encryption
+These tokens are efficient but lack privacy — balances and transactions are visible to anyone on the blockchain.
 
-ConfidentialERC20 supports all the standard ERC20 functions, adapted for encrypted values. For example:
+**Confidential ERC20** 
 
-- `transfer`: Securely transfers encrypted tokens.
-- `approve`: Approves encrypted amounts for spending.
-- `transferFrom`: Transfers tokens on behalf of another address.
-- `balanceOf`: Returns the encrypted balance of an account.
-- `totalSupply`: Returns the total token supply.
+Zama’s `ConfidentialERC20` introduces privacy to ERC20 tokens by storing balances and transactions in an encrypted format using FHE.
 
-To dive deeper into the workings of ConfidentialERC20, check out the [Zama blog post](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption).
+The `ConfidentialERC20` contract still supports standard ERC20 functions such as `transfer`, `approve`, `transferFrom`, `balanceOf`, and `totalSupply` but ensures these operations are processed securely with encrypted data.
 
-## What you'll achieve
+To explore the implementation details of ConfidentialERC20, check out the [Zama blog post](https://www.zama.ai/post/confidential-erc-20-tokens-using-homomorphic-encryption).
 
-In just **~20 minutes**, you’ll:
+**Confidential ERC-20 Mintable**
 
-1. [**Set up Remix**](./remix.md) – Configure your development environment to support FHE contracts.
-2. [**Connect Your Wallet**](./connect_wallet.md) – Prepare for deployment by linking your crypto wallet.
-3. [**Deploy ConfidentialERC20**](./deploying_cerc20.md) – Launch your first FHE-enabled token on the blockchain.
-4. [**Interact with Your Contract**](./interact.md) – Use your deployed contract to mint, transfer, and manage confidential tokens.
+The contract that we will build in this tutorial is  `ConfidentialERC20Mintable` . It's built on top of `ConfidentialERC20` by adding secure minting capabilities. This allows authorized accounts to create new tokens, while maintaining the privacy guarantees of encrypted balances and transactions.
 
----
+The `ConfidentialERC20Mintable` contract ensures:
 
-### Prerequisites
+- **Enhanced privacy**: Balances are stored as encrypted values (`euint64`), preventing public inspection of account balances.
+- **Secure transactions**: Token transfers are processed securely, maintaining confidentiality of amounts.
+- **Owner visibility**: Only account owners can decrypt and view their balances.
 
-Before you begin, make sure you have:
+Let’s get started on your journey to building confidential blockchain applications! 
 
-- **Basic familiarity with Ethereum and smart contracts**
-- **A web browser** (e.g., Chrome, Firefox)
-- **A crypto wallet** (like MetaMask) configured for the Sepolia testnet
-
----
-
-Let’s get started on your journey to building the future of confidential blockchain applications! 🚀
