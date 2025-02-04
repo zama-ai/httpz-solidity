@@ -14,12 +14,7 @@
 
 ## Tutorials
 
-- [Tutorial: Setting up Hardhat](tutorials/learn_fundamentals/hardhat.md)
-- [Tutorial: Learn fhEVM fundamentals with Counter contract](tutorials/learn_fundamentals/overview.md)
-  - [1. Configure the contract](tutorials/learn_fundamentals/configure.md)
-  - [2. Add encrypted inputs](tutorials/learn_fundamentals/encryption.md)
-  - [3. Decrypt only for the user](tutorials/learn_fundamentals/reencryption.md)
-  - [4. Decrypt for everyone](tutorials/learn_fundamentals/decryption.md)
+- [Tutorial: Setting up Hardhat](tutorials/hardhat.md)
 - [See all tutorials](tutorials/see-all-tutorials.md)
 
 ## Smart contract
@@ -51,7 +46,7 @@
 - [Build a web application](frontend/webapp.md)
 - [Using React.js](https://github.com/zama-ai/fhevm-react-template)
 - [Using Next.js](https://github.com/zama-ai/fhevm-next-template)
-- [Using Vue.js](https://github.com/zama-ai/fhevm-vue-template)
+- [Using Vue.js](https://github.com/zama-ai/fhevm-vue-template)å
 - [Using Node or Typescript](frontend/node.md)
 - [Using the CLI](frontend/cli.md)
 - [Common webpack errors](frontend/webpack.md)
