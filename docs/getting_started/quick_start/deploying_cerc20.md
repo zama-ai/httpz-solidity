@@ -6,8 +6,8 @@ In this tutorial, you'll learn how to deploy a confidential token contract using
 
 Ensure the following before deploying the smart contract:
 
-- The **Zama Plugin** installed is installed in the Remix IDE(see [Step 1](/docs/getting_started/quick_start/remix.md)).
-- Your **wallet** is connected to the **Sepolia testnet**(see [Step 2](/docs/getting_started/quick_start/connect_wallet.md)).
+- The **Zama Plugin** installed is installed in the Remix IDE(see [Step 1](./remix.md)).
+- Your **wallet** is connected to the **Sepolia testnet**(see [Step 2](./connect_wallet.md)).
 
 ## Set up the contract file
 
@@ -58,7 +58,7 @@ The **fhevm-contracts** is a Solidity library designed for developers to easily 
 - **Extensions**: Additional features and utilities that can be added to base contracts
 - **Testing utilities**: Tools to help test FHE-enabled smart contracts
 
-See more details in [the fhEVM-contracts documentation](/docs/smart_contracts/contracts.md).
+See more details in [the fhEVM-contracts documentation](../../smart_contracts/contracts.md).
 {% endhint %}
 
 The `fhevm-contracts` library includes the `ConfidentialERC20Mintable` contract, which is an extention of `ConfidentialERC20` with minting capabilities, providing:

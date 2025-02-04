@@ -109,7 +109,7 @@ After making a transfer, you can verify your updated account balance:
 To continue your journey and deepen your knowledge, explore the resources below.
 
 - **[Read the Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper-v2.pdf)**: Understand the core technology behind fhEVM, including its cryptographic foundations and use cases.
-- **[See more demos and tutorials](<(../../tutorials/see-all-tutorials.md)>)**: Expand your skills with hands-on demos and tutorials crafted to guide you through various real-world scenarios.
+- **[See more demos and tutorials](../../tutorials/see-all-tutorials.md)**: Expand your skills with hands-on demos and tutorials crafted to guide you through various real-world scenarios.
 - [**Try out AI coding assistant**](https://chatgpt.com/g/g-67518aee3c708191b9f08d077a7d6fa1-zama-solidity-developer): If you have a chatGPT plus account, try out our custom ChatGPT model tailored for Solidity and fhEVM developers.
 
 ### Tools
@@ -134,4 +134,3 @@ Join the community to shape the future of blockchain together with us.
 - [**Discord**](https://discord.gg/zama-ai): Join the community to get the latest update, have live discussion with fellow developers and Zama team.
 - [**Community Forum**](https://community.zama.ai/): Get support on all technical questions related to fhEVM
 - [**Zama Bounty Program**](https://github.com/zama-ai/bounty-program): Participate to tackle challenges and earn rewards in cash.
-- [**Developer Survey**](https://zama.ai/survey): Share your feedback to help us improve the protocol.
