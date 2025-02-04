@@ -10,6 +10,11 @@ Before starting, make sure you have the following:
 - A crypto **wallet** (we recommend using **MetaMask** for this tutorial).
 
 ## Connecting to the Zama Plugin in Remix
+
+Test slide
+
+<iframe src="https://scribehow.com/embed/1_Setting_up_Remix__ZOnlIIl9SmWU6EV1EkpoLA?skipIntro=true&removeLogo=true" width="100%" height="640" allowfullscreen frameborder="0"></iframe>
+
 **Zama Plugin** allows you to interact with confidential contracts directly within Remix. To set it up:
 
 1. Open the **Remix IDE** by navigating to [https://remix.ethereum.org](https://remix.ethereum.org).
