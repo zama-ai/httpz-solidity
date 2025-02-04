@@ -126,10 +126,6 @@ This software is distributed under the **BSD-3-Clause-Clear** license. Read [thi
 
 > We are open to collaborating and advancing the FHE space with our partners. If you have specific needs, please email us at hello@zama.ai.
 
-<p align="right">
-  <a href="#table-of-contents" > ↑ Back to top </a>
-</p>
-
 ## Support
 
 <a target="_blank" href="https://community.zama.ai">

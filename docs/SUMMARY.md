@@ -60,6 +60,7 @@
 
 ## References
 
+- [Table of all addresses](references/table_of_addresses.md)
 - [Smart contracts - fhEVM API](references/functions.md)
 - [Frontend - fhevmjs lib](references/fhevmjs.md)
 - [Repositories](references/repositories.md)

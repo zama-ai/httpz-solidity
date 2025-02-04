@@ -25,7 +25,7 @@ ERC20 is a widely used token standard on Ethereum that defines a set of rules fo
 
 These tokens are efficient but lack privacy — balances and transactions are visible to anyone on the blockchain.
 
-**Confidential ERC20** 
+**Confidential ERC20**
 
 Zama’s `ConfidentialERC20` introduces privacy to ERC20 tokens by storing balances and transactions in an encrypted format using FHE.
 
@@ -44,4 +44,3 @@ The `ConfidentialERC20Mintable` contract ensures:
 - **Owner visibility**: Only account owners can decrypt and view their balances.
 
 Let’s get started on your journey to building confidential blockchain applications! 
-
