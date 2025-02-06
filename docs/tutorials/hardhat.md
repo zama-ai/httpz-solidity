@@ -29,7 +29,7 @@ Learn how to configure your Hardhat project for developing and deploying fhEVM-s
    cd <your-new-repo>
    ```
 
-   {% embed url="https://scribehow.com/embed/Step_1__M1Gjr6SAQuOsPyT7luekmw?skipIntro=true&removeLogo=true" %}
+{% embed url="https://scribehow.com/embed/Step_1__M1Gjr6SAQuOsPyT7luekmw?skipIntro=true&removeLogo=true" %}
 
 ---
 
