@@ -6,9 +6,9 @@ This guide helps you set up the **Zama Plugin** in the official Remix IDE, enabl
 
 Before starting, make sure you have the following:
 
-* A web **browser** (such as Chrome, Firefox).
-* Basic familiarity with **Ethereum smart contracts**.
-* A crypto **wallet** (we recommend using **MetaMask** for this tutorial).
+- A web **browser** (such as Chrome, Firefox).
+- Basic familiarity with **Ethereum smart contracts**.
+- A crypto **wallet** (we recommend using **MetaMask** for this tutorial).
 
 ## Step 1. Connecting to the Zama Plugin in Remix
 
@@ -24,14 +24,14 @@ Before starting, make sure you have the following:
 
 Use the following configurations:
 
-* **Plugin Name** (required) : Enter `Zama`.
-* **URL**(required): Enter `https://remix.zama.ai/`.
-* **Type of connection**(required): Select `Iframe`
-* **Location in remix** (required):Select `Side Panel`
-* Click `OK`.
+- **Plugin Name** (required) : Enter `Zama`.
+- **URL**(required): Enter `https://remix.zama.ai/`.
+- **Type of connection**(required): Select `Iframe`
+- **Location in remix** (required):Select `Side Panel`
+- Click `OK`.
 
 {% embed url="https://scribehow.com/embed/How_to_Add_Zama_Plugin_in_Remix_Ethereum__yIcEiiToSpOmfRq0kwyiyA?removeLogo=true&skipIntro=true" %}
 
-***
+---
 
 Now that you've configured the plugin, you are able to deploy and interact with **fhEVM** encrypted contracts directly directly via Remix interface. Next, let's dive into the contract deployment.
