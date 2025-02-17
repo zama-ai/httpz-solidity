@@ -1,29 +1,29 @@
 # Quick Start
 
-This tutorial guides you to start quickly with Zama’s **Fully Homomorphic Encryption (FHE)** technology for building confidential smart contracts.
+This tutorial guides you to start quickly with Zama’s **Fully Homomorphic Encryption (FHE)** technology for building confidential smart contracts.&#x20;
 
-## What you'll learn
+## What You’ll Learn
 
-In around 20 minutes, you will build and deploy your first confidential ERC20 contract, mint tokens and perform transactions on it.
+In about 20 minutes, you will:
 
-This tutorial will cover:
+* Build your first **confidential ERC20** contract that leverages FHE.
+* Deploy the contract on the **Sepolia** Network.
+* **Mint tokens** and **perform transactions** in FHE.
+* Build a **frontend application** for your contract.
 
-1. **Set up Remix** development environment using the Zama Plugin.
-2. **Connect your wallet** for deployment and interaction.
-3. **Write and deploy** `ConfidentialERC20Mintable` contract on the Sepolia testnet
-4. **Interact with your contract** to mint, transfer, and manage confidential tokens.
+## Prerequisite
 
-## What you'll build
+* A basic understanding of **Solidity** library and **Ethereum**.
+* A certain amount of **Sepolia ETH** available.
+  * &#x20;If you don’t have enough ETH, use a Sepolia faucet to request free SepoliaETH for testing such as [Alchemy Faucet](https://www.alchemy.com/faucets/ethereum-sepolia) or [QuickNode Faucet](https://faucet.quicknode.com/ethereum/sepolia).
 
-The contract that you will build with this tutorial is called `ConfidentialERC20Mintable` — a privacy-preserving ERC20 implementation that leverages **FHE** to keep balances and transactions confidential. To understand this contract, let’s first introduce the foundational concepts.
+## What is Confidenetial ERC20
 
-{% hint style="info" %} Feel free to skip this part if you already have a basic knowledge of confidential ERC20 tokens.{% endhint %}
+The contract that you will build with this tutorial is called `ConfidentialERC20Mintable` — a privacy-preserving ERC20 implementation that leverages **FHE** to keep balances and transactions confidential. To understand this contract, let’s first introduce the foundational concepts.
 
-**ERC20**
+**RC20**
 
-ERC20 is a widely used token standard on Ethereum that defines a set of rules for creating and managing fungible tokens.
-
-These tokens are efficient but lack privacy — balances and transactions are visible to anyone on the blockchain.
+ERC20 is a widely used token standard on Ethereum that defines a set of rules for creating and managing fungible tokens. These tokens are efficient but lack privacy — balances and transactions are visible to anyone on the blockchain.
 
 **Confidential ERC20**
 
@@ -35,12 +35,17 @@ To explore the implementation details of ConfidentialERC20, check out the [Zama 
 
 **Confidential ERC-20 Mintable**
 
-The contract that we will build in this tutorial is  `ConfidentialERC20Mintable` . It's built on top of `ConfidentialERC20` by adding secure minting capabilities. This allows authorized accounts to create new tokens, while maintaining the privacy guarantees of encrypted balances and transactions.
+The contract that we will build in this tutorial is  `ConfidentialERC20Mintable` . It's built on top of `ConfidentialERC20` by adding secure minting capabilities. This allows authorized accounts to create new tokens, while maintaining the privacy guarantees of encrypted balances and transactions.
 
 The `ConfidentialERC20Mintable` contract ensures:
 
-- **Enhanced privacy**: Balances are stored as encrypted values (`euint64`), preventing public inspection of account balances.
-- **Secure transactions**: Token transfers are processed securely, maintaining confidentiality of amounts.
-- **Owner visibility**: Only account owners can decrypt and view their balances.
+* **Enhanced privacy**: Balances are stored as encrypted values (`euint64`), preventing public inspection of account balances.
+* **Secure transactions**: Token transfers are processed securely, maintaining confidentiality of amounts.
+* **Owner visibility**: Only account owners can decrypt and view their balances.
 
-Let’s get started on your journey to building confidential blockchain applications! 
+## Next steps
+
+Choose your path and get started:
+
+* [**Remix Guide**](../../getting-started/overview-1/remix/) – Rapid in‐browser setup, great for **learning** and fast **prototyping**.
+* [**Hardhat Guide**](../../getting-started/overview-1/hardhat/) – Full-fledged development environment, suitable for **production**.
