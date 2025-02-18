@@ -1,6 +1,6 @@
 # Remix
 
-This tutorials covers the essentials steps to quickly write and deply confidential ERC20 smart contract using the Zama Plug in.
+This tutorial covers the essentials steps to quickly write and deploy confidential ERC20 smart contract using the Zama Plug in.
 
 Remix is a powerful in-browser IDE for Ethereum smart contract development. It offers a fast, intuitive way to write and deploy confidential ERC20 contracts using Zama’s fhEVM plugin—no local setup required.
 
@@ -12,4 +12,3 @@ Remix is a powerful in-browser IDE for Ethereum smart contract development. It o
 4. Interact with your deployed contract directly in the Remix interface.
 
 By the end, you’ll have a working confidential ERC20 token on Sepolia network and know how to perform encrypted transactions.&#x20;
-

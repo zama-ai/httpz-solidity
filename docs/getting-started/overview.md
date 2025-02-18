@@ -22,6 +22,6 @@ The fhEVM Protocol provides a **`TFHE` Solidity library** for building confident
 
 ### For network builders
 
-To **integrate FHE at the protocol level** or operate an **FHE‐enabled network**, fhEVM offers the fhevm backend modules. These repositories include  the foundational implementations that enables FHE in blockchain systems, ensuring that privacy remains at the core of your network architecture.
+To **integrate FHE at the protocol level** or operate an **FHE‐enabled network**, fhEVM offers the fhevm backend modules. These repositories include the foundational implementations that enables FHE in blockchain systems, ensuring that privacy remains at the core of your network architecture.
 
 <table><thead><tr><th width="260">Repository</th><th>Description</th></tr></thead><tbody><tr><td><a href="https://github.com/zama-ai/fhevm-backend">fhevm-backend</a></td><td>Rust backend &#x26; Go‐Ethereum modules, enabling native or coprocessor‐based FHE.</td></tr><tr><td><a href="https://github.com/zama-ai/fhevm-go/">fhevm-go</a></td><td>Go implementation of the FHE Virtual Machine</td></tr><tr><td><a href="https://github.com/zama-ai/zbc-go-ethereum/">zbc-go-ethereum</a></td><td>Modified go-ethereum with enhanced FHE support</td></tr></tbody></table>

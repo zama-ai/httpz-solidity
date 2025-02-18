@@ -6,16 +6,16 @@ This tutorial guides you to start quickly with Zama’s **Fully Homomorphic Encr
 
 In about 20 minutes, you will:
 
-* Build your first **confidential ERC20** contract that leverages FHE.
-* Deploy the contract on the **Sepolia** Network.
-* **Mint tokens** and **perform transactions** in FHE.
-* Build a **frontend application** for your contract.
+- Build your first **confidential ERC20** contract that leverages FHE.
+- Deploy the contract on the **Sepolia** Network.
+- **Mint tokens** and **perform transactions** in FHE.
+- Build a **frontend application** for your contract.
 
 ## Prerequisite
 
-* A basic understanding of **Solidity** library and **Ethereum**.
-* A certain amount of **Sepolia ETH** available.
-  * &#x20;If you don’t have enough ETH, use a Sepolia faucet to request free SepoliaETH for testing such as [Alchemy Faucet](https://www.alchemy.com/faucets/ethereum-sepolia) or [QuickNode Faucet](https://faucet.quicknode.com/ethereum/sepolia).
+- A basic understanding of **Solidity** library and **Ethereum**.
+- A certain amount of **Sepolia ETH** available.
+  - &#x20;If you don’t have enough ETH, use a Sepolia faucet to request free SepoliaETH for testing such as [Alchemy Faucet](https://www.alchemy.com/faucets/ethereum-sepolia) or [QuickNode Faucet](https://faucet.quicknode.com/ethereum/sepolia).
 
 ## What is Confidenetial ERC20
 
@@ -35,17 +35,17 @@ To explore the implementation details of ConfidentialERC20, check out the [Zama 
 
 **Confidential ERC-20 Mintable**
 
-The contract that we will build in this tutorial is  `ConfidentialERC20Mintable` . It's built on top of `ConfidentialERC20` by adding secure minting capabilities. This allows authorized accounts to create new tokens, while maintaining the privacy guarantees of encrypted balances and transactions.
+The contract that we will build in this tutorial is `ConfidentialERC20Mintable` . It's built on top of `ConfidentialERC20` by adding secure minting capabilities. This allows authorized accounts to create new tokens, while maintaining the privacy guarantees of encrypted balances and transactions.
 
 The `ConfidentialERC20Mintable` contract ensures:
 
-* **Enhanced privacy**: Balances are stored as encrypted values (`euint64`), preventing public inspection of account balances.
-* **Secure transactions**: Token transfers are processed securely, maintaining confidentiality of amounts.
-* **Owner visibility**: Only account owners can decrypt and view their balances.
+- **Enhanced privacy**: Balances are stored as encrypted values (`euint64`), preventing public inspection of account balances.
+- **Secure transactions**: Token transfers are processed securely, maintaining confidentiality of amounts.
+- **Owner visibility**: Only account owners can decrypt and view their balances.
 
 ## Next steps
 
 Choose your path and get started:
 
-* [**Remix Guide**](../../getting-started/overview-1/remix/) – Rapid in‐browser setup, great for **learning** and fast **prototyping**.
-* [**Hardhat Guide**](../../getting-started/overview-1/hardhat/) – Full-fledged development environment, suitable for **production**.
+- [**Remix Guide**](remix) – Rapid in‐browser setup, great for **learning** and fast **prototyping**.
+- [**Hardhat Guide**](hardhat) – Full-fledged development environment, suitable for **production**.
