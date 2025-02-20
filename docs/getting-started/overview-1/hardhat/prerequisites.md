@@ -13,7 +13,7 @@ If you already have these installed, skip ahead to [1. Setting Up Hardhat.](1.-s
 
 ---
 
-## **Step 1: Open your terminal**
+## Step 1: Open your terminal
 
 To run the installation commands, open a terminal:
 
@@ -85,8 +85,6 @@ To verify the installation, run:
 ```bash
 cast --version
 ```
-
----
 
 ## Next Steps
 
