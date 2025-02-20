@@ -7,6 +7,7 @@ To use Hardhat to build and deploy confidential smart contract, you need to have
 - **Node.js (v20 or later)**
 - **A package manager**: `npm`, `yarn`, or `pnpm`
 - **Git** for version control
+- **Foundry** for using the command `cast`
 
 If you already have these installed, skip ahead to [1. Setting Up Hardhat.](1.-setting-up-hardhat.md)
 
@@ -53,7 +54,7 @@ Git is required for managing source code, cloning repositories, and handling ver
 - **Windows**: [Download Git for Windows](https://git-scm.com/download/win).
 - **macOS**: Install via [Homebrew](https://brew.sh/) with `brew install git` or [download Git](https://git-scm.com/download/mac).
 
-### Step 4. Install Foundry
+## Step 4. Install Foundry
 
 We will need the command `cast` in our tutorial. This command is available with installing Foundry.
 

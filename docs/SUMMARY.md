@@ -1,7 +1,7 @@
 # Table of contents
 
 - [Welcome to fhEVM](README.md)
-- [Whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper-v2.pdf)
+- [White paper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper-v2.pdf)
 
 ## Getting Started
 
@@ -13,7 +13,7 @@
     - [3. Deploying ConfidentialERC20](getting-started/overview-1/remix/deploying_cerc20.md)
     - [4. Interacting with the contract](getting-started/overview-1/remix/interact.md)
   - [Hardhat](getting-started/overview-1/hardhat/README.md)
-    - [Prerequisite](getting-started/overview-1/hardhat/prerequisite.md)
+    - [Prerequisites](getting-started/overview-1/hardhat/prerequisite.md)
     - [1. Setting up Hardhat](getting-started/overview-1/hardhat/1.-setting-up-hardhat.md)
     - [2. Writing contracts](getting-started/overview-1/hardhat/2.-writing-contracts.md)
     - [3. Testing in mocked mode](getting-started/overview-1/hardhat/3.-testing-in-mocked-mode.md)
