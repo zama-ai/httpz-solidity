@@ -1,4 +1,4 @@
-# Mocked Mode
+# Mocked mode
 
 This document provides an overview of mocked mode in the fhEVM framework, explaining how it enables faster development and testing of smart contracts that use Fully Homomorphic Encryption (FHE).
 
@@ -6,17 +6,19 @@ This document provides an overview of mocked mode in the fhEVM framework, explai
 
 **Mocked mode** is a development and testing feature provided in the `fhEVM` framework that allows developers to simulate the behavior of Fully Homomorphic Encryption (FHE) without requiring the full encryption and decryption processes to be performed. This makes development and testing cycles faster and more efficient by replacing actual cryptographic operations with mocked values, which behave similarly to encrypted data but without the computational overhead of true encryption.
 
-## Where You Can Use Mocked Mode
+## How to use mocked mode
 
-### 1. **Hardhat Template**
+### 1. **Hardhat template**
 
 Mocked mode is currently supported in the [Zama Hardhat template](https://github.com/zama-ai/fhevm-hardhat-template). Developers can enable mocked mode to simulate encrypted operations while building and testing smart contracts locally. The Hardhat template includes pre-configured scripts and libraries to simplify the setup process for mocked mode.
 
-### 2. **Foundry (Coming Soon)**
+Refer to the [[Quick start - Hardhat]](../getting-started/overview-1/hardhat/README.md) guide for instructions on using the Hardhat template.
+
+### 2. **Foundry (coming soon)**
 
 Mocked mode support is planned for [Foundry](./write_contract/foundry.md) in future releases.
 
-## How Mocked Mode Works
+## How mocked mode works
 
 For faster testing iterations, instead of launching all the tests on the local fhEVM node, which could last several minutes, you can use a mocked version of the fhEVM by running `pnpm test`. The same tests should (almost always) pass as is, without any modification; neither the JavaScript files nor the Solidity files need to be changed between the mocked and the real version.
 
@@ -24,9 +26,9 @@ The mocked mode does **not** actually perform real encryption for encrypted type
 
 Additionally, the mocked mode will let you use all the Hardhat-related special testing and debugging methods, such as `evm_mine`, `evm_snapshot`, `evm_revert`, etc., which are very helpful for testing.
 
-## Development Workflow with Mocked Mode
+## Development workflow with mocked mode
 
-When developing confidential contracts, we recommend to use first the mocked version of fhEVM for faster testing with `pnpm test` and coverage computation via `pnpm coverage`, this will lead to a better developer experience. However, keep in mind that the mocked fhEVM has some limitations and discrepancies compared to the real fhEVM node, as explained in the warning section at the end of this page.
+When developing confidential contracts, we recommend to use first the mocked version of fhEVM for faster testing with `pnpm test` and coverage computation via `pnpm coverage`, this will lead to a better developer experience.
 
 It's essential to run tests of the final contract version using the real fhEVM. You can do this by running `pnpm test` before deployment.
 
@@ -57,7 +59,11 @@ npx hardhat coverage
 
 Then open the file `coverage/index.html` to see the coverage results. This will increase security by pointing out missing branches not covered yet by the current test suite.
 
-**Notice:** Due to limitations in the `solidity-coverage` package, test coverage computation does not work with tests that use the `evm_snapshot` Hardhat testing method. If you are using Hardhat snapshots in your tests, we recommend adding the `[skip-on-coverage]` tag at the end of your test description. Here's an example:
+{% hint style="info" %}
+Due to limitations in the `solidity-coverage` package, test coverage computation does not work with tests that use the `evm_snapshot` Hardhat testing method.
+{% endhint %}
+
+If you are using Hardhat snapshots in your tests, we recommend adding the `[skip-on-coverage]` tag at the end of your test description. Here's an example:
 
 ```js
 import { expect } from 'chai';
@@ -132,10 +138,5 @@ describe('Rand', function () {
 
 In the previous snippet, the first test will be run in every case, whether in testing in mocked mode (`pnpm test`) or coverage (mocked) mode (`pnpm coverage`). On the other hand, the second test will be run **only** in mocked mode (when running `pnpm test`), since snapshots only work in that specific case. The second test will be skipped if run in coverage mode, since its description string ends with `[skip-on-coverage]` and similarly, we avoid the test to fail in non-mocked mode since we check that the network name is `hardhat`.
 
-⚠️ **Warning :** Due to intrinsic limitations of the original EVM, the mocked version differ in few corner cases from the real fhEVM, the main difference is the difference in gas prices for the FHE operations.
-
-{% hint style="success" %}
-**Zama 5-Question Developer Survey**
-
-We want to hear from you! Take 1 minute to share your thoughts and helping us enhance our documentation and libraries. **👉** [**Click here**](https://www.zama.ai/developer-survey) to participate.
-{% endhint %}
+- **The first test** always runs in both mocked mode (`pnpm test`) and coverage mode (`pnpm coverage`).
+- **The second test** runs only while testing mocked mode (`pnpm test`) since it uses snapshots which are only available there. The test is skipped in coverage mode due to the `[skip-on-coverage]` suffix in its description. It also checks that the network is 'hardhat' to avoid failures in non-mocked environments.
