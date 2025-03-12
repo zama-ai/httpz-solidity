@@ -136,7 +136,5 @@ describe('Rand', function () {
 });
 ```
 
-In the previous snippet, the first test will be run in every case, whether in testing in mocked mode (`pnpm test`) or coverage (mocked) mode (`pnpm coverage`). On the other hand, the second test will be run **only** in mocked mode (when running `pnpm test`), since snapshots only work in that specific case. The second test will be skipped if run in coverage mode, since its description string ends with `[skip-on-coverage]` and similarly, we avoid the test to fail in non-mocked mode since we check that the network name is `hardhat`.
-
 - **The first test** always runs in both mocked mode (`pnpm test`) and coverage mode (`pnpm coverage`).
 - **The second test** runs only while testing mocked mode (`pnpm test`) since it uses snapshots which are only available there. The test is skipped in coverage mode due to the `[skip-on-coverage]` suffix in its description. It also checks that the network is 'hardhat' to avoid failures in non-mocked environments.
