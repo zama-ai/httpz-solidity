@@ -9,7 +9,6 @@ In about 20 minutes, you will:
 - Build your first **confidential ERC20** contract that leverages FHE.
 - Deploy the contract on the **Sepolia** Network.
 - **Mint tokens** and **perform transactions** in FHE.
-- Build a **frontend application** for your contract.
 
 ## Prerequisite
 
