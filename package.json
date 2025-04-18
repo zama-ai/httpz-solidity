@@ -89,5 +89,9 @@
     "@zama-fhe/oracle-solidity": "^0.0.2",
     "extra-bigint": "^1.1.18",
     "sqlite3": "^5.1.7"
+  },
+  "optionalDependencies": {
+    "solidity-comments-darwin-arm64": "0.1.1",
+    "solidity-comments-linux-x64-gnu": "0.1.1"
   }
 }
