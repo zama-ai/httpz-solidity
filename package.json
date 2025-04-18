@@ -86,7 +86,7 @@
     "typescript": "^5.1.6",
     "web3-validator": "^2.0.6",
     "@openzeppelin/contracts": "^5.0.1",
-    "@zama-fhe/oracle-solidity": "^0.0.2",
+    "@zama-fhe/oracle-solidity": "^0.0.3",
     "extra-bigint": "^1.1.18",
     "sqlite3": "^5.1.7"
   },
