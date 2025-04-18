@@ -1,7 +1,7 @@
 {
   "name": "@fhevm/solidity",
-  "description": "A Solidity library for interacting with FHEVM protocol",
-  "version": "0.7.0-2",
+  "description": "A Solidity library for interacting with fhevm protocol",
+  "version": "0.7.0-3",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -89,5 +89,9 @@
     "@zama-fhe/oracle-solidity": "^0.0.2",
     "extra-bigint": "^1.1.18",
     "sqlite3": "^5.1.7"
+  },
+  "optionalDependencies": {
+    "solidity-comments-darwin-arm64": "0.1.1",
+    "solidity-comments-linux-x64-gnu": "0.1.1"
   }
 }
