@@ -9,8 +9,8 @@ import { FheType } from '../codegen/common';
 import operatorsPrices from '../codegen/operatorsPrices.json';
 import { ALL_FHE_TYPES } from '../codegen/types';
 
-const parsedEnvCoprocessor = dotenv.parse(fs.readFileSync('./httpzTemp/addresses/.env.exec'));
-const coprocAddress = parsedEnvCoprocessor.TFHE_EXECUTOR_CONTRACT_ADDRESS;
+const parsedEnvCoprocessor = dotenv.parse(fs.readFileSync('./fhevmTemp/addresses/.env.exec'));
+const coprocAddress = parsedEnvCoprocessor.FHEVM_EXECUTOR_CONTRACT_ADDRESS;
 
 let firstBlockListening = 0;
 let lastBlockSnapshot = 0;
@@ -161,7 +161,7 @@ async function processAllPastTFHEExecutorEvents() {
   const provider = ethers.provider;
   const latestBlockNumber = await provider.getBlockNumber();
 
-  if (hre.__SOLIDITY_COVERAGE_RUNNING !== true) {
+  if (process.env.SOLIDITY_COVERAGE !== 'true') {
     // evm_snapshot is not supported in coverage mode
     [lastBlockSnapshot, lastCounterRand] = await provider.send('get_lastBlockSnapshot');
     if (lastBlockSnapshot < firstBlockListening) {
@@ -197,7 +197,7 @@ async function processAllPastTFHEExecutorEvents() {
     .filter((event) => event !== null);
 
   firstBlockListening = latestBlockNumber + 1;
-  if (hre.__SOLIDITY_COVERAGE_RUNNING !== true) {
+  if (process.env.SOLIDITY_COVERAGE !== 'true') {
     // evm_snapshot is not supported in coverage mode
     await provider.send('set_lastBlockSnapshot', [firstBlockListening]);
   }

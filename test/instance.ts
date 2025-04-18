@@ -1,11 +1,11 @@
+import dotenv from 'dotenv';
 import {
   clientKeyDecryptor,
   createEIP712,
   createInstance as createFhevmInstance,
   generateKeypair,
   getCiphertextCallParams,
-} from '@httpz/sdk';
-import dotenv from 'dotenv';
+} from 'fhevmjs';
 import { readFileSync } from 'fs';
 import * as fs from 'fs';
 import { ethers, ethers as hethers, network } from 'hardhat';
@@ -21,8 +21,8 @@ const FHE_CLIENT_KEY_PATH = process.env.FHE_CLIENT_KEY_PATH;
 
 let clientKey: Uint8Array | undefined;
 
-const kmsAdd = dotenv.parse(fs.readFileSync('./httpzTemp/addresses/.env.kmsverifier')).KMS_VERIFIER_CONTRACT_ADDRESS;
-const aclAdd = dotenv.parse(fs.readFileSync('./httpzTemp/addresses/.env.acl')).ACL_CONTRACT_ADDRESS;
+const kmsAdd = dotenv.parse(fs.readFileSync('./fhevmTemp/addresses/.env.kmsverifier')).KMS_VERIFIER_CONTRACT_ADDRESS;
+const aclAdd = dotenv.parse(fs.readFileSync('./fhevmTemp/addresses/.env.acl')).ACL_CONTRACT_ADDRESS;
 
 const createInstanceMocked = async () => {
   const instance = {
