@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import { log2 } from 'extra-bigint';
 import * as fs from 'fs';
 import { ethers } from 'hardhat';
-import hre from 'hardhat';
 import { Database } from 'sqlite3';
 
 import { FheType } from '../codegen/common';
@@ -120,7 +119,7 @@ function bitwiseNotUintBits(value: BigInt, numBits: number) {
 
 export const awaitCoprocessor = async (): Promise<void> => {
   chainId = (await ethers.provider.getNetwork()).chainId;
-  await processAllPastTFHEExecutorEvents();
+  await processAllPastFHEVMExecutorEvents();
 };
 
 const abi = [
@@ -157,7 +156,7 @@ const abi = [
   'event FheRandBounded(address indexed caller, uint256 upperBound, uint8 randType, bytes16 seed, bytes32 result)',
 ];
 
-async function processAllPastTFHEExecutorEvents() {
+async function processAllPastFHEVMExecutorEvents() {
   const provider = ethers.provider;
   const latestBlockNumber = await provider.getBlockNumber();
 
