@@ -41,7 +41,7 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/types": "^19.5.0",
-    "@fhevm/core-contracts": "^0.7.0-6",
+    "@fhevm/core-contracts": "^0.7.0-7",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
     "@nomicfoundation/hardhat-ethers": "^3.0.4",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
